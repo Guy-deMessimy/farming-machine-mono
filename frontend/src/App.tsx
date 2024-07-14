@@ -5,7 +5,7 @@ import ErrorPage from './pages/ErrorPage';
 import WelcomePage from './pages/WelcomePage/index';
 import MachineLayout from './components/MachineLayout/index';
 import MachinePage from './pages/MachinePage/index';
-// import * as Styled from './app-styled';
+import './styles.scss';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <RouterProvider router={router} />
     </div>
   );
