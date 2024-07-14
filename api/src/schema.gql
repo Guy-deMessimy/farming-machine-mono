@@ -1,0 +1,15 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""Category model"""
+type Category {
+  id: Int!
+  title: String!
+  description: String!
+  file: String!
+}
+
+type Query {
+  getCategories: [Category!]!
+}

@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id      Int       @default(autoincrement()) @id
+  email   String    @unique
+  // optional name filed : ?
+  name    String?   @db.VarChar(255)
+  posts   Post[]
+  customer Customer?
+}
+
+model Customer {
+  id          Int       @default(autoincrement()) @id
+  name        String    @db.VarChar(255)
+  lastName    String    @db.VarChar(255)
+  phone       String?   @db.VarChar(255)
+  adress      String    @db.VarChar(255)
+  zipCode     String    @db.VarChar(255)
+  country     String    @db.VarChar(255)
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int       @unique
+}
+
+model Post {
+  id          Int      @default(autoincrement()) @id
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  title       String
+  content     String?
+  published   Boolean? @default(false)
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  @@index([title, content])
+}
+
+model Category {
+  id          Int      @default(autoincrement()) @id
+  title       String
+  description String? @db.LongText
+  file        File?   @relation(fields: [fileId], references: [id])
+  fileId      Int?     @unique
+  services     Service[]
+}
+
+model Service {
+  id          Int       @default(autoincrement()) @id
+  title       String
+  description String?   @db.LongText
+  categories  Category?    @relation(fields: [categoryId], references: [id]) 
+  categoryId  Int?
+  types       Type[]
+}
+
+model File {
+  id          Int      @default(autoincrement()) @id
+  fileName    String
+  fileUrl     String   @db.LongText
+  key         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  category    Category?
+  @@index([fileName, key])
+}
+
+model Model {
+  id              Int     @default(autoincrement()) @id
+  modelName       String  
+  brandName       String
+  conception      String
+  engineKwPower   Int
+  engineCcPower   Int
+  MaxKmhSpeed     Int
+  PetrolLitreTank Int
+  TankLitre       Int?
+  WeightKg        Int
+  WorkingWidth    Int?
+  CopiesNumber    Int
+  types           Type?    @relation(fields: [typeId], references: [id]) 
+  typeId          Int?
+}
+
+model Type {
+    id          Int     @default(autoincrement()) @id
+    title       String
+    description String?   @db.LongText
+    services    Service[]
+    models      Model[]
+}
+
