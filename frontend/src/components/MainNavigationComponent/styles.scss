@@ -5,15 +5,19 @@
   left: 0px;
   width: 100%;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto 1fr auto;
   align-items: center;
-  gap: 10px;
+  gap: 40px;
   background-color: white;
   color: black;
   outline: none;
   padding: 10px 10px 10px 10px;
   z-index: 100;
   box-sizing: border-box;
+}
+
+.baseline {
+text-align: center;
 }
 
 .button-group {
