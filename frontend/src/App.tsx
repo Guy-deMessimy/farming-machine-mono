@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import RootLayout from './components/RootLayout/index';
+import LayoutComponent from './components/LayoutComponent/index';
 import ErrorPage from './pages/ErrorPage';
 import WelcomePage from './pages/WelcomePage/index';
 import MachineLayout from './components/MachineLayout/index';
@@ -10,7 +10,7 @@ import MachinePage from './pages/MachinePage/index';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootLayout />,
+    element: <LayoutComponent />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <WelcomePage /> },

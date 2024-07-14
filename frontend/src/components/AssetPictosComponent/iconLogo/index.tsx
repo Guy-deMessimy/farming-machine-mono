@@ -1,13 +1,7 @@
 import React from 'react';
 import FarmingMachineLogoSvg from './svg/index';
+import { Logo } from '../utils/interface';
 import './styles.scss';
-
-interface Logo {
-  title: string;
-  alt: string;
-  width?: number | string;
-  height?: number | string;
-}
 
 const FarmingMachineLogo: React.FC<Logo> = ({ title, alt, width, height }) => {
   return (

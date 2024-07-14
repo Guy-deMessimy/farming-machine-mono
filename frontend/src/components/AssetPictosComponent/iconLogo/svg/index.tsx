@@ -1,13 +1,8 @@
 import * as React from 'react';
+import { SvgLogo } from '../../utils/interface';
 import '../styles.scss';
 
-interface FarmingMachineLogoSvgProps extends React.SVGProps<SVGSVGElement> {
-  title: string;
-  alt: string;
-  width?: number | string;
-  height?: number | string;
-}
-const FarmingMachineLogoSvg: React.FC<FarmingMachineLogoSvgProps> = ({ title, alt, width, height, ...props }) => {
+const FarmingMachineLogoSvg: React.FC<SvgLogo> = ({ title, alt, width, height, ...props }) => {
   return (
     <svg className="svg" viewBox="0 0 24 24" role="img" aria-label={alt} width={width} height={height} {...props}>
       <title>{title}</title>
