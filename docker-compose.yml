@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app/frontend
+        consistency: delegated
+      - type: bind
+        source: ./shared
+        target: /app/shared
+        consistency: delegated
+    environment:
+      - REACT_APP_API_URI={REACT_APP_API_URI}
+      - CHOKIDAR_USEPOLLING=true
+    depends_on:
+      - backend
+      - api
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "3001:3001"  # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
+    volumes:
+      - ./backend:/app/backend
+      - ./shared:/app/shared
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_HOST=database
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    ports:
+      - "3002:3002" # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
+    volumes:
+      - ./api:/app/api
+      - ./shared:/app/shared
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_HOST=database
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+  database:
+    image: mysql:8
+    environment:
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306" # Ceci mappe le port 3006 du conteneur au port 3006 de l'hôte
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
