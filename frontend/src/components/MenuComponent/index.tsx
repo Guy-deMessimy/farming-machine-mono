@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dropdown, MenuButton, Menu, MenuItem, MenuListboxSlotProps } from '@mui/base';
+import { Dropdown, MenuButton, Menu, MenuItem, MenuListboxSlotProps, menuItemClasses } from '@mui/base';
 import { useNavigate } from 'react-router-dom';
 import { CssTransition } from '@mui/base/Transitions';
 import { PopupContext } from '@mui/base/Unstable_Popup';
@@ -27,7 +27,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ tabsData }) => {
       <MenuButton className="menu-button">Navigation</MenuButton>
       <Menu className="menu" slots={{ listbox: AnimatedListbox }}>
         {tabsData.map((tab) => (
-          <MenuItem className="menu-item" key={tab.value} onClick={createHandleMenuClick(tab.path)}>
+          <MenuItem
+            className={`menu-item ${menuItemClasses.disabled ? 'disabled' : ''}`}
+            key={tab.value}
+            onClick={createHandleMenuClick(tab.path)}
+          >
             {tab.label}
           </MenuItem>
         ))}
@@ -42,7 +46,6 @@ const AnimatedListbox = React.forwardRef(function AnimatedListbox(
 ) {
   const { ownerState, ...other } = props;
   const popupContext = React.useContext(PopupContext);
-
   if (popupContext === null) {
     throw new Error('The `AnimatedListbox` component cannot be rendered outside a `Popup` component');
   }
@@ -51,7 +54,7 @@ const AnimatedListbox = React.forwardRef(function AnimatedListbox(
 
   return (
     <CssTransition className={`placement-${verticalPlacement}`} enterClassName="open" exitClassName="closed">
-      <ul className="list-box" {...other} ref={ref} />
+      <ul {...other} ref={ref} />
     </CssTransition>
   );
 });

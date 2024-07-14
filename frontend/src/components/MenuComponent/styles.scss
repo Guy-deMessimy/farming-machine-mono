@@ -1,5 +1,4 @@
 .menu-button{
-    // font-family: 'IBM Plex Sans', sans-serif;
     font-weight: 600;
     font-size: 0.875rem;
     line-height: 1.5;
@@ -27,6 +26,10 @@
     }
 }
 
+.menu {
+    z-index: 200;
+}
+
 .menu-item {
     list-style: none;
     padding: 8px;
@@ -43,10 +46,13 @@
       background-color: white;
       color: grey;
     }
+
+  &.disabled {
+    color: grey;
+  }
 }
 
-.list-box {
-    font-family: 'IBM Plex Sans', sans-serif;
+ul {
     font-size: 0.875rem;
     box-sizing: border-box;
     padding: 6px;
