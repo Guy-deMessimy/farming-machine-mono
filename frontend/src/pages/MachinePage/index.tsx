@@ -1,19 +1,23 @@
 import { useState } from 'react';
-// import { DummyMachine, DummyMachineList } from './machine-dummy-list';
-// import { Machine, MachineType } from './machine-model';
-// import MachineList from './machine-list';
-// import MachineTypeList from './machine-type-tabs';
-// import * as styled from '../styles';
+
+// Components
+import { dummyEngineList } from './components/machine-dummy-list';
+import MachineList from './components/machine-list';
+
+// Utils
+import { Engine } from './utils/machine-model';
+
+// Ui and assets
+import './styles.scss';
 
 const MachinePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [machines, setMachines] = useState<Array<Machine>>(DummyMachine);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // const [machineType, setMachineType] = useState<Array<MachineType>>(DummyMachineList);
+  const [engineList, setEngineList] = useState<Array<Engine>>(dummyEngineList);
 
   return (
-    <div>
-      <p>quels machine</p>
+    <div className="machine__wrapper">
+      <div className="machine__wrapper__title">QUEL VEHICULE SOUHAITEZ-VOUS CONDUIRE ?</div>
+      <MachineList engineList={engineList} />
     </div>
   );
 };

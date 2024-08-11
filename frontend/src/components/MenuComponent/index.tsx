@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Dropdown, MenuButton, Menu, MenuItem, MenuListboxSlotProps, menuItemClasses } from '@mui/base';
 import { useNavigate } from 'react-router-dom';
 import { CssTransition } from '@mui/base/Transitions';
@@ -15,7 +15,7 @@ interface DropdownMenuProps {
   tabsData: TabData[];
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ tabsData }) => {
+const DropdownMenu: FC<DropdownMenuProps> = ({ tabsData }) => {
   const navigate = useNavigate();
 
   const createHandleMenuClick = (path: string) => () => {

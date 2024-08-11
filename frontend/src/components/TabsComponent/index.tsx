@@ -1,3 +1,4 @@
+import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Tabs } from '@mui/base/Tabs';
 import { TabsList } from '@mui/base/TabsList';
@@ -19,7 +20,7 @@ const tabsData: TabData[] = [
   { value: 6, label: 'Configuration', path: '/configuration' },
 ];
 
-const TabsComponent: React.FC = () => {
+const TabsComponent: FC = () => {
   return (
     <Tabs className="tabs" defaultValue={1}>
       <TabsList className="tablist">
