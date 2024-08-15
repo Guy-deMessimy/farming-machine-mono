@@ -4,14 +4,17 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copier d'abord les fichiers package.json
-COPY package*.json ./
 COPY frontend/package*.json ./frontend/
 COPY shared/package*.json ./shared/
 
 # Installer les dépendances
+WORKDIR /app/frontend
+RUN npm install
+WORKDIR /app/shared
 RUN npm install
 
 # Copier le reste des fichiers du projet
+WORKDIR /app
 COPY frontend ./frontend
 COPY shared ./shared
 
@@ -22,4 +25,4 @@ WORKDIR /app/frontend
 EXPOSE 3000
 
 # Commande pour démarrer l'application en mode développement
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]

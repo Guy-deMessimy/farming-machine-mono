@@ -4,14 +4,17 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copier d'abord les fichiers package.json
-COPY package*.json ./
 COPY backend/package*.json ./backend/
 COPY shared/package*.json ./shared/
 
-# Installer les dépendances et le CLI NestJS globalement
+# Installer les dépendances
+WORKDIR /app/backend
+RUN npm install
+WORKDIR /app/shared
 RUN npm install
 
 # Copier le reste des fichiers du projet
+WORKDIR /app
 COPY backend ./backend
 COPY shared ./shared
 
