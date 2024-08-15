@@ -2,14 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""Category model"""
-type Category {
+"""engine model"""
+type Engine {
   id: Int!
-  title: String!
-  description: String!
-  file: String!
+  modelName: String!
+  brandName: String!
+  conception: String!
+  engineKwPower: Int!
+  engineCcPower: Int!
+  MaxKmhSpeed: Int!
+  PetrolLitreTank: Int!
+  TankLitre: Int!
+  WeightKg: Int!
+  WorkingWidth: Int!
+  CopiesNumber: Int!
 }
 
 type Query {
-  getCategories: [Category!]!
+  getEngines: [Engine!]!
 }

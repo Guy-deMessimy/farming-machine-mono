@@ -72,7 +72,7 @@ model File {
   @@index([fileName, key])
 }
 
-model Model {
+model Engine {
   id              Int     @default(autoincrement()) @id
   modelName       String  
   brandName       String
@@ -94,6 +94,6 @@ model Type {
     title       String
     description String?   @db.LongText
     services    Service[]
-    models      Model[]
+    models      Engine[]
 }
 
