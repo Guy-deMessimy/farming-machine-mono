@@ -9,7 +9,7 @@ import appConfig from './config/app.config';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
-import { CategoriesModule } from './modules/categories/categories.module';
+import { EnginesModule } from './modules/engine/engines.module';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
     }),
     PrismaModule,
     PubSubModule,
-    CategoriesModule,
+    EnginesModule,
   ],
   controllers: [],
   providers: [],
