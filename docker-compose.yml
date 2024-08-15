@@ -3,90 +3,90 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: . # Utilise le répertoire courant comme contexte de build
+      dockerfile: frontend/Dockerfile # Chemin vers le Dockerfile spécifique pour le frontend
     ports:
-      - "3000:3000"
+      - "3000:3000" # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
     volumes:
       - type: bind
-        source: ./frontend
-        target: /app/frontend
-        consistency: delegated
+        source: ./frontend # Répertoire source sur l'hôte
+        target: /app/frontend # Point de montage dans le conteneur
+        consistency: delegated # Optimise les performances I/O pour les montages de volumes
       - type: bind
-        source: ./shared
-        target: /app/shared
+        source: ./shared # Répertoire partagé sur l'hôte
+        target: /app/shared # Point de montage du répertoire partagé dans le conteneur
         consistency: delegated
     environment:
-      - REACT_APP_API_URI={REACT_APP_API_URI}
-      - CHOKIDAR_USEPOLLING=true
+      - REACT_APP_API_URI={REACT_APP_API_URI} # Variable d'environnement pour l'URI de l'API
+      - CHOKIDAR_USEPOLLING=true  # Active le polling pour la détection de changements de fichiers
     depends_on:
-      - backend
-      - api
+      - backend # Assure que le service backend démarre avant le frontend
+      - api # Assure que le service api démarre avant le frontend
     networks:
-      - app-network
+      - app-network # Connecte le service au réseau app-network
 
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: . # Utilise le répertoire courant comme contexte de build
+      dockerfile: backend/Dockerfile # Chemin vers le Dockerfile spécifique pour le backend
     ports:
       - "3001:3001"  # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
     volumes:
-      - ./backend:/app/backend
-      - ./shared:/app/shared
+      - ./backend:/app/backend # Monte le répertoire backend de l'hôte dans le conteneur
+      - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=development # Définit l'environnement Node.js
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_HOST=database
+      - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
+      - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD} # Mot de passe de la base de données
+      - DATABASE_HOST=database # Hôte de la base de données
     depends_on:
-      - database
+      - database # Assure que le service database démarre avant le backend
     networks:
       - app-network
 
   api:
     build:
-      context: .
-      dockerfile: api/Dockerfile
+      context: . # Utilise le répertoire courant comme contexte de build
+      dockerfile: api/Dockerfile # Chemin vers le Dockerfile spécifique pour l'api
     ports:
       - "3002:3002" # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
     volumes:
-      - ./api:/app/api
-      - ./shared:/app/shared
+      - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
+      - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=development # Définit l'environnement Node.js
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
-      - DATABASE_NAME=${DATABASE_NAME}
-      - DATABASE_USER=${DATABASE_USER}
-      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-      - DATABASE_HOST=database
-    depends_on:
-      - database
+      - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
+      - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD} # Mot de passe de la base de données
+      - DATABASE_HOST=database # Hôte de la base de données
+      - database  # Assure que le service database démarre avant l'API
     networks:
-      - app-network
+      - app-network # Connecte le service au réseau app-network
 
   database:
-    image: mysql:8
+    image: mysql:8 # Utilise l'image MySQL version 8
     environment:
-      - MYSQL_DATABASE=${DATABASE_NAME}
-      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE_NAME} # Nom de la base de données à créer
+      - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD} # Mot de passe root pour MySQL
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql # Persiste les données MySQL
     ports:
       - "3306:3306" # Ceci mappe le port 3006 du conteneur au port 3006 de l'hôte
     networks:
-      - app-network
+      - app-network  # Connecte le service au réseau app-network
+
 
   prisma-studio:
     build:
-      context: .
-      dockerfile: api/Dockerfile
+      context: .  # Utilise le répertoire courant comme contexte de build
+      dockerfile: api/Dockerfile # Chemin vers le Dockerfile spécifique pour l'api
     command: npx prisma studio
     volumes:
-      - ./api:/app/api
-      - ./shared:/app/shared
+      - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
+      - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
       - NODE_ENV=development
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}
@@ -95,7 +95,7 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}
       - DATABASE_HOST=database
     ports:
-      - "5555:5555"
+      - "5555:5555" # Ceci mappe le port 3006 du conteneur au port 3006 de l'hôte
     depends_on:
       - database
     networks:
@@ -103,7 +103,7 @@ services:
 
 networks:
   app-network:
-    driver: bridge
+    driver: bridge # Utilise le driver bridge pour le réseau
 
 volumes:
-  mysql_data:
+  mysql_data: # Définit un volume nommé pour les données MySQL

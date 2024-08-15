@@ -16,5 +16,16 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Démarrer l'application
+# Exécuter les migrations Prisma pour le développement
+echo "Running Prisma migrations..."
+npx prisma migrate dev --name init
+
+# Vérifier si les migrations se sont bien déroulées
+if [ $? -ne 0 ]; then
+  echo "Prisma migrations failed"
+  exit 1
+fi
+
+# Démarrer l'application avec Nest
+echo "Starting the application..."
 npm run start:dev
