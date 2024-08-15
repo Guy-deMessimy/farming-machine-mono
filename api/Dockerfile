@@ -1,5 +1,7 @@
 # api/Dockerfile
 FROM node:18-alpine AS builder
+
+# Définir le répertoire de travail
 WORKDIR /app
 
 # Copier les fichiers package.json des sous-dossiers
@@ -12,29 +14,26 @@ RUN npm install
 WORKDIR /app/shared
 RUN npm install
 
-# Copier le reste des fichiers
-WORKDIR /app
-COPY api ./api
-COPY shared ./shared
-COPY api/prisma/schema.prisma ./prisma/
+# Copier le reste des fichiers du projet
+COPY . .
+
+# S'assurer que le fichier schema.prisma est présent
+COPY api/prisma/schema.prisma /app/api/prisma/
 
 # Générer Prisma
 WORKDIR /app/api
 RUN npx prisma generate
 
-# Stage d'exécution
-FROM node:18-alpine
-WORKDIR /app
-
-# Copier les artefacts du stage de construction
-COPY --from=builder /app .
-
-# Copier le script de démarrage
-COPY api/start.sh .
-RUN chmod +x start.sh
+# Copier et rendre exécutable le script de démarrage
+COPY api/start.sh /app/api/
+RUN chmod +x /app/api/start.sh
+WORKDIR /app/api
 
 # Exposer le port
 EXPOSE 3002
+
+# Définir le répertoire de travail pour l'exécution
+WORKDIR /app
 
 # Utiliser le script comme commande de démarrage
 CMD ["./start.sh"]

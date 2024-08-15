@@ -1,30 +1,28 @@
-#!/bin/bash
+#!/bin/sh
+
+# Définir le chemin du schéma Prisma
+PRISMA_SCHEMA="/app/api/prisma/schema.prisma"
 
 # Générer les fichiers Prisma
-npx prisma generate
+echo "Generating Prisma client..."
+npx prisma generate --schema="$PRISMA_SCHEMA"
 
 # Attendre l'initialisation de Prisma
-until npx prisma db pull &> /dev/null; do
-  echo "Waiting for Prisma to initialize..."
-  sleep 1
+until npx prisma db pull --schema="$PRISMA_SCHEMA" > /dev/null 2>&1
+do
+    echo "Waiting for Prisma to initialize..."
+    sleep 1
 done
 
 # Vérifier que Prisma fonctionne correctement
-npx prisma query 'SELECT 1' &> /dev/null
-if [ $? -ne 0 ]; then
-  echo "Prisma initialization failed"
-  exit 1
+if ! npx prisma query --schema="$PRISMA_SCHEMA" 'SELECT 1' > /dev/null 2>&1; then
+    echo "Prisma initialization failed"
+    exit 1
 fi
 
-# Exécuter les migrations Prisma pour le développement
+# Exécuter les migrations Prisma
 echo "Running Prisma migrations..."
-npx prisma migrate dev --name init
-
-# Vérifier si les migrations se sont bien déroulées
-if [ $? -ne 0 ]; then
-  echo "Prisma migrations failed"
-  exit 1
-fi
+npm run migrate
 
 # Démarrer l'application avec Nest
 echo "Starting the application..."
