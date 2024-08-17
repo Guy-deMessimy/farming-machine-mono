@@ -6,7 +6,7 @@ services:
       context: . # Utilise le répertoire courant comme contexte de build
       dockerfile: frontend/Dockerfile # Chemin vers le Dockerfile spécifique pour le frontend
     ports:
-      - "3000:3000" # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
+      - "4000:4000" # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
     volumes:
       - type: bind
         source: ./frontend # Répertoire source sur l'hôte
@@ -46,7 +46,7 @@ services:
       context: . # Utilise le répertoire courant comme contexte de build
       dockerfile: api/Dockerfile # Chemin vers le Dockerfile spécifique pour l'api
     ports:
-      - "3002:3002" # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
+      - "3000:3000" # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
     volumes:
       - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur

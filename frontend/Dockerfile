@@ -1,9 +1,10 @@
 # frontend/Dockerfile
 FROM node:18-alpine
 
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Copier d'abord les fichiers package.json
+# Copier les fichiers package.json
 COPY frontend/package*.json ./frontend/
 COPY shared/package*.json ./shared/
 

@@ -1,9 +1,10 @@
 # backend/Dockerfile
 FROM node:18-alpine
 
+# Définir le répertoire de travail
 WORKDIR /app
 
-# Copier d'abord les fichiers package.json
+# Copier les fichiers package.json
 COPY backend/package*.json ./backend/
 COPY shared/package*.json ./shared/
 
@@ -18,10 +19,10 @@ WORKDIR /app
 COPY backend ./backend
 COPY shared ./shared
 
-# Définir le répertoire de travail pour le frontend
+# Définir le répertoire de travail pour le backend
 WORKDIR /app/backend
 
-# Exposer le port utilisé par l'application React en développement
+# Exposer le port utilisé par le backend en développement
 EXPOSE 3001
 
 # Commande pour démarrer l'application en mode développement

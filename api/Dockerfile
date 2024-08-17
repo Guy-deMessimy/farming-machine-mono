@@ -4,7 +4,7 @@ FROM node:18-alpine AS builder
 # Définir le répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers package.json des sous-dossiers
+# Copier les fichiers package.json
 COPY api/package*.json ./api/
 COPY shared/package*.json ./shared/
 
@@ -29,7 +29,7 @@ COPY api/start.sh /app/api/
 RUN chmod +x /app/api/start.sh
 WORKDIR /app/api
 
-# Exposer le port
+# Exposer le port utilisé par l'api en développement
 EXPOSE 3002
 
 # Définir le répertoire de travail pour l'exécution
