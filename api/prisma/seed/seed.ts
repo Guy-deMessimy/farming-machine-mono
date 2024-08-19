@@ -4,7 +4,27 @@ import { ENGINE_LIST } from './engine';
 
 const prisma = new PrismaClient();
 
-const main = async () => {
+interface EngineInput {
+  modelName: string;
+  brandName: string;
+  conception: string;
+  engineKwPower: number;
+  engineCcPower: number;
+  maxKmhSpeed: number;
+  petrolLitreTank: number;
+  tankLitre: number;
+  weightKg: number;
+  workingWidth: number;
+  copiesNumber: number;
+}
+
+interface ParsedArgs {
+  values: {
+    environment?: string;
+  };
+}
+
+const main = async (): Promise<void> => {
   const {
     values: { environment },
   } = parseArgs({
@@ -13,35 +33,35 @@ const main = async () => {
         type: 'string',
       },
     },
-  });
+  }) as ParsedArgs;
 
   switch (environment) {
     case 'development':
-      const seedEngine = async () => {
-        Promise.all(
-          ENGINE_LIST.map(
-            async (n) =>
-              await prisma.engine.create({
+      const seedEngine = async (): Promise<void> => {
+        try {
+          await Promise.all(
+            ENGINE_LIST.map(async (n: EngineInput) =>
+              prisma.engine.create({
                 data: {
                   modelName: n.modelName,
                   brandName: n.brandName,
                   conception: n.conception,
                   engineKwPower: n.engineKwPower,
                   engineCcPower: n.engineCcPower,
-                  MaxKmhSpeed: n.MaxKmhSpeed,
-                  PetrolLitreTank: n.PetrolLitreTank,
-                  TankLitre: n.TankLitre,
-                  WeightKg: n.WeightKg,
-                  WorkingWidth: n.WorkingWidth,
-                  CopiesNumber: n.CopiesNumber,
+                  maxKmhSpeed: n.maxKmhSpeed,
+                  petrolLitreTank: n.petrolLitreTank,
+                  tankLitre: n.tankLitre,
+                  weightKg: n.weightKg,
+                  workingWidth: n.workingWidth,
+                  copiesNumber: n.copiesNumber,
                 },
               }),
-          ),
-        )
-          .then(() => console.info('[SEED] Succussfully create engine records'))
-          .catch((e) =>
-            console.error('[SEED] Failed to create engine records', e),
+            ),
           );
+          console.info('[SEED] Successfully created engine records');
+        } catch (e) {
+          console.error('[SEED] Failed to create engine records', e);
+        }
       };
 
       seedEngine();
@@ -62,8 +82,6 @@ main()
 
   .catch(async (e) => {
     console.error(e);
-
     await prisma.$disconnect();
-
     process.exit(1);
   });

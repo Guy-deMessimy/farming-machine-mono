@@ -4,18 +4,18 @@
 
 """engine model"""
 type Engine {
-  id: Int!
+  id: ID!
   modelName: String!
   brandName: String!
   conception: String!
   engineKwPower: Int!
   engineCcPower: Int!
-  MaxKmhSpeed: Int!
-  PetrolLitreTank: Int!
-  TankLitre: Int!
-  WeightKg: Int!
-  WorkingWidth: Int!
-  CopiesNumber: Int!
+  maxKmhSpeed: Int!
+  petrolLitreTank: Int!
+  tankLitre: Int!
+  weightKg: Int!
+  workingWidth: Int!
+  copiesNumber: Int!
 }
 
 type Query {

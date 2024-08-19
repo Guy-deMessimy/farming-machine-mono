@@ -1,9 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Engine as EngineDB } from '@prisma/client';
 
 @ObjectType({ description: 'engine model' })
 export class Engine {
-  @Field(() => Int)
+  @Field(() => ID)
   id: EngineDB[`id`];
 
   @Field(() => String)
@@ -22,22 +22,22 @@ export class Engine {
   engineCcPower: EngineDB[`engineCcPower`];
 
   @Field(() => Int)
-  MaxKmhSpeed: EngineDB[`MaxKmhSpeed`];
+  maxKmhSpeed: EngineDB[`maxKmhSpeed`];
 
   @Field(() => Int)
-  PetrolLitreTank: EngineDB[`PetrolLitreTank`];
+  petrolLitreTank: EngineDB[`petrolLitreTank`];
 
   @Field(() => Int)
-  TankLitre: EngineDB[`TankLitre`];
+  tankLitre: EngineDB[`tankLitre`];
 
   @Field(() => Int)
-  WeightKg: EngineDB[`WeightKg`];
+  weightKg: EngineDB[`weightKg`];
 
   @Field(() => Int)
-  WorkingWidth?: EngineDB[`WorkingWidth`];
+  workingWidth?: EngineDB[`workingWidth`];
 
   @Field(() => Int)
-  CopiesNumber: EngineDB[`CopiesNumber`];
+  copiesNumber: EngineDB[`copiesNumber`];
 
   // see for relations
 }
