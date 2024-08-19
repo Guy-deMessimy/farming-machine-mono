@@ -21,10 +21,10 @@ export class Engine {
   // engineCcPower: number;
 
   @Field(() => Int)
-  MaxKmhSpeed: number;
+  maxKmhSpeed: number;
 
   @Field(() => Int)
-  PetrolLitreTank: number;
+  petrolLitreTank: number;
 
   // @Field(() => Int)
   // TankLitre: number;
@@ -36,7 +36,7 @@ export class Engine {
   // WorkingWidth?: number;
 
   @Field(() => Int)
-  CopiesNumber: number;
+  copiesNumber: number;
 
   // see for relations
 }

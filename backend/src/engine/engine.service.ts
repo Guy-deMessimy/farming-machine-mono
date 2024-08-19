@@ -13,11 +13,11 @@ export class EngineService {
       query {
         getEngines {
         id
-    CopiesNumber
-    MaxKmhSpeed
-    PetrolLitreTank
-    ModelName
-    BrandName
+    copiesNumber
+    maxKmhSpeed
+    petrolLitreTank
+    modelName
+    brandName
         }
       }
     `;
