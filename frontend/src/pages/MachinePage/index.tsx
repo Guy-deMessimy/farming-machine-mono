@@ -6,6 +6,7 @@ import MachineList from './components/machine-list';
 
 // Utils
 import { Engine } from './utils/machine-model';
+import { useEngines } from '../../hooks/useEngines';
 
 // Ui and assets
 import './styles.scss';
@@ -13,6 +14,11 @@ import './styles.scss';
 const MachinePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [engineList, setEngineList] = useState<Array<Engine>>(dummyEngineList);
+  const { engines, loading, error } = useEngines();
+  console.log('engines', engines);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="machine__wrapper">
