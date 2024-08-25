@@ -12,7 +12,7 @@ const uploadLink = createUploadLink({
   headers: {
     'Apollo-Require-Preflight': 'true',
   },
-  uri: process.env.REACT_APP_API_URI,
+  uri: process.env.REACT_APP_BACKEND_URI || 'http://localhost:3001/graphql',
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
