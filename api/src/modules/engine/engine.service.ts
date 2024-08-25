@@ -11,6 +11,7 @@ export class EngineService {
 
   async getEngineList() {
     const engineList = await this.repository.getEngines({});
+    console.log('enginelist in API', engineList);
     return engineList;
   }
 }

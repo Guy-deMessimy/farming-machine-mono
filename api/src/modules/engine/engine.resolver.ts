@@ -12,6 +12,7 @@ export class EngineResolver {
 
   @Query(() => [Engine])
   async getEngines() {
+    console.log('Query received in API');
     return this.engineService.getEngineList();
   }
 }
