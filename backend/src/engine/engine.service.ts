@@ -3,42 +3,33 @@ import { ApiService } from '../shared/api-service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Engine } from './engine.entity';
+import { GraphQLResolveInfo, print, Kind } from 'graphql';
 
 @Injectable()
 export class EngineService {
   constructor(private apiService: ApiService) {}
 
-  getAgriculturalMachines(): Observable<any[]> {
-    const query = `
-      query {
-        getEngines {
-        id
-    copiesNumber
-    maxKmhSpeed
-    petrolLitreTank
-    modelName
-    brandName
-        }
-      }
-    `;
+  getEngineList(info: GraphQLResolveInfo): Observable<Engine[]> {
+    const query = this.extractQueryFromInfo(info);
+    console.log('Extracted query:', query);
     return this.apiService
-      .query<{ getEngines: any[] }>(query)
+      .query<{ getEngines: Engine[] }>(query)
       .pipe(map((data) => data.getEngines));
   }
 
-  // getAgriculturalMachines() {
-  //   const query = `
-  //     query {
-  //       getEngines {
-  //       id
-  //   copiesNumber
-  //   maxKmhSpeed
-  //   petrolLitreTank
-  //   modelName
-  //   brandName
-  //       }
-  //     }
-  //   `;
-  //   return console.log('query', query);
-  // }
+  private extractQueryFromInfo(info: GraphQLResolveInfo): string {
+    const operationDefinition = info.operation;
+    const fieldNode = info.fieldNodes[0];
+
+    // Créer une nouvelle opération avec le bon nom de champ
+    const newOperation = {
+      ...operationDefinition,
+      selectionSet: {
+        kind: Kind.SELECTION_SET,
+        selections: [fieldNode],
+      },
+    };
+
+    return print(newOperation as any);
+  }
 }

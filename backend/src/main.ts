@@ -7,7 +7,7 @@ async function bootstrap() {
 
   try {
     logger.log(`Starting backend service...`);
-    logger.log(`Database URL: ${process.env.API_URI}`);
+    logger.log(`Api URL: ${process.env.API_URI}`);
 
     const app = await NestFactory.create(AppModule, { cors: true });
 

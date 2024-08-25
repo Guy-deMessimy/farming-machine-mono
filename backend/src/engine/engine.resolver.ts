@@ -1,4 +1,5 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args, Info } from '@nestjs/graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { EngineService } from './engine.service';
 import { Engine } from './engine.entity';
 
@@ -7,11 +8,18 @@ export class EngineResolver {
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine])
-  async getAgriculturalMachines() {
+  async getEngines(@Info() info: GraphQLResolveInfo) {
+    // @Args('query', { nullable: true })
     console.log('Query received in BACKEND');
     console.log('Resolver: getAgriculturalMachines called');
+    console.log('Received query:', info);
+    // console.log('Received variables:', variables);
     try {
-      const result = await this.engineService.getAgriculturalMachines();
+      const result = await this.engineService.getEngineList(
+        // variables,
+
+        info,
+      );
       console.log('Query received in BACKEND');
       console.log(
         'Resolver: getAgriculturalMachines result:',

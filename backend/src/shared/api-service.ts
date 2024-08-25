@@ -10,12 +10,12 @@ export class ApiService {
 
   constructor(private httpService: HttpService) {}
 
-  query<T>(query: string, variables?: any): Observable<T> {
+  query<T>(query: string): Observable<T> {
     const payload = {
       query,
-      variables,
+      // variables,
     };
-    console.log('Sending GraphQL query:', JSON.stringify(payload, null, 2));
+    // console.log('Sending GraphQL query:', JSON.stringify(payload, null, 2));
     console.log('API URL:', this.apiUrl);
 
     return this.httpService
