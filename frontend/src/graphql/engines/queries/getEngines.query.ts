@@ -10,3 +10,16 @@ export const GET_ENGINES = gql`
   }
   ${ENGINE_DETAILS_FRAGMENT}
 `;
+
+export const GET_CATEGORIES = gql`
+  query GetAgriculturalMachines {
+    getAgriculturalMachines {
+      brandName
+      copiesNumber
+      id
+      maxKmhSpeed
+      modelName
+      petrolLitreTank
+    }
+  }
+`;
