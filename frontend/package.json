@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.10.6",
+    "@apollo/client": "^3.11.4",
     "@mui/base": "^5.0.0-beta.40",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -51,9 +51,9 @@
     ]
   },
   "devDependencies": {
+    "@types/apollo-upload-client": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
-    "@types/apollo-upload-client": "^17.0.2",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-baseui": "^12.2.0",

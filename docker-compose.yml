@@ -17,7 +17,7 @@ services:
         target: /app/shared # Point de montage du répertoire partagé dans le conteneur
         consistency: delegated
     environment:
-      - REACT_APP_API_URI={REACT_APP_API_URI} # Variable d'environnement pour l'URI de l'API
+      - REACT_APP_BACKEND_URI=http://backend:3001/graphql # Variable d'environnement pour l'URI du backend
       - CHOKIDAR_USEPOLLING=true  # Active le polling pour la détection de changements de fichiers
     depends_on:
       - backend # Assure que le service backend démarre avant le frontend
@@ -37,6 +37,7 @@ services:
     environment:
       - NODE_ENV=development # Définit l'environnement Node.js
       - API_URL=http://api:3000/graphql
+      - CORS_ORIGIN=http://frontend:4000
     depends_on:
       - api # Assure que le service api démarre avant le backend
     networks:
