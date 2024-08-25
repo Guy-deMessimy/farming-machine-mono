@@ -5,7 +5,8 @@ import { map, catchError, retry } from 'rxjs/operators';
 
 @Injectable()
 export class ApiService {
-  private readonly apiUrl = 'http://api:3000/graphql'; // URL of the main GraphQL API
+  private readonly apiUrl =
+    process.env.API_URL || 'http://localhost:3000/graphql'; // URL of the main GraphQL API
 
   constructor(private httpService: HttpService) {}
 
@@ -51,9 +52,21 @@ export class ApiService {
           } else {
             console.error('Error:', error.message);
           }
-          console.error('Error config:', JSON.stringify(error.config, null, 2));
+          console.error('Error querying API:', this.safeStringify(error));
           return throwError(() => new Error('Failed to query API'));
         }),
       );
+  }
+  private safeStringify(obj: any): string {
+    const cache = new Set();
+    return JSON.stringify(obj, (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (cache.has(value)) {
+          return '[Circular]';
+        }
+        cache.add(value);
+      }
+      return value;
+    });
   }
 }

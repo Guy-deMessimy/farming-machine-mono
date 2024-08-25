@@ -8,25 +8,7 @@ import { Engine } from './engine.entity';
 export class EngineService {
   constructor(private apiService: ApiService) {}
 
-  // getAgriculturalMachines(): Observable<any[]> {
-  //   const query = `
-  //     query {
-  //       getEngines {
-  //       id
-  //   copiesNumber
-  //   maxKmhSpeed
-  //   petrolLitreTank
-  //   modelName
-  //   brandName
-  //       }
-  //     }
-  //   `;
-  //   return this.apiService
-  //     .query<{ getEngines: any[] }>(query)
-  //     .pipe(map((data) => data.getEngines));
-  // }
-
-  getAgriculturalMachines() {
+  getAgriculturalMachines(): Observable<any[]> {
     const query = `
       query {
         getEngines {
@@ -39,6 +21,24 @@ export class EngineService {
         }
       }
     `;
-    return console.log('query', query);
+    return this.apiService
+      .query<{ getEngines: any[] }>(query)
+      .pipe(map((data) => data.getEngines));
   }
+
+  // getAgriculturalMachines() {
+  //   const query = `
+  //     query {
+  //       getEngines {
+  //       id
+  //   copiesNumber
+  //   maxKmhSpeed
+  //   petrolLitreTank
+  //   modelName
+  //   brandName
+  //       }
+  //     }
+  //   `;
+  //   return console.log('query', query);
+  // }
 }

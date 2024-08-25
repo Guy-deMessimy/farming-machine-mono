@@ -8,11 +8,11 @@ export class EngineResolver {
 
   @Query(() => [Engine])
   async getAgriculturalMachines() {
-    console.log('Query received in backend');
+    console.log('Query received in BACKEND');
     console.log('Resolver: getAgriculturalMachines called');
     try {
       const result = await this.engineService.getAgriculturalMachines();
-      console.log('Query received in backend');
+      console.log('Query received in BACKEND');
       console.log(
         'Resolver: getAgriculturalMachines result:',
         JSON.stringify(result, null, 2),
