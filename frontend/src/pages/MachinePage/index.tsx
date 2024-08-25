@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from '@apollo/client';
 
 // Components
 import { dummyEngineList } from './components/machine-dummy-list';
@@ -8,7 +7,6 @@ import MachineList from './components/machine-list';
 // Utils
 import { Engine } from './utils/machine-model';
 import { useEngines } from '../../hooks/useEngines';
-// import { GET_CATEGORIES } from '../../graphql/engines/queries/getEngines.query';
 
 // Ui and assets
 import './styles.scss';

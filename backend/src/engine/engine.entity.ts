@@ -11,8 +11,8 @@ export class Engine {
   @Field(() => String)
   brandName: string;
 
-  // @Field(() => String)
-  // conception: string;
+  @Field(() => String)
+  conception: string;
 
   // @Field(() => Int)
   // engineKwPower: number;

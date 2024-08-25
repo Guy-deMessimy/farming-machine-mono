@@ -10,6 +10,7 @@ export const GET_ENGINES = gql`
       maxKmhSpeed
       modelName
       petrolLitreTank
+      conception
     }
   }
 `;
