@@ -36,8 +36,7 @@ services:
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
       - NODE_ENV=development # Définit l'environnement Node.js
-      - API_URL=http://api:3000/graphql
-      - CORS_ORIGIN=http://frontend:4000
+      - API_URL=http://api:3000/graphql # Variable d'environnement pour l'URI de l'iap
     depends_on:
       - api # Assure que le service api démarre avant le backend
     networks:
