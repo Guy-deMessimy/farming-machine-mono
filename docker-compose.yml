@@ -6,7 +6,7 @@ services:
       context: . # Utilise le répertoire courant comme contexte de build
       dockerfile: frontend/Dockerfile # Chemin vers le Dockerfile spécifique pour le frontend
     ports:
-      - "4000:4000" # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}" # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
     volumes:
       - type: bind
         source: ./frontend # Répertoire source sur l'hôte
@@ -17,7 +17,7 @@ services:
         target: /app/shared # Point de montage du répertoire partagé dans le conteneur
         consistency: delegated
     environment:
-      - REACT_APP_BACKEND_URI=http://backend:3001/graphql # Variable d'environnement pour l'URI du backend
+      - REACT_APP_BACKEND_URI=${REACT_APP_BACKEND_URI} # Variable d'environnement pour l'URI du backend
       - CHOKIDAR_USEPOLLING=true  # Active le polling pour la détection de changements de fichiers
     depends_on:
       - backend # Assure que le service backend démarre avant le frontend
@@ -30,13 +30,14 @@ services:
       context: . # Utilise le répertoire courant comme contexte de build
       dockerfile: backend/Dockerfile # Chemin vers le Dockerfile spécifique pour le backend
     ports:
-      - "3001:3001"  # Ceci mappe le port 3001 du conteneur au port 3005 de l'hôte
+      - "${BACKEND_PORT}:${BACKEND_PORT}" # Ceci mappe le port 3001 du conteneur au port 3001 de l'hôte
     volumes:
       - ./backend:/app/backend # Monte le répertoire backend de l'hôte dans le conteneur
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
-      - NODE_ENV=development # Définit l'environnement Node.js
-      - API_URL=http://api:3000/graphql # Variable d'environnement pour l'URI de l'iap
+      - NODE_ENV=${NODE_ENV} # Définit l'environnement Node.js
+      - API_URL=${API_URL} # Variable d'environnement pour l'URI de l'API
+      - CORS_ORIGIN=${CORS_ORIGIN} # Variable d'environnement pour les URI cors
     depends_on:
       - api # Assure que le service api démarre avant le backend
     networks:
@@ -47,12 +48,12 @@ services:
       context: . # Utilise le répertoire courant comme contexte de build
       dockerfile: api/Dockerfile # Chemin vers le Dockerfile spécifique pour l'api
     ports:
-      - "3000:3000" # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
+      - "${API_PORT}:${API_PORT}"  # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
     volumes:
       - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
-      - NODE_ENV=development # Définit l'environnement Node.js
+      - NODE_ENV=${NODE_ENV} # Définit l'environnement Node.js
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME} # URL de connexion à la base de données
       - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
       - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
@@ -85,7 +86,7 @@ services:
       - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=${NODE_ENV}
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME} # URL de connexion à la base de données
       - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
       - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
