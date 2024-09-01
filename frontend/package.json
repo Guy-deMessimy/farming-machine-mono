@@ -2,6 +2,7 @@
   "name": "@farmingmachine-monorepo/frontend",
   "version": "1.0.0",
   "private": true,
+  "proxy": "http://backend:3001",
   "dependencies": {
     "@apollo/client": "^3.11.4",
     "@mui/base": "^5.0.0-beta.40",
