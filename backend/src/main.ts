@@ -9,7 +9,28 @@ async function bootstrap() {
     logger.log(`Starting backend service...`);
     logger.log(`Api URL: ${process.env.API_URI}`);
 
-    const app = await NestFactory.create(AppModule, { cors: true });
+    const app = await NestFactory.create(AppModule);
+
+    const corsOrigins = process.env.CORS_ORIGIN
+      ? process.env.CORS_ORIGIN.split(',')
+      : [
+          'http://localhost:4000',
+          'http://frontend:4000',
+          'http://localhost:3000',
+          'http://api:3000',
+        ];
+
+    app.enableCors({
+      origin: corsOrigins,
+      methods: ['POST', 'OPTIONS'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'Apollo-Require-Preflight',
+      ],
+      credentials: true,
+      optionsSuccessStatus: 204,
+    });
 
     app.use((req, res, next) => {
       console.log('Full request:', {
