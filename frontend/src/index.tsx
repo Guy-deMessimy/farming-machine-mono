@@ -9,10 +9,8 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 const uploadLink = createUploadLink({
-  headers: {
-    'Apollo-Require-Preflight': 'true',
-  },
-  uri: process.env.REACT_APP_BACKEND_URI || 'http://localhost:3001/graphql',
+  uri: '/graphql' || 'http://backend:3001/graphql' || 'http://localhost:3001/graphql',
+  credentials: 'include',
 });
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
