@@ -32,6 +32,8 @@ async function bootstrap() {
       optionsSuccessStatus: 204,
     });
 
+    // app.use(bodyParser.json());
+
     app.use((req, res, next) => {
       console.log('Full request:', {
         method: req.method,

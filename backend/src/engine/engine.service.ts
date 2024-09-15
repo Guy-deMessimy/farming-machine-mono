@@ -1,35 +1,46 @@
 import { Injectable } from '@nestjs/common';
-import { ApiService } from '../shared/api-service';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Engine } from './engine.entity';
-import { GraphQLResolveInfo, print, Kind } from 'graphql';
+import { HttpService } from '@nestjs/axios/dist';
 
 @Injectable()
 export class EngineService {
-  constructor(private apiService: ApiService) {}
+  constructor(private readonly httpService: HttpService) {}
 
-  getEngineList(info: GraphQLResolveInfo): Observable<Engine[]> {
-    const query = this.extractQueryFromInfo(info);
-    console.log('Extracted query:', query);
-    return this.apiService
-      .query<{ getEngines: Engine[] }>(query)
-      .pipe(map((data) => data.getEngines));
-  }
-
-  private extractQueryFromInfo(info: GraphQLResolveInfo): string {
-    const operationDefinition = info.operation;
-    const fieldNode = info.fieldNodes[0];
-
-    // Créer une nouvelle opération avec le bon nom de champ
-    const newOperation = {
-      ...operationDefinition,
-      selectionSet: {
-        kind: Kind.SELECTION_SET,
-        selections: [fieldNode],
-      },
+  getEngineList(requestBody: any): Observable<Engine[]> {
+    const payload = {
+      query: requestBody,
+      // variables,
     };
-
-    return print(newOperation as any);
+    console.log('Extracted query in service:', payload.query);
+    const response = this.httpService
+      .post<{ data: { getEngines: Engine[] } }>(
+        process.env.API_URL || 'http://localhost:3000/graphql',
+        payload,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      )
+      .pipe(
+        map((response) => {
+          console.log('Received response from API:', response.data);
+          // Retourner les données des engines
+          return response.data.data.getEngines;
+        }),
+        catchError((error) => {
+          console.error('Error during API call:', error.message);
+          if (error.response) {
+            console.error('Error response data:', error.response.data);
+            console.error('Error response status:', error.response.status);
+            console.error('Error response headers:', error.response.headers);
+          }
+          return throwError(() => new Error('Failed to query API'));
+        }),
+      );
+    console.log('RESPONSE', response);
+    return response;
   }
 }

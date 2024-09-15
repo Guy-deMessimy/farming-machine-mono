@@ -1,35 +1,23 @@
-import { Resolver, Query, Args, Info } from '@nestjs/graphql';
+import { Resolver, Query, Args, Info, Context } from '@nestjs/graphql';
 import { GraphQLResolveInfo } from 'graphql';
+import { Observable } from 'rxjs';
 import { EngineService } from './engine.service';
 import { Engine } from './engine.entity';
+// import { GraphQLJSONObject } from 'graphql-type-json';
 
-@Resolver('EngineResolver')
+@Resolver()
 export class EngineResolver {
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine])
-  async getEngines(@Info() info: GraphQLResolveInfo) {
-    // @Args('query', { nullable: true })
-    console.log('Query received in BACKEND');
-    console.log('Resolver: getAgriculturalMachines called');
-    console.log('Received query:', info);
-    // console.log('Received variables:', variables);
+  getEngines(@Context() context: any): Observable<Engine[]> {
     try {
-      const result = await this.engineService.getEngineList(
-        // variables,
-
-        info,
-      );
-      console.log('Query received in BACKEND');
-      console.log(
-        'Resolver: getAgriculturalMachines result:',
-        JSON.stringify(result, null, 2),
-      );
-      console.log('Resolver: getAgriculturalMachines result 2:', result);
-
+      const requestBody = context.req.body.query;
+      console.log('requestBody in BACKEND resolver', requestBody);
+      const result = this.engineService.getEngineList(requestBody);
       return result;
     } catch (error) {
-      console.error('Resolver: getAgriculturalMachines error:', error);
+      console.error('Resolver: getEngines error:', error);
       throw error;
     }
   }
