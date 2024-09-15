@@ -1,23 +1,23 @@
-import { Resolver, Query, Args, Info, Context } from '@nestjs/graphql';
-import { GraphQLResolveInfo } from 'graphql';
+import { Resolver, Query, Context } from '@nestjs/graphql';
+import { Logger } from '@nestjs/common';
+import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { EngineService } from './engine.service';
 import { Engine } from './engine.entity';
-// import { GraphQLJSONObject } from 'graphql-type-json';
 
-@Resolver()
+@Resolver(() => Engine)
 export class EngineResolver {
+  private readonly logger = new Logger(EngineResolver.name);
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine])
-  getEngines(@Context() context: any): Observable<Engine[]> {
+  getEngines(@Context() context: { req: Request }): Observable<Engine[]> {
     try {
       const requestBody = context.req.body.query;
-      console.log('requestBody in BACKEND resolver', requestBody);
       const result = this.engineService.getEngineList(requestBody);
       return result;
     } catch (error) {
-      console.error('Resolver: getEngines error:', error);
+      this.logger.error('Resolver: getEngines error:', error.stack);
       throw error;
     }
   }

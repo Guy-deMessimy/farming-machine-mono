@@ -7,7 +7,7 @@ async function bootstrap() {
 
   try {
     logger.log(`Starting backend service...`);
-    logger.log(`Api URL: ${process.env.API_URI}`);
+    logger.log(`Api URL: ${process.env.API_URL}`);
 
     const app = await NestFactory.create(AppModule);
 
@@ -35,12 +35,18 @@ async function bootstrap() {
     // app.use(bodyParser.json());
 
     app.use((req, res, next) => {
-      console.log('Full request:', {
-        method: req.method,
-        url: req.url,
-        headers: req.headers,
-        body: req.body,
-      });
+      logger.log(
+        `Full request: ${JSON.stringify(
+          {
+            method: req.method,
+            url: req.url,
+            headers: req.headers,
+            body: req.body,
+          },
+          null,
+          2,
+        )}`,
+      );
       next();
     });
 
@@ -62,7 +68,7 @@ async function bootstrap() {
       }),
     );
     await app.listen(3001, '0.0.0.0');
-    logger.log(`Application is running on: http://localhost:3001`);
+    logger.log(`Application is running on: ${process.env.API_URL}`);
   } catch (error) {
     logger.error(`Error starting application: ${error.message}`, error.stack);
     process.exit(1);

@@ -3,7 +3,7 @@ import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
 @ObjectType({ description: 'engine model' })
 export class Engine {
   @Field(() => ID)
-  id: string;
+  id: number;
 
   @Field(() => String)
   modelName: string;
@@ -14,11 +14,11 @@ export class Engine {
   @Field(() => String)
   conception: string;
 
-  // @Field(() => Int)
-  // engineKwPower: number;
+  @Field(() => Int)
+  engineKwPower: number;
 
-  // @Field(() => Int)
-  // engineCcPower: number;
+  @Field(() => Int)
+  engineCcPower: number;
 
   @Field(() => Int)
   maxKmhSpeed: number;
@@ -26,14 +26,14 @@ export class Engine {
   @Field(() => Int)
   petrolLitreTank: number;
 
-  // @Field(() => Int)
-  // TankLitre: number;
+  @Field(() => Int)
+  tankLitre: number;
 
-  // @Field(() => Int)
-  // WeightKg: number;
+  @Field(() => Int)
+  weightKg: number;
 
-  // @Field(() => Int)
-  // WorkingWidth?: number;
+  @Field(() => Int)
+  workingWidth?: number;
 
   @Field(() => Int)
   copiesNumber: number;
