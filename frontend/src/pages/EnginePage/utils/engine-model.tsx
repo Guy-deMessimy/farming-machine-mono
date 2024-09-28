@@ -1,4 +1,4 @@
-export interface Engine {
+export interface EngineModel {
   id: number;
   modelName: string;
   brandName: string;

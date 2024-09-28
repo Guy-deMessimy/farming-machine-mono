@@ -1,26 +1,30 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import LayoutComponent from './components/LayoutComponent/index';
+// Layout
+import MainLayout from './components/MainLayoutComponent/index';
+import Layout from './components/LayoutComponent/index';
+
+// Pages
 import ErrorPage from './pages/ErrorPage';
 import WelcomePage from './pages/WelcomePage/index';
-import MachineLayout from './components/MachineLayout/index';
-import MachinePage from './pages/MachinePage/index';
+import EnginePage from './pages/EnginePage/index';
+
 import './styles.scss';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <LayoutComponent />,
+    element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <WelcomePage /> },
       {
         path: '/machines',
-        element: <MachineLayout />,
+        element: <Layout />,
         children: [
           {
             index: true,
-            element: <MachinePage />,
+            element: <EnginePage />,
           },
         ],
       },

@@ -1,15 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import MainNavigation from '../MainNavigationComponent/index';
 
-const LayoutComponent = () => {
+const Layout = () => {
   return (
     <>
-      <MainNavigation />
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
     </>
   );
 };
 
-export default LayoutComponent;
+export default Layout;
