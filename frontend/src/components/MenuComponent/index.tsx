@@ -3,16 +3,13 @@ import { Dropdown, MenuButton, Menu, MenuItem, MenuListboxSlotProps, menuItemCla
 import { useNavigate } from 'react-router-dom';
 import { CssTransition } from '@mui/base/Transitions';
 import { PopupContext } from '@mui/base/Unstable_Popup';
+// Utils
+import { TabDataModel } from '../utils/model-component';
+// Ui and assets
 import './styles.scss';
 
-interface TabData {
-  value: number;
-  label: string;
-  path: string;
-}
-
 interface DropdownMenuProps {
-  tabsData: TabData[];
+  tabsData: TabDataModel[];
 }
 
 const DropdownMenu: FC<DropdownMenuProps> = ({ tabsData }) => {

@@ -1,17 +1,15 @@
 import { Button } from '@mui/base/Button';
+// Components
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';
 import User from '../AssetPictosComponent/iconUser/index';
 import DropdownMenu from '../MenuComponent';
+// Utils
+import { TabDataModel } from '../utils/model-component';
+// UI and assets
 import './styles.scss';
 
-interface TabData {
-  value: number;
-  label: string;
-  path: string;
-}
-
-const myTabsData: TabData[] = [
-  { value: 1, label: 'Machines', path: '/machines' },
+const myTabsData: TabDataModel[] = [
+  { value: 1, label: 'Engines', path: '/engines' },
   { value: 2, label: 'Services', path: '/category' },
   { value: 3, label: 'Rent', path: '/rent' },
   { value: 4, label: 'Share', path: '/share' },
