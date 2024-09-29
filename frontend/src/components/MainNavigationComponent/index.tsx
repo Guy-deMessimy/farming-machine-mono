@@ -22,7 +22,7 @@ const MainNavigationComponent = () => {
     <header className="header">
       <DropdownMenu tabsData={myTabsData} />
       <FarmingMachineLogo alt={'logo'} title={'logo_farming_machine'} width="65px" height="65px" path={'/'} />
-      <h3 className="baseline">farming machine : Trouvez la machine parfaite, ou partagez la vôtre</h3>
+      <h3 className="baseline"> trouvez votre farming machine</h3>
       <div className="button-group">
         <User alt={'logo'} title={'logo_farming'} width="30px" height="30px" path={''} />
         <Button className="button">Connexion</Button>

@@ -4,16 +4,16 @@
     line-height: 1.5;
     padding: 8px 16px;
     border-radius: 8px;
-    color: white;
+    color: black;
     transition: all 150ms ease;
     cursor: pointer;
-    background: orange;
-    border: 1px solid grey;
+    background: white;
+    border: 1px solid white;
     box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   
     &:hover {
-      background: grey;
-      border-color: grey;
+      background: orange;
+      border-color: orange;
     }
   
     &:active {
@@ -21,7 +21,7 @@
     }
   
     &:focus-visible {
-      box-shadow: 0 0 0 4px orange;
+      box-shadow: 0 0 0 4px white;
       outline: none;
     }
 }
