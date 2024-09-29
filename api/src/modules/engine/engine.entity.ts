@@ -39,5 +39,8 @@ export class Engine {
   @Field(() => Int)
   copiesNumber: EngineDB[`copiesNumber`];
 
+  @Field(() => String)
+  imageUrl: EngineDB[`imageUrl`];
+
   // see for relations
 }

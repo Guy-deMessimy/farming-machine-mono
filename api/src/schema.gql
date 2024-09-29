@@ -16,6 +16,7 @@ type Engine {
   weightKg: Int!
   workingWidth: Int!
   copiesNumber: Int!
+  imageUrl: String!
 }
 
 type Query {

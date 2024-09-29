@@ -85,6 +85,7 @@ model Engine {
   weightKg        Int
   workingWidth    Int?
   copiesNumber    Int
+  imageUrl        String?
   types           Type?    @relation(fields: [typeId], references: [id]) 
   typeId          Int?
 }

@@ -38,5 +38,8 @@ export class Engine {
   @Field(() => Int)
   copiesNumber: number;
 
+  @Field(() => String)
+  imageUrl: string;
+
   // see for relations
 }

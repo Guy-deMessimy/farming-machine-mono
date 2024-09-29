@@ -44,6 +44,7 @@ describe('EngineResolver', () => {
         weightKg: 600,
         workingWidth: 6,
         copiesNumber: 4,
+        imageUrl: 'http://machine-test.png',
       },
     ];
 
