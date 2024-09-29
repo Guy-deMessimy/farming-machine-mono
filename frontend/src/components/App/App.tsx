@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 // Layout
-import MainLayout from './components/MainLayoutComponent/index';
-import Layout from './components/LayoutComponent/index';
+import MainLayout from '../MainLayoutComponent/index';
+import Layout from '../LayoutComponent/index';
 
 // Pages
-import ErrorPage from './pages/ErrorPage';
-import WelcomePage from './pages/WelcomePage/index';
-import EnginePage from './pages/EnginePage/index';
+import ErrorPage from '../../pages/ErrorPage';
+import WelcomePage from '../../pages/WelcomePage/index';
+import EnginePage from '../../pages/EnginePage/index';
 
 import './styles.scss';
 

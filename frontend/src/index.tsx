@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom/client';
 import { ApolloClient, InMemoryCache, ApolloProvider, from } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
 import { onError } from '@apollo/client/link/error';
-import App from './App';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import './styles.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

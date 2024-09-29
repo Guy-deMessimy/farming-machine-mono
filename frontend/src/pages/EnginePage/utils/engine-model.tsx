@@ -11,6 +11,7 @@ export interface EngineModel {
   WeightKg: number;
   WorkingWidth: number;
   CopiesNumber: number;
+  imageUrl: string;
 }
 
 export interface MachineType {
