@@ -1,67 +1,62 @@
 
 .engine__wrapper {
   border: none;
-  border: solid 1px grey; 
+  padding: 10px 150px 10px 150px;
+
   &__title {
   color: black;
   box-sizing: content-box;
-  text-align: left;
   font-size: 1.25rem;
   font-weight: 900;
-  padding: 20px;
+  padding: 10px 10px 10px 50px;
   }
+
   &__hr {
     border: solid 1px lightgray;
   }
 }
 
 .engine__list {
-  /* /* display: flex; */
-  flex-wrap: wrap; /* Permet au contenu de passer à la ligne si nécessaire */
-  /* padding: 20px; */
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Trois colonnes égales */
-  gap: 20px; /* Espacement entre les cartes, ajustez selon vos besoins */
-  margin: 10px 150px 10px 150px;
+  grid-template-columns: repeat(3, 1fr);
+  background: #f3f3f3;
+  gap: 20px;
   overflow: auto;
-  /* border: solid 1px blue; */
+  border: none; 
+  padding: 10px;
+
   &__item {
-    border: 1px solid #ccc;
+    border: 1px solid lightgrey;
     border-radius: 8px;
     list-style-type: none;
-    padding: 10px 10px 10px 10px;
-    /* background-image: linear-gradient(to bottom right, #000080, #4682b4); */
+    padding: 10px;
+
     &__link {
-        width: 100%;
-        border: none;
-        font-size: 1.15rem;
-        color: #242424;
-        text-decoration: none;
-        list-style-type: none;
+      text-decoration: none ;
+      :hover {
+          text-decoration: none;
+      }
     }
   }
 }
 
 .engine__card {
     border-radius: 8px;
-    border: solid 1px red;
+    border: none;
     height: 100%;
-    /* background-color: #3b3b3b; */
-    background-image: linear-gradient(to right, #12121d, #d4cccc, #202029);
-    // background-image:     linear-gradient(217deg, rgba(0, 0, 139, 0.8), rgba(0, 0, 139, 0) 70.71%), /* Dégradé bleu nuit */
-    // linear-gradient(127deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 70.71%), /* Lumière blanche */
-    // linear-gradient(336deg, rgba(0, 0, 139, 0.8), rgba(0, 0, 139, 0) 70.71%); /* Renforce le bleu nuit */
-    /* margin: 10px;
-    padding: 15px; */
+    background-image: radial-gradient(circle, #cfcfcf 0%, #071013 100%);   
+    color: white;
+    padding: 15px;
+
     &__title {
         font-size: 18px;
         font-weight: bold;
-        text-decoration: none;
     }
 
     &__photo {
         width: 100%;
         height: auto;
-        margin-top: 10px; /* Espacement entre le titre et la photo */
+        margin-top: 10px;
+        border: solid 1px blue;
     }
 }

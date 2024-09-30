@@ -1,4 +1,5 @@
-.menu-button{
+.menu-button {
+    min-width: 150px;
     font-weight: 600;
     font-size: 0.875rem;
     line-height: 1.5;
@@ -9,17 +10,14 @@
     cursor: pointer;
     background: white;
     border: 1px solid white;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   
     &:hover {
       background: orange;
       border-color: orange;
     }
-  
     &:active {
-      background: grey;
+      background: orange;
     }
-  
     &:focus-visible {
       box-shadow: 0 0 0 4px white;
       outline: none;
@@ -42,13 +40,13 @@
     }
   
     &:focus {
-      outline: 1px solid orange;
-      background-color: white;
-      color: grey;
+      outline: 1px solid white;
+      background-color: rgb(26, 26, 26);
+      color: white;
     }
 
   &.disabled {
-    color: grey;
+    color: white;
   }
 }
 
@@ -56,15 +54,14 @@ ul {
     font-size: 0.875rem;
     box-sizing: border-box;
     padding: 6px;
-    margin: 12px 0;
-    min-width: 200px;
+    margin: 12px 10px;
+    min-width: 150px;
     border-radius: 12px;
     overflow: auto;
     outline: 0px;
-    background: '#fff';
-    border: 1px solid grey;
-    color: grey;
-    box-shadow: 0px 4px 30px grey;
+    background: orange;
+    border: 1px solid rgb(26, 26, 26);
+    color: white;
     z-index: 1;
     
     .closed & {
