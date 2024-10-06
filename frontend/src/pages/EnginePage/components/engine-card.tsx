@@ -2,7 +2,6 @@ import { FC } from 'react';
 // Utils
 import { EngineModel } from '../utils/engine-model';
 // Ui and assets
-import MachinePhoto from '../../../assets/machine.png';
 import '../styles.scss';
 
 interface ReportComponentProps {
