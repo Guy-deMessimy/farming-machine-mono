@@ -86,15 +86,15 @@ model Engine {
   workingWidth    Int?
   copiesNumber    Int
   imageUrl        String?
-  types           Type?    @relation(fields: [typeId], references: [id]) 
+  type            Type?    @relation(fields: [typeId], references: [id]) 
   typeId          Int?
 }
 
 model Type {
     id          Int     @default(autoincrement()) @id
-    title       String
+    name        String
     description String?   @db.LongText
     services    Service[]
-    models      Engine[]
+    engines     Engine[]
 }
 
