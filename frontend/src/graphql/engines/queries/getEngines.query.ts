@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_ENGINES = gql`
-  query GetEngines {
-    getEngines {
+  query GetEngines($query: EngineQueryDto) {
+    getEngines(query: $query) {
       id
       modelName
       brandName
@@ -19,3 +19,23 @@ export const GET_ENGINES = gql`
     }
   }
 `;
+
+// export const GET_ENGINES = gql`
+//   query GetEngines {
+//     getEngines {
+//       id
+//       modelName
+//       brandName
+//       conception
+//       engineKwPower
+//       engineCcPower
+//       maxKmhSpeed
+//       petrolLitreTank
+//       tankLitre
+//       weightKg
+//       workingWidth
+//       copiesNumber
+//       imageUrl
+//     }
+//   }
+// `;
