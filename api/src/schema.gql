@@ -20,5 +20,31 @@ type Engine {
 }
 
 type Query {
-  getEngines: [Engine!]!
+  getEngines(query: EngineQueryDto!): [Engine!]!
+}
+
+input EngineQueryDto {
+  offset: Int
+  limit: Int
+  cursor: Int
+  orderBy: EngineOrderByInput
+  where: EngineWhereInput
+}
+
+input EngineOrderByInput {
+  id: SortOrder
+  brand: SortOrder
+  model: SortOrder
+}
+
+"""Order of sorting: ASC for ascending, DESC for descending"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input EngineWhereInput {
+  id: Int
+  brand: String
+  model: String
 }

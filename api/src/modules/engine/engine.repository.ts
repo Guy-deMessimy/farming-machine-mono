@@ -1,8 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma, Engine } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
-import { EngineInput } from './engine.dto';
-// import { PostInput } from './entities/post.entity';
+import { EngineQueryDto } from './engine-query.dto';
 
 @Injectable()
 export class EngineRepository {
@@ -13,14 +12,14 @@ export class EngineRepository {
     });
   }
 
-  async getEngines(params: EngineInput): Promise<Engine[]> {
-    const { limit, offset, cursor, where, orderBy } = params;
+  async getEngines(query: EngineQueryDto): Promise<Engine[]> {
+    const { limit, offset, cursor, orderBy, where } = query;
     return this.prisma.engine.findMany({
       skip: limit,
       take: offset,
-      // cursor,
-      // where,
+      cursor: cursor ? { id: cursor } : undefined,
       orderBy,
+      where,
     });
   }
 }

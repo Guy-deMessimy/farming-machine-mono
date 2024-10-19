@@ -1,7 +1,8 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Query, Resolver, Args } from '@nestjs/graphql';
 import { EngineService } from './engine.service';
 import { PubSub } from 'graphql-subscriptions';
 import { Engine } from './engine.entity';
+import { EngineQueryDto } from './engine-query.dto';
 
 @Resolver()
 export class EngineResolver {
@@ -11,8 +12,8 @@ export class EngineResolver {
   ) {}
 
   @Query(() => [Engine])
-  async getEngines() {
+  async getEngines(@Args('query') query: EngineQueryDto) {
     console.log('Query received in API');
-    return this.engineService.getEngineList();
+    return this.engineService.getEngines(query);
   }
 }
