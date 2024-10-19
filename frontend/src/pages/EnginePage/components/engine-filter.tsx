@@ -15,19 +15,23 @@ type DropdownOption = {
 };
 
 interface FilterFormValues {
-  dropdown1: DropdownOption | null;
-  dropdown2: DropdownOption | null;
-  dropdown3: DropdownOption | null;
-  dropdown4: DropdownOption | null;
+  dropdown1: string[] | null;
+  dropdown2: string[] | null;
+  dropdown3: string[] | null;
+  dropdown4: string[] | null;
 }
 
 const EngineFilter: React.FC = () => {
   const myDefaultValues = (): FilterFormValues => ({
-    dropdown1: null,
+    dropdown1: ['Marque décroissante'],
     dropdown2: null,
     dropdown3: null,
     dropdown4: null,
   });
+  const options: DropdownOption[] = [
+    { value: 'option1', label: 'Marque croissante' },
+    { value: 'option2', label: 'Marque décroissante' },
+  ];
 
   const form: UseFormReturn<FilterFormValues> = useForm<FilterFormValues>({
     shouldUnregister: true,
@@ -56,8 +60,8 @@ const EngineFilter: React.FC = () => {
 
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
-      <form className={`engine-filter-form__form`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <EngineFilterForm />
+      <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
+        <EngineFilterForm options={options} />
       </form>
     </FormProvider>
   );

@@ -4,6 +4,7 @@ import EngineList from './components/engine-list';
 import { useEngines } from '../../hooks/useEngines';
 // Ui and assets
 import './styles.scss';
+import EngineFilter from './components/engine-filter';
 
 const EnginePage = () => {
   const { engines, loading, error } = useEngines();
@@ -15,6 +16,7 @@ const EnginePage = () => {
     <div className="engine__wrapper">
       <div className="engine__wrapper__title">QUEL VEHICULE SOUHAITEZ-VOUS CONDUIRE ?</div>
       <hr className="engine__wrapper__hr"></hr>
+      <EngineFilter />
       <EngineList enginesList={engines} />
     </div>
   );
