@@ -71,3 +71,167 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+# Farming Machine server 🫐
+
+## Installation
+
+Cloner le repo et lancer un `npm install` pour récupérer les dépendances. Se diriger ensuite vers le terminal et accéder à l'interface mysql
+
+```sh
+mysql -u root -p
+```
+
+puis créer la base pour que Prisma puisse y accéder
+
+```sql
+CREATE DATABASE IF NOT EXISTS farmingmachine;
+```
+
+quitter mysql avec `exit` et créer un fichier `.env` pour renseigner la variable pour la connexion a la db. Voir .env.example
+
+```dosini
+PRISMA_DATABASE_URL=mysql://root:password$@localhost:3306/farmingmachine
+```
+
+lancer le server sql local 
+
+```sh
+docker-compose up -d
+```
+
+lancer ensuite la migration Prisma
+
+```sh
+npx prisma migrate dev --name init
+```
+
+## Tools
+
+Pour lancer Prisma studio
+
+```sh
+npx prisma studio
+```
+
+Une session sera lancée sur [localhost:5555](http://localhost:5555/)
+
+
+Apollo sandbox playground
+
+```sh
+localhost:3000/graphql
+```
+
+Une session sera lancée sur [localhost:3000/graphql](http://localhost:3000/graphql)
+
+Generate OpenAPI documentation 
+
+```sh
+localhost:3000/api
+```
+Une session sera lancée sur [localhost:3000/api](http://localhost:3000/api)
+
+## Technical project structure
+
+Prisma ORM est le pont entre la bdd et les services du backend
+
+```sh
+npx prisma init
+```
+
+Le shema Bdd Prisma est definit dans le dossier Prisma
+
+```sh
+schema.prisma
+```
+
+Mapper le modèle Prisma définit dans la bdd (execute la 1ere migration)
+
+```sh
+npx prisma migrate dev --name init
+```
+
+en cas d'ajout et/ou modifications du shema le script ci-dessous est à jouer
+
+```sh
+npm run migrate
+```
+
+pour reset la db
+
+```sh
+npm run reset
+```
+pour seed la db
+
+```sh
+npm run seed
+```
+
+Prisma client permet a Nest JS l'accès et la modification des données en bdd
+
+```sh
+prisma client
+```
+
+Data access layer : couche accès client à l'api (equivalent du controller en REST api)
+
+```sh
+couche resolver
+```
+
+Data access layer : definir le type des données entrantes
+
+```sh
+couche dto
+```
+
+Data access layer : couche logique métier
+
+```sh
+couche service
+```
+
+Data access layer : couche mutation de la bdd
+
+```sh
+couche repository
+```
+
+Data access layer : objet GraphQl pour typer la reponse server
+```sh
+resolver model
+```
+
+## Linter
+
+```sh
+npm run lint
+```
+
+## Nest Js CLI
+
+Create service
+
+```sh
+nest g service ${name}
+```
+
+Generate a new controller
+
+```sh
+nest g resolver ${name}
+```
+
+Generate a new module
+
+```sh
+nest g module ${name}
+```
+
+Defines the interface for input or/and output within our system
+
+```sh
+nest g class ${name} 'user/dto/create-user.dto' --no-spec
+```
