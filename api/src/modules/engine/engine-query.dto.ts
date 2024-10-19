@@ -16,12 +16,12 @@ class EngineOrderByInput implements Prisma.EngineOrderByWithRelationInput {
   @Field(() => SortOrder, { nullable: true })
   @IsEnum(SortOrder)
   @IsOptional()
-  brand?: SortOrder;
+  brandName?: SortOrder;
 
   @Field(() => SortOrder, { nullable: true })
   @IsEnum(SortOrder)
   @IsOptional()
-  model?: SortOrder;
+  modelName?: SortOrder;
 }
 
 @InputType()
@@ -32,11 +32,11 @@ class EngineWhereInput {
 
   @Field(() => String, { nullable: true })
   @IsOptional()
-  readonly brand?: string;
+  readonly brandName?: string;
 
   @Field(() => String, { nullable: true })
   @IsOptional()
-  readonly model?: string;
+  readonly modelName?: string;
 }
 
 @InputType()
@@ -44,11 +44,13 @@ export class EngineQueryDto
   extends BaseQueryDto<number>
   implements QueryOptions<EngineOrderByInput, Prisma.EngineWhereInput>
 {
-  @IsOptional()
   @Field(() => EngineOrderByInput, { nullable: true })
+  @IsOptional()
   @Type(() => EngineOrderByInput)
   readonly orderBy?: EngineOrderByInput;
+
   @Field(() => EngineWhereInput, { nullable: true })
   @IsOptional()
+  @Type(() => EngineWhereInput)
   readonly where?: EngineWhereInput;
 }

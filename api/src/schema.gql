@@ -20,7 +20,7 @@ type Engine {
 }
 
 type Query {
-  getEngines(query: EngineQueryDto!): [Engine!]!
+  getEngines(query: EngineQueryDto): [Engine!]
 }
 
 input EngineQueryDto {
@@ -33,8 +33,8 @@ input EngineQueryDto {
 
 input EngineOrderByInput {
   id: SortOrder
-  brand: SortOrder
-  model: SortOrder
+  brandName: SortOrder
+  modelName: SortOrder
 }
 
 """Order of sorting: ASC for ascending, DESC for descending"""
@@ -45,6 +45,6 @@ enum SortOrder {
 
 input EngineWhereInput {
   id: Int
-  brand: String
-  model: String
+  brandName: String
+  modelName: String
 }

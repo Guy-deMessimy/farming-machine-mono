@@ -13,7 +13,7 @@ export class EngineRepository {
   }
 
   async getEngines(query: EngineQueryDto): Promise<Engine[]> {
-    const { limit, offset, cursor, orderBy, where } = query;
+    const { limit, offset, cursor, orderBy, where } = query || {};
     return this.prisma.engine.findMany({
       skip: limit,
       take: offset,

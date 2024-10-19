@@ -18,5 +18,6 @@ export class BaseQueryDto<TCursor> {
 
   @Field(() => Int, { nullable: true })
   @IsOptional()
+  @Type(() => Number)
   readonly cursor?: TCursor;
 }
