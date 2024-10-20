@@ -10,7 +10,7 @@ export class EngineResolver {
   private readonly logger = new Logger(EngineResolver.name);
   constructor(private readonly engineService: EngineService) {}
 
-  @Query(() => [Engine])
+  @Query(() => [Engine], { nullable: true })
   getEngines(@Context() context: { req: Request }): Observable<Engine[]> {
     try {
       const requestBody = context.req.body.query;
