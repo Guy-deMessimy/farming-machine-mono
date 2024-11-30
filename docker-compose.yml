@@ -11,7 +11,7 @@ services:
       - type: bind
         source: ./frontend # Répertoire source sur l'hôte
         target: /app/frontend # Point de montage dans le conteneur
-        consistency: delegated # Optimise les performances I/O pour les montages de volumes
+        consistency: delegated # Optimise les performances I/O pour les montages de volumes et la synchronisation des fichiers
       - type: bind
         source: ./shared # Répertoire partagé sur l'hôte
         target: /app/shared # Point de montage du répertoire partagé dans le conteneur
@@ -32,13 +32,21 @@ services:
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}" # Ceci mappe le port 3001 du conteneur au port 3001 de l'hôte
     volumes:
-      - ./backend:/app/backend # Monte le répertoire backend de l'hôte dans le conteneur
-      - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
+    - type: bind
+      source: ./backend # Répertoire source sur l'hôte
+      target: /app/backend # Point de montage dans le conteneur
+      consistency: delegated # Optimise les performances I/O pour les montages de volumes et la synchronisation des fichiers
+    - type: bind
+      source: ./shared # Répertoire source sur l'hôte
+      target: /app/shared # Point de montage dans le conteneur
+      consistency: delegated # Optimise les performances I/O pour les montages de volumes et la synchronisation des fichiers
+    - /app/backend/node_modules # Ignore les node_modules pour éviter les conflits
+    command: npm run start:dev # Démarre NestJS en mode wa
     environment:
       - NODE_ENV=${NODE_ENV} # Définit l'environnement Node.js
       - API_URL=${API_URL} # Variable d'environnement pour l'URI de l'API
       - CORS_ORIGIN=${CORS_ORIGIN} # Variable d'environnement pour les URI cors
-    depends_on:
+      - CHOKIDAR_USEPOLLING=true # Active le polling pour la détection de changements de fichiers
       - api # Assure que le service api démarre avant le backend
     networks:
       - app-network

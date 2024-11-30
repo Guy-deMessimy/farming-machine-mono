@@ -26,4 +26,4 @@ WORKDIR /app/backend
 EXPOSE 3001
 
 # Commande pour démarrer l'application en mode développement
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "start:dev"]
