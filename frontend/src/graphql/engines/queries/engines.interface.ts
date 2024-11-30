@@ -1,7 +1,7 @@
 // Types pour le tri
 export enum SortOrder {
-  ASC = 'asc',
-  DESC = 'desc',
+  ASC = 'ASC',
+  DESC = 'DESC',
 }
 
 // Interface pour EngineOrderByInput

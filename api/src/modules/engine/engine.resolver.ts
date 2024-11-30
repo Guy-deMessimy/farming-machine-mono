@@ -13,7 +13,7 @@ export class EngineResolver {
 
   @Query(() => [Engine], { nullable: true })
   async getEngines(@Args('query', { nullable: true }) query?: EngineQueryDto) {
-    console.log('Query received in API');
+    console.log('Query received in API', query);
     return this.engineService.getEngines(query);
   }
 }

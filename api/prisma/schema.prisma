@@ -88,7 +88,7 @@ model Engine {
   imageUrl        String?
   type            Type?    @relation(fields: [typeId], references: [id]) 
   typeId          Int?
-  @@index([brandName])
+  @@index([brandName, modelName])
 }
 
 model Type {

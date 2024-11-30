@@ -11,6 +11,7 @@ export class EngineService {
   ) {}
 
   async getEngines(query?: EngineQueryDto) {
+    console.log('QUERY in api', query);
     const engineList = await this.repository.getEngines(query);
     console.log('enginelist in API', engineList);
     return engineList;
