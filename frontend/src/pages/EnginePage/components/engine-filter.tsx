@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
-import { FormProvider, useForm, UseFormReturn, SubmitHandler, FieldErrors } from 'react-hook-form';
+import React, { FC, useMemo } from 'react';
+import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 
 // Components
 import EngineFilterForm from './engine-filter-form';
+import { Button } from 'antd'; // Importation des composants Ant Design
 
 // Actions and Api
 
@@ -21,7 +22,11 @@ interface FilterFormValues {
   dropdown4: string[] | null;
 }
 
-const EngineFilter: React.FC = () => {
+interface ReportComponentProps {
+  onChange: (value: string) => void; // Type correct pour une fonction qui prend une valeur en paramètre
+}
+
+const EngineFilter: FC<ReportComponentProps> = ({ onChange }) => {
   const myDefaultValues = (): FilterFormValues => ({
     dropdown1: ['Marque décroissante'],
     dropdown2: null,
@@ -29,11 +34,11 @@ const EngineFilter: React.FC = () => {
     dropdown4: null,
   });
   const options: DropdownOption[] = [
-    { value: 'option1', label: 'Marque croissante' },
-    { value: 'option2', label: 'Marque décroissante' },
+    { value: 'ASC', label: 'Marque croissante' },
+    { value: 'DESC', label: 'Marque décroissante' },
   ];
 
-  const form: UseFormReturn<FilterFormValues> = useForm<FilterFormValues>({
+  const form = useForm<FilterFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
     criteriaMode: 'all',
@@ -61,7 +66,10 @@ const EngineFilter: React.FC = () => {
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <EngineFilterForm options={options} />
+        <EngineFilterForm options={options} onChange={onChange} />
+        <Button type="primary" htmlType="submit" style={{ marginTop: '20px' }}>
+          Soumettre
+        </Button>
       </form>
     </FormProvider>
   );

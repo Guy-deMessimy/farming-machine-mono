@@ -1,11 +1,11 @@
 import { useQuery } from '@apollo/client';
 import { GET_ENGINES } from '../graphql/engines/queries/getEngines.query';
-import { EngineQueryDto, EngineOrderByInput, SortOrder } from '../graphql/engines/queries/engines.interface';
+import { EngineQueryDto } from '../graphql/engines/queries/engines.interface';
 
-export const useEngines = () => {
-  const defaultOrderBy: EngineOrderByInput = { brandName: SortOrder.ASC };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useEngines = (params: any) => {
   const query: EngineQueryDto = {
-    orderBy: defaultOrderBy,
+    orderBy: params,
   };
   const { data, loading, error } = useQuery(GET_ENGINES, {
     variables: { query },
