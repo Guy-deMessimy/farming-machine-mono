@@ -14,27 +14,16 @@ RUN npm install
 WORKDIR /app/shared
 RUN npm install
 
-# Copier le reste des fichiers du projet
-COPY . .
-
-# S'assurer que le fichier schema.prisma est présent
-# COPY api/prisma/schema.prisma /app/api/prisma/
-
-# Générer Prisma
-# WORKDIR /app/api
-# RUN npx prisma generate
-
-# Copier et rendre exécutable le script de démarrage
-# COPY api/start.sh /app/api/
-# RUN chmod +x /app/api/start.sh
-
-# Exposer le port utilisé par l'api en développement
-EXPOSE 3002
+WORKDIR /app
+COPY api ./api
+COPY shared ./shared
 
 # Définir le répertoire de travail pour l'exécution
 WORKDIR /app/api
 
-# Utiliser le script comme commande de démarrage
-# CMD ["/bin/sh", "./start.sh"]
-# CMD ["sh", "-c", "sh -x ./start.sh"]
-CMD npx prisma migrate dev && npm run start:dev
+# Exposer le port utilisé par l'api en développement
+EXPOSE 3002
+
+# Commande pour démarrer l'application en mode développement
+# CMD npx prisma migrate dev && npm run start:dev
+CMD ["npm", "run", "start:full"]

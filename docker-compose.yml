@@ -58,8 +58,15 @@ services:
     ports:
       - "${API_PORT}:${API_PORT}"  # Ceci mappe le port 3002 du conteneur au port 3002 de l'hôte
     volumes:
-      - ./api:/app/api # Monte le répertoire api de l'hôte dans le conteneur
-      - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
+    - type: bind
+      source: ./api # Répertoire source sur l'hôte
+      target: /app/api # Point de montage dans le conteneur
+      consistency: delegated # Optimise les performances I/O pour les montages de volumes et la synchronisation des fichiers
+    - type: bind
+      source: ./shared # Répertoire source sur l'hôte
+      target: /app/shared # Point de montage dans le conteneur
+      consistency: delegated # Optimise les performances I/O pour les montages de volumes et la synchronisation des fichiers
+    - /app/api/node_modules # Ignore les node_modules pour éviter les conflits
     environment:
       - NODE_ENV=${NODE_ENV} # Définit l'environnement Node.js
       - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME} # URL de connexion à la base de données
@@ -67,6 +74,7 @@ services:
       - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
       - DATABASE_PASSWORD=${DATABASE_PASSWORD} # Mot de passe de la base de données
       - DATABASE_HOST=database # Hôte de la base de données
+      - CHOKIDAR_USEPOLLING=true # Active le polling pour la détection de changements de fichiers
     depends_on:
       - database  # Assure que le service database démarre avant l'API
     networks:
