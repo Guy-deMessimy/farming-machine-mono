@@ -1,42 +1,26 @@
 import React, { FC, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
+import { Button } from 'antd';
 
 // Components
-import EngineFilterForm from './engine-filter-form';
-import { Button } from 'antd'; // Importation des composants Ant Design
-
-// Actions and Api
-
+import BrandFilterForm from './brand-filter-form';
+// Types
+import { DropdownOption, FilterFormValues } from '../../../../shared/types/filters.type';
 // Styles
-import '../styles.scss';
-
-type DropdownOption = {
-  value: string;
-  label: string;
-};
-
-interface FilterFormValues {
-  dropdown1: string[] | null;
-  dropdown2: string[] | null;
-  dropdown3: string[] | null;
-  dropdown4: string[] | null;
-}
+import './styles.scss';
 
 interface ReportComponentProps {
-  onChange: (value: string) => void; // Type correct pour une fonction qui prend une valeur en paramètre
+  options: DropdownOption[];
+  onChange: (value: string[]) => void; // Type correct pour une fonction qui prend une valeur en paramètre
 }
 
-const EngineFilter: FC<ReportComponentProps> = ({ onChange }) => {
+const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
   const myDefaultValues = (): FilterFormValues => ({
     dropdown1: ['Marque décroissante'],
     dropdown2: null,
     dropdown3: null,
     dropdown4: null,
   });
-  const options: DropdownOption[] = [
-    { value: 'ASC', label: 'Marque croissante' },
-    { value: 'DESC', label: 'Marque décroissante' },
-  ];
 
   const form = useForm<FilterFormValues>({
     shouldUnregister: true,
@@ -66,7 +50,7 @@ const EngineFilter: FC<ReportComponentProps> = ({ onChange }) => {
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <EngineFilterForm options={options} onChange={onChange} />
+        <BrandFilterForm options={options} onChange={onChange} />
         <Button type="primary" htmlType="submit" style={{ marginTop: '20px' }}>
           Soumettre
         </Button>
@@ -77,4 +61,4 @@ const EngineFilter: FC<ReportComponentProps> = ({ onChange }) => {
   return <>{EngineFilterFormProvider}</>;
 };
 
-export default EngineFilter;
+export default BrandFilter;

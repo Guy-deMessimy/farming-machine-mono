@@ -1,0 +1,12 @@
+
+.engine__filter {
+  border: solid 1px red;
+  display: flex;
+  gap: 20px;
+  overflow: auto;
+  padding: 10px;
+  &__form {
+    border: solid 1px green;
+    padding: 10px;
+  }
+}

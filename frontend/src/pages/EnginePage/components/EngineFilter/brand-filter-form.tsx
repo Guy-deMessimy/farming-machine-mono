@@ -1,36 +1,27 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
 import { Select } from 'antd';
+import { DropdownOption, FilterFormValues } from '../../../../shared/types/filters.type';
 
 // Components
-
+import { useEngines } from '../../../../hooks/useEngines';
 // Utils
 
-import '../styles.scss';
-import { useEngines } from '../../../hooks/useEngines';
-
-type DropdownOption = {
-  value: string;
-  label: string;
-};
+import './styles.scss';
 
 interface ReportComponentProps {
   options: DropdownOption[];
-  onChange: (value: string) => void; // Type correct pour une fonction qui prend une valeur en paramètre
+  onChange: (value: string[]) => void;
 }
 
-interface FilterFormValues {
-  dropdown1: string; // Adaptez ce type à vos besoins
-}
-
-const EngineFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
+const BrandFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
   const {
     control,
     formState: { errors },
   } = useFormContext<FilterFormValues>();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (selectedOption: string, field: ControllerRenderProps<FilterFormValues, 'dropdown1'>) => {
+  const handleChange = (selectedOption: string[], field: ControllerRenderProps<FilterFormValues, 'dropdown1'>) => {
     console.log('AAA selectedOption', selectedOption);
     onChange(selectedOption);
     return field.onChange(selectedOption);
@@ -50,6 +41,7 @@ const EngineFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
               {...field}
               options={options}
               style={{ width: 200, borderColor: '#1890ff' }}
+              mode="multiple"
               placeholder="Trier par"
               onChange={(selectedOption) => handleChange(selectedOption, field)}
             />
@@ -60,4 +52,4 @@ const EngineFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
   );
 };
 
-export default EngineFilterForm;
+export default BrandFilterForm;

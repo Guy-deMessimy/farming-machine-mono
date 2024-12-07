@@ -1,0 +1,45 @@
+
+.engine__list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: #f3f3f3;
+  gap: 20px;
+  overflow: auto;
+  border: none; 
+  padding: 10px;
+
+  &__item {
+    border: 1px solid lightgrey;
+    border-radius: 8px;
+    list-style-type: none;
+    padding: 10px;
+
+    &__link {
+      text-decoration: none ;
+      :hover {
+          text-decoration: none;
+      }
+    }
+  }
+}
+
+.engine__card {
+    border-radius: 8px;
+    border: none;
+    height: 100%;
+    background-image: radial-gradient(circle, #cfcfcf 0%, #071013 100%);   
+    color: white;
+    padding: 15px;
+
+    &__title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    &__photo {
+        width: 100%;
+        height: auto;
+        margin-top: 10px;
+        border: none;
+    }
+}

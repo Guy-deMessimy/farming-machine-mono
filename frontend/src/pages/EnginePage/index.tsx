@@ -1,22 +1,27 @@
+import { useState } from 'react';
 // Components
-import EngineList from './components/engine-list';
+import BrandFilter from './components/EngineFilter/brand-filter';
+import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
+// Types
+import { DEFAULT_ORDER_BY, SortOrder } from '../../shared/constants/constant';
+import { DropdownOption } from '../../shared/types/filters.type';
 // Ui and assets
 import './styles.scss';
-import EngineFilter from './components/engine-filter';
-import { EngineOrderByInput, SortOrder } from '../../graphql/engines/queries/engines.interface';
-import { useState } from 'react';
 
 const EnginePage = () => {
-  const defaultOrderBy: EngineOrderByInput = { brandName: SortOrder.DESC };
-  const [orderBy, setOrderBy] = useState(defaultOrderBy); // Valeur initiale
-
+  const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
   const { engines, loading, error } = useEngines(orderBy);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleFilterChange = (value: any) => {
-    setOrderBy({ brandName: value });
+  const options: DropdownOption[] = [
+    { value: 'ASC', label: 'Marque croissante' },
+    { value: 'DESC', label: 'Marque décroissante' },
+  ];
+
+  const handleFilterChange = (value: string[]) => {
+    const sortOrderValues = value.filter((v): v is SortOrder => v === SortOrder.ASC || v === SortOrder.DESC);
+    setOrderBy({ brandName: sortOrderValues });
   };
 
   if (loading) return <p>Loading...</p>;
@@ -26,7 +31,7 @@ const EnginePage = () => {
     <div className="engine__wrapper">
       <div className="engine__wrapper__title">QUEL VEHICULE SOUHAITEZ-VOUS CONDUIRE ?</div>
       <hr className="engine__wrapper__hr"></hr>
-      <EngineFilter onChange={handleFilterChange} />
+      <BrandFilter options={options} onChange={handleFilterChange} />
       <EngineList enginesList={engines} />
     </div>
   );

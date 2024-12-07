@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 // Components
 import EngineCard from './engine-card';
 // Utils
-import { EngineModel } from '../utils/engine-model';
+import { EngineModel } from '../../utils/engine-model';
 // Ui and assets
-import '../styles.scss';
+import './styles.scss';
 
 interface ReportComponentProps {
   enginesList: EngineModel[];

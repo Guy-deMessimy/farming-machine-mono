@@ -1,8 +1,8 @@
 import { FC } from 'react';
 // Utils
-import { EngineModel } from '../utils/engine-model';
+import { EngineModel } from '../../utils/engine-model';
 // Ui and assets
-import '../styles.scss';
+import './styles.scss';
 
 interface ReportComponentProps {
   engineItem: EngineModel;
