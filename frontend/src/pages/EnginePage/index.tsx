@@ -5,23 +5,24 @@ import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
 // Types
-import { DEFAULT_ORDER_BY, SortOrder } from '../../shared/constants/constant';
+import { SortOrder } from '../../shared/types/enum.type';
+import { DEFAULT_ENGINE_ORDER_BY } from '../../shared/types/engines.type';
 import { DropdownOption } from '../../shared/types/filters.type';
 // Ui and assets
 import './styles.scss';
 
 const EnginePage = () => {
-  const [orderBy, setOrderBy] = useState(DEFAULT_ORDER_BY);
-  const { engines, loading, error } = useEngines(orderBy);
+  const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
+  const { engines, loading, error } = useEngines({ orderBy });
 
   const options: DropdownOption[] = [
     { value: 'ASC', label: 'Marque croissante' },
     { value: 'DESC', label: 'Marque décroissante' },
   ];
 
-  const handleFilterChange = (value: string[]) => {
-    const sortOrderValues = value.filter((v): v is SortOrder => v === SortOrder.ASC || v === SortOrder.DESC);
-    setOrderBy({ brandName: sortOrderValues });
+  const handleFilterChange = (value: string) => {
+    const sortOrderValue = value as SortOrder;
+    setOrderBy({ brandName: sortOrderValue });
   };
 
   if (loading) return <p>Loading...</p>;

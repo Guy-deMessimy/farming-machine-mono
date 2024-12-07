@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { Button } from 'antd';
 
@@ -11,12 +11,12 @@ import './styles.scss';
 
 interface ReportComponentProps {
   options: DropdownOption[];
-  onChange: (value: string[]) => void; // Type correct pour une fonction qui prend une valeur en paramètre
+  onChange: (value: string) => void; // Type correct pour une fonction qui prend une valeur en paramètre
 }
 
 const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
   const myDefaultValues = (): FilterFormValues => ({
-    dropdown1: ['Marque décroissante'],
+    dropdown1: 'Marque décroissante',
     dropdown2: null,
     dropdown3: null,
     dropdown4: null,

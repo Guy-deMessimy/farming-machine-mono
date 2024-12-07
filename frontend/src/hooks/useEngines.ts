@@ -1,12 +1,9 @@
 import { useQuery } from '@apollo/client';
 import { GET_ENGINES } from '../graphql/engines/queries/getEngines.query';
-import { EngineQueryDto } from '../graphql/engines/queries/engines.interface';
+import { EngineQueryDto } from '../shared/types/engines.type';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const useEngines = (params: any) => {
-  const query: EngineQueryDto = {
-    orderBy: params,
-  };
+export const useEngines = <T extends EngineQueryDto>(params: T) => {
+  const query = { ...params };
   const { data, loading, error } = useQuery(GET_ENGINES, {
     variables: { query },
   });

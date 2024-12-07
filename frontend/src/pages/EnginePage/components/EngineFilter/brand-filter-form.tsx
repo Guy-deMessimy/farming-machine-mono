@@ -1,17 +1,12 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
 import { Select } from 'antd';
 import { DropdownOption, FilterFormValues } from '../../../../shared/types/filters.type';
-
-// Components
-import { useEngines } from '../../../../hooks/useEngines';
-// Utils
-
 import './styles.scss';
 
 interface ReportComponentProps {
   options: DropdownOption[];
-  onChange: (value: string[]) => void;
+  onChange: (value: string) => void;
 }
 
 const BrandFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
@@ -20,11 +15,9 @@ const BrandFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
     formState: { errors },
   } = useFormContext<FilterFormValues>();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleChange = (selectedOption: string[], field: ControllerRenderProps<FilterFormValues, 'dropdown1'>) => {
-    console.log('AAA selectedOption', selectedOption);
-    onChange(selectedOption);
-    return field.onChange(selectedOption);
+  const handleChange = (selectedOption: string, field: ControllerRenderProps<FilterFormValues, 'dropdown1'>) => {
+    onChange(selectedOption[1]);
+    return field.onChange(selectedOption[1]);
   };
 
   return (
@@ -35,7 +28,7 @@ const BrandFilterForm: FC<ReportComponentProps> = ({ options, onChange }) => {
         control={control}
         key=""
         rules={{}}
-        render={({ field, fieldState }) => {
+        render={({ field }) => {
           return (
             <Select
               {...field}
