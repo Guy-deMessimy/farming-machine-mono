@@ -9,7 +9,7 @@ export interface EngineQueryDto {
 }
 
 export interface EngineOrderByInput {
-  brandName: SortOrder;
+  brandName?: SortOrder;
   id?: SortOrder;
   modelName?: SortOrder;
 }

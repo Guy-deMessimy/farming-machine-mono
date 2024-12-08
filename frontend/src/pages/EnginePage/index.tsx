@@ -13,6 +13,8 @@ import './styles.scss';
 
 const EnginePage = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
+  const limit = 8;
+  const where = { brandName: 'New Holland' };
   const { engines, loading, error } = useEngines({ orderBy });
 
   const options: DropdownOption[] = [
@@ -20,7 +22,7 @@ const EnginePage = () => {
     { value: 'DESC', label: 'Marque décroissante' },
   ];
 
-  const handleFilterChange = (value: string) => {
+  const handleFilterChange = (value: string | null) => {
     const sortOrderValue = value as SortOrder;
     setOrderBy({ brandName: sortOrderValue });
   };
