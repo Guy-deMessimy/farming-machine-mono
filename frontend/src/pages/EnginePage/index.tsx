@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 // Components
 import BrandFilter from './components/EngineFilter/brand-filter';
 import EngineList from './components/EngineList/engine-list';
@@ -11,7 +11,7 @@ import { DropdownOption } from '../../shared/types/filters.type';
 // Ui and assets
 import './styles.scss';
 
-const EnginePage = () => {
+const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
   const limit = 8;
   const where = { brandName: 'New Holland' };
