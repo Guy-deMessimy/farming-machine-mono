@@ -18,8 +18,11 @@ const EnginePage: FC = () => {
   const { engines, loading, error } = useEngines({ orderBy });
 
   const options: DropdownOption[] = [
-    { value: 'ASC', label: 'Marque croissante' },
-    { value: 'DESC', label: 'Marque décroissante' },
+    { value: 'ASC', label: 'Filtrer par: Marque croissante' },
+    {
+      value: 'DESC',
+      label: 'Filtrer par: Marque décroissante',
+    },
   ];
 
   const handleFilterChange = (value: string | null) => {

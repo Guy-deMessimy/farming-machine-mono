@@ -1,8 +1,5 @@
-export interface BaseFormValues {
-  [key: string]: any;
-}
+import { DropdownOption } from '../types/filters.type';
 
-export interface FilterFormValues extends BaseFormValues {
-  dropdown1: string[] | null;
-  dropdown2: string[] | null;
+export interface ComplexFormValues {
+  [key: string]: string | number | boolean | DropdownOption | (() => void) | string[] | null;
 }

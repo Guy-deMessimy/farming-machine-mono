@@ -1,28 +1,28 @@
 import { FC, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { Button } from 'antd';
-
 // Components
 import BrandFilterForm from './brand-filter-form';
 // Types
-import { DropdownOption, FilterFormValues } from '../../../../shared/types/filters.type';
+import { DropdownOption } from '../../../../shared/types/filters.type';
+import { ComplexFormValues } from '../../../../shared/types/forms.type';
 // Styles
 import './styles.scss';
 
 interface ReportComponentProps {
   options: DropdownOption[];
-  onChange: (value: string | null) => void; // Type correct pour une fonction qui prend une valeur en paramètre
+  onChange: (value: string | null) => void;
 }
 
 const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
-  const myDefaultValues = (): FilterFormValues => ({
-    dropdown1: { value: 'ASC', label: 'Marque croissante' },
+  const myDefaultValues = (): ComplexFormValues => ({
+    brand_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
     dropdown2: null,
     dropdown3: null,
     dropdown4: null,
   });
 
-  const form = useForm<FilterFormValues>({
+  const form = useForm<ComplexFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
     criteriaMode: 'all',
@@ -30,9 +30,9 @@ const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
     defaultValues: myDefaultValues(),
   });
 
-  const memoizedWatchValues = useMemo(() => form.watch('dropdown1'), [form.watch('dropdown1')]);
+  const memoizedWatchValues = useMemo(() => form.watch('brand_filter'), [form.watch('brand_filter')]);
 
-  const onSubmit: SubmitHandler<FilterFormValues> = async (data) => {
+  const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
     try {
       console.log('je try', data, memoizedWatchValues);
       // Traitement des données du formulaire
@@ -43,7 +43,7 @@ const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
     }
   };
 
-  const onError = (errors: FieldErrors<FilterFormValues>) => {
+  const onError = (errors: FieldErrors<ComplexFormValues>) => {
     console.log('onError', errors);
   };
 
