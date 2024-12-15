@@ -1,17 +1,22 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
 import { Select, Tag } from 'antd';
-import { DropdownStringOption, DropdownNumberOption } from '../../../../shared/types/filters.type';
+
+// Types
+import { DropdownStringOption } from '../../../../shared/types/filters.type';
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
+import { EngineTypes } from '../../../../shared/types/engines.type';
+
+// Temp
 import { brandSortOptions, categoryOptions } from './dummy-type-data';
 import './styles.scss';
-import { EngineOrderByInput } from '../../../../shared/types/engines.type';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
+  engineTypesList: EngineTypes[];
 }
 
-const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange }) => {
+const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
   const {
     control,
     formState: { errors },
@@ -19,6 +24,16 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange }) => {
   } = useFormContext<ComplexFormValues>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   console.log('AAA selectedItems ', selectedItems);
+
+  console.log('AAA engineTypes', engineTypesList);
+
+  const optionsB = engineTypesList.map((type) => {
+    return {
+      label: type.name,
+      value: type.id,
+    };
+  });
+  console.log('AAA optionsB', optionsB);
 
   const filteredOptions = categoryOptions.filter((option) => !selectedItems.includes(option.label));
   console.log('AAA filteredOptions ', filteredOptions);
@@ -85,7 +100,7 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange }) => {
           return (
             <Select
               {...field}
-              options={filteredOptions}
+              options={optionsB}
               value={selectedItems}
               placeholder="Trier par"
               mode="multiple"

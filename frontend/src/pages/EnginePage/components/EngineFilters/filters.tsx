@@ -4,14 +4,16 @@ import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-fo
 import FiltersForm from './filters-form';
 // Types
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
+import { EngineTypes } from '../../../../shared/types/engines.type';
 // Styles
 import './styles.scss';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
+  engineTypesList: EngineTypes[];
 }
 
-const Filters: FC<ReportComponentProps> = ({ onOrderChange }) => {
+const Filters: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
     category_filter: { value: 1, label: 'matériels agricoles' },
@@ -46,7 +48,7 @@ const Filters: FC<ReportComponentProps> = ({ onOrderChange }) => {
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <FiltersForm onOrderChange={onOrderChange} />
+        <FiltersForm onOrderChange={onOrderChange} engineTypesList={engineTypesList} />
       </form>
     </FormProvider>
   );
