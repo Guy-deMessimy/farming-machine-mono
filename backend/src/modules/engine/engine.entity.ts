@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
+import { EngineTypes } from '../engine-type/engine-type.entity';
 
 @ObjectType({ description: 'engine model' })
 export class Engine {
@@ -41,5 +42,6 @@ export class Engine {
   @Field(() => String)
   imageUrl: string;
 
-  // see for relations
+  @Field(() => EngineTypes, { nullable: true })
+  type?: EngineTypes;
 }
