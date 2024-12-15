@@ -9,7 +9,6 @@ import { EngineOrderByInput } from '../../../../shared/types/engines.type';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
-  // onCategoryChange: (value: string | null) => void;
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange }) => {

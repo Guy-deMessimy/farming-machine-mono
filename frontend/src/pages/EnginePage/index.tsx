@@ -12,19 +12,14 @@ import './styles.scss';
 
 const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
-  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
-  const limit = 8;
-  const where = { brandName: 'New Holland' };
+  // const limit = 8;
+  // const where = { brandName: 'New Holland' };
   const { engines, loading, error } = useEngines({ orderBy });
 
   const handleOrderChange = (value: string | null) => {
     const sortOrderValue = value as SortOrder;
     setOrderBy({ brandName: sortOrderValue });
   };
-
-  // const handleCategoryChange = (value: string | null) => {
-  //   console.log('AAA value', value);
-  // };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;

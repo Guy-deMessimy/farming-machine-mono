@@ -6,11 +6,9 @@ import FiltersForm from './filters-form';
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
 // Styles
 import './styles.scss';
-import { EngineOrderByInput } from '../../../../shared/types/engines.type';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
-  // onCategoryChange: (value: string | null) => void;
 }
 
 const Filters: FC<ReportComponentProps> = ({ onOrderChange }) => {
@@ -34,7 +32,6 @@ const Filters: FC<ReportComponentProps> = ({ onOrderChange }) => {
   const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
     try {
       console.log('je try', data, memoizedWatchValues);
-      // Traitement des données du formulaire
     } catch (error) {
       console.log('je error', error);
     } finally {
