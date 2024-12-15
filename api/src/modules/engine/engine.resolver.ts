@@ -1,6 +1,6 @@
 import { Query, Resolver, Args } from '@nestjs/graphql';
-import { EngineService } from './engine.service';
 import { PubSub } from 'graphql-subscriptions';
+import { EngineService } from './engine.service';
 import { Engine } from './engine.entity';
 import { EngineQueryDto } from './engine-query.dto';
 
@@ -11,9 +11,11 @@ export class EngineResolver {
     private readonly pubSub: PubSub,
   ) {}
 
-  @Query(() => [Engine], { nullable: true })
-  async getEngines(@Args('query', { nullable: true }) query?: EngineQueryDto) {
+  @Query(() => [Engine], { name: 'findAllEngines', nullable: true })
+  async findAllEngines(
+    @Args('query', { nullable: true }) query?: EngineQueryDto,
+  ) {
     console.log('Query received in API', query);
-    return this.engineService.getEngines(query);
+    return this.engineService.findAllEngines(query);
   }
 }

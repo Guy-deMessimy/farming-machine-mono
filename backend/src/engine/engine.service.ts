@@ -9,7 +9,7 @@ import { HttpService } from '@nestjs/axios/dist';
 export class EngineService {
   constructor(private readonly httpService: HttpService) {}
 
-  getEngineList({
+  findAllEngines({
     graphQlQuery,
     query,
   }: {
@@ -20,7 +20,7 @@ export class EngineService {
     console.log('Payload sent to API:', JSON.stringify(payload, null, 2));
 
     return this.httpService
-      .post<{ data: { getEngines: Engine[] } }>(
+      .post<{ data: { findAllEngines: Engine[] } }>(
         process.env.API_URL || 'http://localhost:3000/graphql',
         payload,
         {
@@ -28,7 +28,7 @@ export class EngineService {
         },
       )
       .pipe(
-        map((response) => response.data.data.getEngines),
+        map((response) => response.data.data.findAllEngines),
         catchError((error) => {
           console.error('Error during API call:', error.message);
           if (error.response) {

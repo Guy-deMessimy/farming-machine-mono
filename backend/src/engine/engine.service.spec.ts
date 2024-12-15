@@ -49,7 +49,7 @@ describe('EngineService', () => {
       const mockResponse: AxiosResponse = {
         data: {
           data: {
-            getEngines: mockEngines,
+            findAllEngines: mockEngines,
           },
         },
         status: 200,
@@ -60,9 +60,12 @@ describe('EngineService', () => {
 
       jest.spyOn(httpService, 'post').mockReturnValueOnce(of(mockResponse));
 
-      const query = '{ getEngines { id brandName modelName } }';
+      const query = '{ findAllEngines { id brandName modelName } }';
 
-      service.getEngineList(query).subscribe({
+      service.findAllEngines({
+        graphQlQuery: query,  
+        query: {},    
+      }).subscribe({
         next: (engines) => {
           expect(engines).toEqual(mockEngines);
           expect(httpService.post).toHaveBeenCalledWith(
@@ -97,9 +100,12 @@ describe('EngineService', () => {
         .spyOn(httpService, 'post')
         .mockReturnValueOnce(throwError(() => ({ response: errorResponse })));
 
-      const query = '{ getEngines { id brandName modelName } }';
+      const query = '{ findAllEngines { id brandName modelName } }';
 
-      service.getEngineList(query).subscribe({
+      service.findAllEngines({
+        graphQlQuery: query, 
+        query: {},
+      }).subscribe({
         next: () => done.fail('Should have thrown an error'),
         error: (error) => {
           expect(error).toBeInstanceOf(Error);

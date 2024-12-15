@@ -12,7 +12,7 @@ export class EngineResolver {
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine], { nullable: true })
-  getEngines(
+  findAllEngines(
     @Context() context?: { req: Request },
     @Args('query', { nullable: true }) query?: EngineQueryDto,
   ): Observable<Engine[]> {
@@ -21,10 +21,10 @@ export class EngineResolver {
       if (typeof graphQlQuery !== 'string') {
         throw new Error('Request body query is not a string');
       }
-      const result = this.engineService.getEngineList({ graphQlQuery, query });
+      const result = this.engineService.findAllEngines({ graphQlQuery, query });
       return result;
     } catch (error) {
-      this.logger.error('Resolver: getEngines error:', error.stack);
+      this.logger.error('Resolver: findAllEngines error:', error.stack);
       throw error;
     }
   }

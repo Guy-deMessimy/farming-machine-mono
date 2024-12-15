@@ -2,6 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""engine type model"""
+type EngineTypes {
+  id: ID!
+  name: String!
+  description: String!
+  engines: [Engine!]
+}
+
 """engine model"""
 type Engine {
   id: ID!
@@ -17,10 +25,12 @@ type Engine {
   workingWidth: Int!
   copiesNumber: Int!
   imageUrl: String!
+  type: EngineTypes
 }
 
 type Query {
-  getEngines(query: EngineQueryDto): [Engine!]
+  findAllEngines(query: EngineQueryDto): [Engine!]
+  findAllEngineTypes: [EngineTypes!]!
 }
 
 input EngineQueryDto {

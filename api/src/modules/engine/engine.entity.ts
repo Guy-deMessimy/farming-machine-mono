@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import { Engine as EngineDB } from '@prisma/client';
+import { EngineTypes } from '../engine-type/engine-type.entity';
 
 @ObjectType({ description: 'engine model' })
 export class Engine {
@@ -42,5 +43,6 @@ export class Engine {
   @Field(() => String)
   imageUrl: EngineDB[`imageUrl`];
 
-  // see for relations
+  @Field(() => EngineTypes, { nullable: true })
+  type?: EngineTypes;
 }

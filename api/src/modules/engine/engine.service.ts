@@ -10,10 +10,10 @@ export class EngineService {
     private readonly pubSub: PubSub,
   ) {}
 
-  async getEngines(query?: EngineQueryDto) {
+  async findAllEngines(query?: EngineQueryDto) {
     console.log('QUERY in api', query);
-    const engineList = await this.repository.getEngines(query);
-    console.log('enginelist in API', engineList);
-    return engineList;
+    const enginesList = await this.repository.findAllEngines(query);
+    console.log('enginelist in API', enginesList);
+    return enginesList;
   }
 }

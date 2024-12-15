@@ -58,7 +58,6 @@ model Service {
   description String?   @db.LongText
   categories  Category?    @relation(fields: [categoryId], references: [id]) 
   categoryId  Int?
-  types       Type[]
 }
 
 model File {
@@ -95,7 +94,6 @@ model Type {
     id          Int     @default(autoincrement()) @id
     name        String
     description String?   @db.LongText
-    services    Service[]
     engines     Engine[]
 }
 

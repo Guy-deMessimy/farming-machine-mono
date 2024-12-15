@@ -48,9 +48,9 @@ describe('EngineResolver', () => {
       },
     ];
 
-    jest.spyOn(engineService, 'getEngineList').mockReturnValue(of(result));
+    jest.spyOn(engineService, 'findAllEngines').mockReturnValue(of(result));
 
-    resolver.getEngines({ req: { body: { query: '{}' } } } as any).subscribe({
+    resolver.findAllEngines({ req: { body: { query: '{}' } } } as any).subscribe({
       next: (engines) => {
         expect(engines).toEqual(result);
         done();

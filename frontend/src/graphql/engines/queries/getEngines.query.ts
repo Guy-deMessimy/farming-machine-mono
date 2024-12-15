@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export const GET_ENGINES = gql`
-  query GetEngines($query: EngineQueryDto) {
-    getEngines(query: $query) {
+  query FindAllEngines($query: EngineQueryDto) {
+    findAllEngines(query: $query) {
       id
       modelName
       brandName

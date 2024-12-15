@@ -12,7 +12,7 @@ export class EngineRepository {
     });
   }
 
-  async getEngines(query: EngineQueryDto): Promise<Engine[]> {
+  async findAllEngines(query: EngineQueryDto): Promise<Engine[]> {
     const { limit, offset, cursor, orderBy, where } = query || {};
     return this.prisma.engine.findMany({
       skip: limit,

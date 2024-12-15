@@ -8,7 +8,7 @@ export const useEngines = <T extends EngineQueryDto>(params: T) => {
     variables: { query },
   });
   return {
-    engines: data?.getEngines || [],
+    engines: data?.findAllEngines || [],
     loading,
     error,
   };
