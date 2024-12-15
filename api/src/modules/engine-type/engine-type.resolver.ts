@@ -3,7 +3,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { EngineTypesService } from './engine-type.service';
 import { EngineTypes } from './engine-type.entity';
 
-@Resolver()
+@Resolver(() => EngineTypes)
 export class EngineTypesResolver {
   constructor(
     private readonly enginesTypeService: EngineTypesService,
