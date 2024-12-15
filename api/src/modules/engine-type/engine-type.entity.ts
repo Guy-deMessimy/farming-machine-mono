@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { Type as EngineTypesDB } from '@prisma/client';
+import { EngineTypes as EngineTypesDB } from '@prisma/client';
 import { Engine } from '../engine/engine.entity';
 
 @ObjectType({ description: 'engine type model' })

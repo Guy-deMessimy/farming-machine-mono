@@ -18,6 +18,7 @@ interface EngineInput {
   workingWidth: number;
   copiesNumber: number;
   typeId: number;
+  imageUrl: string;
 }
 
 
@@ -49,7 +50,7 @@ const main = async (): Promise<void> => {
         try {
           await Promise.all(
             ENGINE_TYPE.map(async (n: TypeInput) =>
-              prisma.type.create({
+              prisma.engineTypes.create({
                 data: {
                   name: n.name,
                   description: n.description,
@@ -85,6 +86,7 @@ const main = async (): Promise<void> => {
                   workingWidth: n.workingWidth,
                   copiesNumber: n.copiesNumber,
                   typeId: n.typeId,
+                  imageUrl: n.imageUrl,  
                 },
               }),
             ),

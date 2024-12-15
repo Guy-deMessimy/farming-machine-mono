@@ -85,15 +85,15 @@ model Engine {
   workingWidth    Int?
   copiesNumber    Int
   imageUrl        String?
-  type            Type?    @relation(fields: [typeId], references: [id]) 
+  type            EngineTypes?    @relation(fields: [typeId], references: [id])
   typeId          Int?
   @@index([brandName, modelName])
 }
 
-model Type {
-    id          Int     @default(autoincrement()) @id
-    name        String
-    description String?   @db.LongText
-    engines     Engine[]
+model EngineTypes {
+  id          Int       @default(autoincrement()) @id
+  name        String
+  description String?   @db.LongText
+  engines     Engine[] 
 }
 
