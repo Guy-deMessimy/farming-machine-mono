@@ -1,81 +1,42 @@
-export const ENGINE_TYPE_LIST = [
-  {
-    name: 'Tracteurs',
-    description: 'une gamme d/attelage adaptée à de nombreux équipements',
-  },
-  {
-    name: 'Chargeuses avant',
-    description: 'soulever des palettes ou décharger des produits.',
-  },
-  {
-    name: 'Cultivateurs',
-    description: 'péparer vos champs en labourant le sol',
-  },
-  {
-    name: 'Machines à ensemancer',
-    description: 'semer vos différentes cultures',
-  },
-  {
-    name: 'Moissoneuses-batteuses',
-    description: 'moissoner vos champs de céréales',
-  },
-  {
-    name: 'Moissoneuses',
-    description: 'équipements à atteler à votre moissoneuse-bateuse',
-  },
-  {
-    name: 'Remorques',
-    description:
-      'décharger vos récoltes pour acheminement vers le point de vente',
-  },
-  {
-    name: 'Charrues',
-    description:
-      'péparer vos champs pour le prochain cycle et assurer la fertilité de vos sols',
-  },
-  {
-    name: 'Pulvérisateurs',
-    description: '"épander vos engrais',
-  },
-  {
-    name: 'Cuve à lisier',
-    description: 'répandez vos engrais organique sur vos champs',
-  },
-  {
-    name: 'Epandeur à fumier',
-    description: 'répandez vos engrais',
-  },
-  {
-    name: 'Sarcleuses',
-    description: 'améliorer le rendement de vos champs',
-  },
-
-  {
-    name: 'Faucheuses',
-    description: 'coupez l/herbe facilement',
-  },
-  {
-    name: 'Faneuses',
-    description: 'accélérez le processus de séchage de l/herbe fauchée',
-  },
-  {
-    name: 'Andaineurs',
-    description: 'ratissez l:herbe en andains pour faciliter son ramassage',
-  },
-  {
-    name: 'Presse à balles',
-    description: 'pressez la paille qui s/accumule pendant le battage',
-  },
-  {
-    name: 'Chargeuses de balles automatiques',
-    description: 'facilitez le rammassage et le transport des balles',
-  },
-  {
-    name: 'Broyeurs de fanes',
-    description: '',
-  },
-  {
-    name: 'Arracheuses',
-    description: 'déterrez vos pommes de terre ou betteraves scurères',
-  },
-];
+export const ENGINE_TYPE = [
+  {name: 'Broyeuses', description: 'Pour broyer'},
+  {name: 'Epareuses', description: 'Pour éparer'},
+  {name: 'Andaineurs', description: 'Pour andainer'},
+  {name: 'Arracheuses', description: 'POur arracher'},
+  {name: 'Balayeuses', description: 'Pour balayer'},
+  {name: 'Bétaillères', description: 'Pour bétailler'},
+  {name: 'Ceuilleurs', description: 'Pour ceuillir'},
+  {name: 'Chargeuses ', description: 'Pour charger'},
+  {name: 'Cultivateurs', description: 'Pour cultiver'},
+  {name: 'Cuves', description: 'Pour cuver'},
+  {name: 'Dérouleuses', description: 'Pour dérouler'},
+  {name: 'Désileuses', description: 'Pour désiler'},
+  {name: 'Drones', description: 'Pour droner'},
+  {name: 'Ecimeuses', description: 'Pour ecimer'},
+  {name: 'Encemeuses', description: 'Pour encemer'},
+  {name: 'Enfouisseurs', description: 'Pour enfouisser'},
+  {name: 'Enrouleurs', description: 'Pour enrouler'},
+  {name: 'Enrubanneuses', description: 'Pour enrubanner'},
+  {name: 'Ensileuses' , description: 'Pour ensiler'},
+  {name: 'Epandeurs', description: 'POur épander'},
+  {name: 'Faneuses', description: 'Pour faner'},
+  {name: 'Faucheurs', description: 'Pour faucher'},
+  {name: 'Guidages', description: 'Pour guider'},
+  {name: 'Herses', description: 'Pour herser'},
+  {name: 'Lames de déneigement', description: 'Pour déneiger'},
+  {name: 'Lèves palette', description: 'Pour lever'},
+  {name: 'Moissoneuses', description: 'Pour moissonner'},
+  {name: 'Nacelles', description: 'Pour naceller'},
+  {name: 'Pailleuses', description: 'Pour pailler'},
+  {name: 'Planteuses', description: 'Pour planter'},
+  {name: 'Plateau', description: 'Pour platoifier'},
+  {name: 'Pompes', description: 'Pour irriguer'},
+  {name: 'Presses', description: 'Pour presser'},
+  {name: 'Pulvérisateurs', description: 'Pour pulvériser'},
+  {name: 'Quads', description: 'Pour quader'},
+  {name: 'Remorques', description:  'Pour remorquer'},
+  {name: 'Semoirs', description: 'Pour semer'},
+  {name: 'Tank a lait', description: 'Pour tanker'},
+  {name: 'Tracteurs', description: 'POur tracter'},
+  {name: 'Sarcleuses', description: 'POur sarcler'},
+  ];

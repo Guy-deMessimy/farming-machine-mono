@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
 import { ENGINE_LIST } from './engine';
+import { ENGINE_TYPE } from './engineType';
 
 const prisma = new PrismaClient();
 
@@ -16,6 +17,13 @@ interface EngineInput {
   weightKg: number;
   workingWidth: number;
   copiesNumber: number;
+  typeId: number;
+}
+
+
+interface TypeInput {
+  name: string;
+  description: string;
 }
 
 interface ParsedArgs {
@@ -37,6 +45,28 @@ const main = async (): Promise<void> => {
 
   switch (environment) {
     case 'development':
+      const seedType = async (): Promise<boolean> => {
+        try {
+          await Promise.all(
+            ENGINE_TYPE.map(async (n: TypeInput) =>
+              prisma.type.create({
+                data: {
+                  name: n.name,
+                  description: n.description,
+          
+                },
+              }),
+            ),
+          );
+          console.info('[SEED] Successfully created engine type records');
+          return true;
+        } catch (e) {
+          console.error('[SEED] Failed to create engine type records', e);
+          return false; 
+        }
+      };
+
+
       const seedEngine = async (): Promise<void> => {
         try {
           await Promise.all(
@@ -54,6 +84,7 @@ const main = async (): Promise<void> => {
                   weightKg: n.weightKg,
                   workingWidth: n.workingWidth,
                   copiesNumber: n.copiesNumber,
+                  typeId: n.typeId,
                 },
               }),
             ),
@@ -63,8 +94,12 @@ const main = async (): Promise<void> => {
           console.error('[SEED] Failed to create engine records', e);
         }
       };
-
-      seedEngine();
+      const isTypeSeeded = await seedType();
+      if (isTypeSeeded) {
+        await seedEngine();
+      } else {
+        console.warn('[SEED] Skipping engine seeding due to type seeding failure');
+      }
       break;
 
     case 'test':
