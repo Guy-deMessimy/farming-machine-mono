@@ -11,7 +11,7 @@ export const ENGINE_LIST = [
     weightKg: 6000,
     workingWidth: 14,
     copiesNumber: 2,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland-2.png'
   },
   {
@@ -26,7 +26,7 @@ export const ENGINE_LIST = [
     weightKg: 18700,
     workingWidth: 13.8,
     copiesNumber: 1,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
   },
   {
@@ -41,7 +41,7 @@ export const ENGINE_LIST = [
     weightKg: 19000,
     workingWidth: 12.2,
     copiesNumber: 2,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson-2.png',
   },
   {
@@ -56,7 +56,7 @@ export const ENGINE_LIST = [
     weightKg: 21000,
     workingWidth: 12.2,
     copiesNumber: 1,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png'
   },
   {
@@ -71,7 +71,7 @@ export const ENGINE_LIST = [
     weightKg: 24500,
     workingWidth: 13.7,
     copiesNumber: 1,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
   },
   {
@@ -86,7 +86,7 @@ export const ENGINE_LIST = [
     weightKg: 15000,
     workingWidth: 9.3,
     copiesNumber: 3,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png'
   },
   {
@@ -101,7 +101,7 @@ export const ENGINE_LIST = [
     weightKg: 13500,
     workingWidth: 7.7,
     copiesNumber: 2,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png'
   },
   {
@@ -116,7 +116,7 @@ export const ENGINE_LIST = [
     weightKg: 10500,
     workingWidth: 6.1,
     copiesNumber: 4,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland-2.png',
   },
   {
@@ -131,7 +131,7 @@ export const ENGINE_LIST = [
     weightKg: 11500,
     workingWidth: 7.2,
     copiesNumber: 2,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png',
   },
   {
@@ -146,7 +146,7 @@ export const ENGINE_LIST = [
     weightKg: 11000,
     workingWidth: 7.6,
     copiesNumber: 3,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
   },
   {
@@ -161,7 +161,7 @@ export const ENGINE_LIST = [
     weightKg: 17800,
     workingWidth: 9.9,
     copiesNumber: 1,
-    typeId: 16,
+    typeId: 10,
     imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
   },
 ];
