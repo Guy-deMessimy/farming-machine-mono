@@ -1,34 +1,30 @@
 import { FC, useState } from 'react';
 // Components
-import BrandFilter from './components/EngineFilter/brand-filter';
+import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
 // Types
 import { SortOrder } from '../../shared/types/enum.type';
-import { DEFAULT_ENGINE_ORDER_BY } from '../../shared/types/engines.type';
-import { DropdownOption } from '../../shared/types/filters.type';
+import { DEFAULT_ENGINE_ORDER_BY, EngineOrderByInput } from '../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
 
 const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
+  const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
   const limit = 8;
   const where = { brandName: 'New Holland' };
   const { engines, loading, error } = useEngines({ orderBy });
 
-  const options: DropdownOption[] = [
-    { value: 'ASC', label: 'Filtrer par: Marque croissante' },
-    {
-      value: 'DESC',
-      label: 'Filtrer par: Marque décroissante',
-    },
-  ];
-
-  const handleFilterChange = (value: string | null) => {
+  const handleOrderChange = (value: string | null) => {
     const sortOrderValue = value as SortOrder;
     setOrderBy({ brandName: sortOrderValue });
   };
+
+  // const handleCategoryChange = (value: string | null) => {
+  //   console.log('AAA value', value);
+  // };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -37,7 +33,7 @@ const EnginePage: FC = () => {
     <div className="engine__wrapper">
       <div className="engine__wrapper__title">QUEL VEHICULE SOUHAITEZ-VOUS CONDUIRE ?</div>
       <hr className="engine__wrapper__hr"></hr>
-      <BrandFilter options={options} onChange={handleFilterChange} />
+      <Filters onOrderChange={handleOrderChange} />
       <EngineList enginesList={engines} />
     </div>
   );

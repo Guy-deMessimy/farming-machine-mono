@@ -1,23 +1,22 @@
 import { FC, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
-import { Button } from 'antd';
 // Components
-import BrandFilterForm from './brand-filter-form';
+import FiltersForm from './filters-form';
 // Types
-import { DropdownOption } from '../../../../shared/types/filters.type';
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
 // Styles
 import './styles.scss';
+import { EngineOrderByInput } from '../../../../shared/types/engines.type';
 
 interface ReportComponentProps {
-  options: DropdownOption[];
-  onChange: (value: string | null) => void;
+  onOrderChange: (value: string | null) => void;
+  // onCategoryChange: (value: string | null) => void;
 }
 
-const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
+const Filters: FC<ReportComponentProps> = ({ onOrderChange }) => {
   const myDefaultValues = (): ComplexFormValues => ({
-    brand_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
-    dropdown2: null,
+    sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
+    category_filter: { value: 1, label: 'matériels agricoles' },
     dropdown3: null,
     dropdown4: null,
   });
@@ -30,7 +29,7 @@ const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
     defaultValues: myDefaultValues(),
   });
 
-  const memoizedWatchValues = useMemo(() => form.watch('brand_filter'), [form.watch('brand_filter')]);
+  const memoizedWatchValues = useMemo(() => form.watch('sort_filter'), [form.watch('sort_filter')]);
 
   const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
     try {
@@ -50,10 +49,7 @@ const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <BrandFilterForm options={options} onChange={onChange} />
-        <Button type="primary" htmlType="submit" style={{ marginTop: '20px' }}>
-          Soumettre
-        </Button>
+        <FiltersForm onOrderChange={onOrderChange} />
       </form>
     </FormProvider>
   );
@@ -61,4 +57,4 @@ const BrandFilter: FC<ReportComponentProps> = ({ options, onChange }) => {
   return <>{EngineFilterFormProvider}</>;
 };
 
-export default BrandFilter;
+export default Filters;
