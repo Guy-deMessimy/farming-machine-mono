@@ -1,11 +1,11 @@
 import { FC } from 'react';
-// Utils
-import { EngineModel } from '../../utils/engine-model';
+// Type
+import { Engine } from '../../../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
 
 interface ReportComponentProps {
-  engineItem: EngineModel;
+  engineItem: Engine;
 }
 
 const EngineCard: FC<ReportComponentProps> = ({ engineItem }) => {

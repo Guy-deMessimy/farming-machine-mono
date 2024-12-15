@@ -4,18 +4,18 @@ import { Link } from 'react-router-dom';
 // Components
 import EngineCard from './engine-card';
 // Utils
-import { EngineModel } from '../../utils/engine-model';
+import { Engine } from '../../../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
 
 interface ReportComponentProps {
-  enginesList: EngineModel[];
+  enginesList: Engine[];
 }
 
 const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
   return (
     <ul className="engine__list">
-      {enginesList.map((engine: EngineModel) => (
+      {enginesList.map((engine: Engine) => (
         <li className="engine__list__item" key={engine.id}>
           <Link className="engine__list__item__link" to={engine.id.toString()}>
             <EngineCard engineItem={engine}></EngineCard>

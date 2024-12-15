@@ -9,7 +9,7 @@ export const useEngines = <T extends EngineQueryDto>(params: T) => {
   });
   return {
     engines: data?.findAllEngines || [],
-    loading,
-    error,
+    enginesLoading: loading,
+    enginesError: error,
   };
 };
