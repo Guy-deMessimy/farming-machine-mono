@@ -11,6 +11,7 @@ export const ENGINE_LIST = [
     weightKg: 6000,
     workingWidth: 14,
     copiesNumber: 2,
+    typeId: 16,
   },
   {
     modelName: 'Lexion 8900',
@@ -24,6 +25,7 @@ export const ENGINE_LIST = [
     weightKg: 18700,
     workingWidth: 13.8,
     copiesNumber: 1,
+    typeId: 16,
   },
   {
     modelName: 'S790',
@@ -37,6 +39,7 @@ export const ENGINE_LIST = [
     weightKg: 19000,
     workingWidth: 12.2,
     copiesNumber: 2,
+    typeId: 16,
   },
   {
     modelName: 'Ideal 9T',
@@ -50,6 +53,7 @@ export const ENGINE_LIST = [
     weightKg: 21000,
     workingWidth: 12.2,
     copiesNumber: 1,
+    typeId: 16,
   },
   {
     modelName: 'CR10.90',
@@ -63,6 +67,7 @@ export const ENGINE_LIST = [
     weightKg: 24500,
     workingWidth: 13.7,
     copiesNumber: 1,
+    typeId: 16,
   },
   {
     modelName: 'Trion 750',
@@ -76,6 +81,7 @@ export const ENGINE_LIST = [
     weightKg: 15000,
     workingWidth: 9.3,
     copiesNumber: 3,
+    typeId: 16,
   },
   {
     modelName: 'Tucano 580',
@@ -89,6 +95,7 @@ export const ENGINE_LIST = [
     weightKg: 13500,
     workingWidth: 7.7,
     copiesNumber: 2,
+    typeId: 16,
   },
   {
     modelName: 'TC5.90',
@@ -102,6 +109,7 @@ export const ENGINE_LIST = [
     weightKg: 10500,
     workingWidth: 6.1,
     copiesNumber: 4,
+    typeId: 16,
   },
   {
     modelName: 'Deutz-Fahr 6095 HTS',
@@ -115,6 +123,7 @@ export const ENGINE_LIST = [
     weightKg: 11500,
     workingWidth: 7.2,
     copiesNumber: 2,
+    typeId: 16,
   },
   {
     modelName: 'MF Activa 7347 S',
@@ -128,6 +137,7 @@ export const ENGINE_LIST = [
     weightKg: 11000,
     workingWidth: 7.6,
     copiesNumber: 3,
+    typeId: 16,
   },
   {
     modelName: 'Rostselmash TORUM 785',
@@ -141,5 +151,6 @@ export const ENGINE_LIST = [
     weightKg: 17800,
     workingWidth: 9.9,
     copiesNumber: 1,
+    typeId: 16,
   },
 ];
