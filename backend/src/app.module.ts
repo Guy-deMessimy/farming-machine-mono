@@ -4,7 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 // Modules
-import { EnginesModule } from './engine/engine.module';
+import { EnginesModule } from './modules/engine/engine.module';
 
 @Module({
   imports: [

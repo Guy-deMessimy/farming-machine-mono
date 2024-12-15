@@ -20,6 +20,9 @@ export class EngineRepository {
       cursor: cursor ? { id: cursor } : undefined,
       orderBy,
       where,
+      include: {
+        type: true,
+      }
     });
   }
 }

@@ -1,9 +1,9 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
 import { IsEnum, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
-import { BaseQueryDto } from '../common/dto/base-query.dto';
-import { QueryOptions } from '../common/dto/query-options.interface';
-import { SortOrder } from '../common/enum/sort-order.enum';
+import { BaseQueryDto } from '../../common/dto/base-query.dto';
+import { QueryOptions } from '../../common/dto/query-options.interface';
+import { SortOrder } from '../../common/enum/sort-order.enum';
 
 @InputType()
 class EngineOrderByInput {
