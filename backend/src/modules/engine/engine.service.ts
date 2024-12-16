@@ -13,7 +13,8 @@ export class EngineService {
   }: {
     graphQlQuery: string;
     query: any;
-  }): Observable<Engine[]> {
-    return this.graphqlApiService.execute<Engine[]>(graphQlQuery, query);
+    }): Observable<Engine[]> {
+    const response = this.graphqlApiService.execute<Engine[]>(graphQlQuery, query);
+    return response;
   }
 }
