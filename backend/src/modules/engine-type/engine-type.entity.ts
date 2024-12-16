@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Engine } from '../engine/engine.entity';
 
 @ObjectType({ description: 'engine type model' })

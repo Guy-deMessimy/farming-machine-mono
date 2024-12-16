@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { EngineTypes } from './engine-type.entity';
-import { HttpService } from '@nestjs/axios/dist';
 import { GraphqlApiService } from '../graphql-api/graphql-api.service';
 
 @Injectable()

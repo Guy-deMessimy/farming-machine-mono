@@ -1,4 +1,4 @@
-import { Resolver, Query, Context, Args } from '@nestjs/graphql';
+import { Resolver, Query, Context } from '@nestjs/graphql';
 import { Logger } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';

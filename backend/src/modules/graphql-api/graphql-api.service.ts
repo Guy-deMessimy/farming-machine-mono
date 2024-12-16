@@ -12,9 +12,6 @@ export class GraphqlApiService {
    * @returns Observable avec le type de données attendu.
    */
 
-
-
-  
   execute<T>(
     query: string,
     variables: Record<string, any> = {},
