@@ -62,21 +62,23 @@ describe('EngineService', () => {
 
       const query = '{ findAllEngines { id brandName modelName } }';
 
-      service.findAllEngines({
-        graphQlQuery: query,  
-        query: {},    
-      }).subscribe({
-        next: (engines) => {
-          expect(engines).toEqual(mockEngines);
-          expect(httpService.post).toHaveBeenCalledWith(
-            expect.any(String),
-            { query },
-            expect.any(Object),
-          );
-          done();
-        },
-        error: done,
-      });
+      service
+        .findAllEngines({
+          graphQlQuery: query,
+          query: {},
+        })
+        .subscribe({
+          next: (engines) => {
+            expect(engines).toEqual(mockEngines);
+            expect(httpService.post).toHaveBeenCalledWith(
+              expect.any(String),
+              { query },
+              expect.any(Object),
+            );
+            done();
+          },
+          error: done,
+        });
     });
 
     it('should handle errors', (done) => {
@@ -102,17 +104,19 @@ describe('EngineService', () => {
 
       const query = '{ findAllEngines { id brandName modelName } }';
 
-      service.findAllEngines({
-        graphQlQuery: query, 
-        query: {},
-      }).subscribe({
-        next: () => done.fail('Should have thrown an error'),
-        error: (error) => {
-          expect(error).toBeInstanceOf(Error);
-          expect(error.message).toBe('Failed to query API');
-          done();
-        },
-      });
+      service
+        .findAllEngines({
+          graphQlQuery: query,
+          query: {},
+        })
+        .subscribe({
+          next: () => done.fail('Should have thrown an error'),
+          error: (error) => {
+            expect(error).toBeInstanceOf(Error);
+            expect(error.message).toBe('Failed to query API');
+            done();
+          },
+        });
     });
   });
 });

@@ -4,15 +4,21 @@ import { catchError, map, Observable } from 'rxjs';
 
 @Injectable()
 export class GraphqlApiService {
-    constructor(private readonly httpService: HttpService) { }
-      /**
+  constructor(private readonly httpService: HttpService) {}
+  /**
    * Exécute une requête GraphQL avec des variables dynamiques.
    * @param query La requête GraphQL en string.
    * @param variables Les variables pour la requête (facultatif).
    * @returns Observable avec le type de données attendu.
    */
 
-  execute<T>(query: string, variables: Record<string, any> = {}): Observable<T> {
+
+
+  
+  execute<T>(
+    query: string,
+    variables: Record<string, any> = {},
+  ): Observable<T> {
     const payload = { query, variables };
 
     return this.httpService
@@ -26,14 +32,14 @@ export class GraphqlApiService {
       .pipe(
         map((response) => {
           console.log('AAAA response', response.data.data);
-          const data = response.data?.data
+          const data = response.data?.data;
           if (!data) {
             throw new Error('No data found in GraphQL response');
           }
           const topLevelKey = Object.keys(data)[0];
           return data[topLevelKey];
         }),
-        
+
         catchError((error) => {
           console.error('Error during API call:', error.message);
           if (error.response) {

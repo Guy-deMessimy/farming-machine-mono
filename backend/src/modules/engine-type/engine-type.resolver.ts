@@ -19,7 +19,9 @@ export class EngineTypesResolver {
       if (typeof graphQlQuery !== 'string') {
         throw new Error('Request body query is not a string');
       }
-      const result = this.engineTypesService.findAllEngineTypes({ graphQlQuery });
+      const result = this.engineTypesService.findAllEngineTypes({
+        graphQlQuery,
+      });
       return result;
     } catch (error) {
       this.logger.error('Resolver: findAllEngineTypes error:', error.stack);

@@ -18,6 +18,6 @@ export class EngineService {
     query: any;
   }): Observable<Engine[]> {
     const payload = { query: graphQlQuery, variables: { query } };
-        return this.graphqlApiService.execute<Engine[]>(graphQlQuery, query)
+    return this.graphqlApiService.execute<Engine[]>(graphQlQuery, query);
   }
 }

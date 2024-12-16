@@ -14,8 +14,8 @@ export class EngineTypesService {
   }: {
     graphQlQuery: string;
   }): Observable<EngineTypes[]> {
-    const payload = { query: graphQlQuery};
+    const payload = { query: graphQlQuery };
     console.log('Payload sent to API:', JSON.stringify(payload, null, 2));
-    return this.graphqlApiService.execute<EngineTypes[]>(graphQlQuery)
+    return this.graphqlApiService.execute<EngineTypes[]>(graphQlQuery);
   }
 }

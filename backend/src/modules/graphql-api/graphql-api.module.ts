@@ -3,7 +3,7 @@ import { HttpModule } from '@nestjs/axios';
 import { GraphqlApiService } from './graphql-api.service';
 
 @Module({
-  imports: [HttpModule], 
+  imports: [HttpModule],
   providers: [GraphqlApiService],
   exports: [GraphqlApiService],
 })
