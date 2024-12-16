@@ -13,11 +13,10 @@ export class GraphqlApiService {
    */
 
   execute<T>(
-    query: string,
-    variables: Record<string, any> = {},
+    graphQlQuery: string,
+    query: Record<string, any> = {},
   ): Observable<T> {
-    const payload = { query, variables };
-
+    const payload = { query: graphQlQuery, variables: { query } };
     return this.httpService
       .post<{ data: T }>(
         process.env.API_URL || 'http://localhost:3000/graphql',

@@ -17,10 +17,7 @@ interface ReportComponentProps {
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
-  const {
-    control,
-    watch,
-  } = useFormContext<ComplexFormValues>();
+  const { control, watch } = useFormContext<ComplexFormValues>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   console.log('AAA selectedItems ', selectedItems);
 
