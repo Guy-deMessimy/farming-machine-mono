@@ -10,13 +10,14 @@ import './styles.scss';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
+  onEngineTypesChange: (value: number[] | null) => void;
   engineTypesList: EngineTypes[];
 }
 
-const Filters: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
+const Filters: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesChange, engineTypesList }) => {
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
-    category_filter: { value: 1, label: 'matériels agricoles' },
+    engine_types_filter: [],
     dropdown3: null,
     dropdown4: null,
   });
@@ -48,7 +49,11 @@ const Filters: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) =
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <FiltersForm onOrderChange={onOrderChange} engineTypesList={engineTypesList} />
+        <FiltersForm
+          onOrderChange={onOrderChange}
+          onEngineTypesChange={onEngineTypesChange}
+          engineTypesList={engineTypesList}
+        />
       </form>
     </FormProvider>
   );

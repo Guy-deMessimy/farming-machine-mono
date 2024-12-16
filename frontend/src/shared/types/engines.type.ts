@@ -18,7 +18,7 @@ export interface EngineWhereInput {
   id?: number;
   modelName?: string;
   brandName?: string;
-  typeId?: number[];
+  typeId?: number[] | null;
 }
 
 export const DEFAULT_ENGINE_ORDER_BY: EngineOrderByInput = {

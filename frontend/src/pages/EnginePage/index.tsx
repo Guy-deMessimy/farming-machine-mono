@@ -13,15 +13,25 @@ import './styles.scss';
 
 const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<{ typeId: number[] | null }>({ typeId: null });
   // const limit = 8;
   // const where = { brandName: 'New Holland' };
-  const where = { typeId: [9] };
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy });
+  console.log('AAA selectedEngineTypes', selectedEngineTypes);
+  // const where = { typeId: [9] };
+  const where = selectedEngineTypes.typeId ? { typeId: selectedEngineTypes.typeId } : {};
+  console.log('AAA where', where);
+  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes();
 
   const handleOrderChange = (value: string | null) => {
     const sortOrderValue = value as SortOrder;
     setOrderBy({ brandName: sortOrderValue });
+  };
+
+  const handleEngineTypesChange = (value: number[] | null) => {
+    const engineTypesValue = value;
+    console.log('AAA engineTypesValue', engineTypesValue);
+    setSelectedEngineTypes({ typeId: engineTypesValue });
   };
 
   if (enginesLoading) return <p>Loading...</p>;
@@ -31,7 +41,11 @@ const EnginePage: FC = () => {
     <div className="engine__wrapper">
       <div className="engine__wrapper__title">QUEL VEHICULE SOUHAITEZ-VOUS CONDUIRE ?</div>
       <hr className="engine__wrapper__hr"></hr>
-      <Filters onOrderChange={handleOrderChange} engineTypesList={engineTypes} />
+      <Filters
+        onOrderChange={handleOrderChange}
+        onEngineTypesChange={handleEngineTypesChange}
+        engineTypesList={engineTypes}
+      />
       <EngineList enginesList={engines} />
     </div>
   );

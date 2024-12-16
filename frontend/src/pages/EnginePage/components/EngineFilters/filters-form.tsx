@@ -13,52 +13,49 @@ import './styles.scss';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
+  onEngineTypesChange: (value: number[] | null) => void;
   engineTypesList: EngineTypes[];
 }
 
-const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
+const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesChange, engineTypesList }) => {
   const { control, watch } = useFormContext<ComplexFormValues>();
-  const [selectedItems, setSelectedItems] = useState<string[]>([]);
-  console.log('AAA selectedItems ', selectedItems);
-
-  console.log('AAA engineTypes', engineTypesList);
-
-  const engineTypes = engineTypesList.map((type) => {
-    return {
-      label: type.name,
-      value: type.id,
-    };
-  });
-  console.log('AAA engineTypes', engineTypes);
 
   const handleSortChange = (selectedValue: string, field: ControllerRenderProps<ComplexFormValues, 'sort_filter'>) => {
     const selectedOption = sortOptions.find((option) => option.value === selectedValue) || null;
     field.onChange(selectedOption);
   };
 
-  const handleCategoryChange = (
-    selectedValue: string[],
-    field: ControllerRenderProps<ComplexFormValues, 'category_filter'>,
+  const handleEngineTypesChange = (
+    selectedValue: number[],
+    field: ControllerRenderProps<ComplexFormValues, 'engine_types_filter'>,
   ) => {
-    console.log('AAA selectedvalue', selectedValue);
-    console.log('AAA field', field);
-    setSelectedItems(selectedValue);
+    // console.log('AAA selectedvalue on func', selectedValue);
+    // console.log('AAA field', field);
     field.onChange(selectedValue);
   };
 
-  const memoizedWatchValues = watch('sort_filter');
+  const watchSortValues = watch('sort_filter');
+  // console.log('AAA watchSortValues', watchSortValues);
+  const watchTypesValues = watch('engine_types_filter') as number[] | null;
+  console.log('AAA watchTypesValues', watchTypesValues);
+
   useEffect(() => {
     if (
-      memoizedWatchValues &&
-      typeof memoizedWatchValues === 'object' &&
-      'value' in memoizedWatchValues &&
-      typeof memoizedWatchValues.value === 'string'
+      watchSortValues &&
+      typeof watchSortValues === 'object' &&
+      'value' in watchSortValues &&
+      typeof watchSortValues.value === 'string'
     ) {
-      onOrderChange(memoizedWatchValues.value);
+      onOrderChange(watchSortValues.value);
     } else {
       onOrderChange('ASC');
     }
-  }, [memoizedWatchValues]);
+  }, [watchSortValues]);
+
+  useEffect(() => {
+    // console.log('AAA je passe dans le use', watchTypesValues);
+    onEngineTypesChange(watchTypesValues ?? null);
+  }, [watchTypesValues]);
 
   return (
     <div className="engine__filter__form">
@@ -68,6 +65,7 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
         key="sort_filter"
         rules={{}}
         render={({ field }) => {
+          // console.log('AAA field value1', field.value);
           return (
             <Select
               {...field}
@@ -85,11 +83,12 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
         }}
       />
       <Controller
-        name="category_filter"
+        name="engine_types_filter"
         control={control}
-        key="category_filter"
+        key="engine_types_filter"
         rules={{}}
         render={({ field }) => {
+          // console.log('AAA field value2', field.value);
           return (
             <Select
               {...field}
@@ -97,11 +96,16 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
               }
-              options={engineTypes}
-              value={selectedItems}
+              options={engineTypesList.map((type) => {
+                return {
+                  label: type.name,
+                  value: Number(type.id),
+                };
+              })}
+              value={typeof field.value === 'object' && field.value !== null ? (field.value as number[]) : null}
               placeholder="Trier par"
               mode="multiple"
-              onChange={(value: string[]) => handleCategoryChange(value, field)}
+              onChange={(value: number[]) => handleEngineTypesChange(value, field)}
               optionLabelProp="label"
               style={{ width: '100%' }}
             />
