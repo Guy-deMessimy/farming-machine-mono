@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
-import { Select, Tag } from 'antd';
+import { Select } from 'antd';
 
 // Types
 import { DropdownStringOption } from '../../../../shared/types/filters.type';
@@ -19,7 +19,6 @@ interface ReportComponentProps {
 const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList }) => {
   const {
     control,
-    formState: { errors },
     watch,
   } = useFormContext<ComplexFormValues>();
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
