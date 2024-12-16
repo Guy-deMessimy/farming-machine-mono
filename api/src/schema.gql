@@ -57,4 +57,5 @@ input EngineWhereInput {
   id: Int
   brandName: String
   modelName: String
+  typeId: [Int!]
 }

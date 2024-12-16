@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsEnum, IsOptional } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsEnum, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Prisma } from '@prisma/client';
 import { BaseQueryDto } from '../../common/dto/base-query.dto';
@@ -37,12 +37,18 @@ class EngineWhereInput {
   @Field(() => String, { nullable: true })
   @IsOptional()
   readonly modelName?: string;
+
+  @Field(() => [Int], { nullable: true })
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  readonly typeId?: number[];
 }
 
 @InputType()
 export class EngineQueryDto
   extends BaseQueryDto<number>
-  implements QueryOptions<EngineOrderByInput, Prisma.EngineWhereInput>
+  implements QueryOptions<EngineOrderByInput, EngineWhereInput>
 {
   @Field(() => EngineOrderByInput, { nullable: true })
   @IsOptional()

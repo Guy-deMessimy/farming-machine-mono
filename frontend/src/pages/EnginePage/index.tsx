@@ -16,7 +16,7 @@ const EnginePage: FC = () => {
   // const limit = 8;
   // const where = { brandName: 'New Holland' };
   const where = { typeId: [9] };
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
+  const { engines, enginesLoading, enginesError } = useEngines({ orderBy });
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes();
 
   const handleOrderChange = (value: string | null) => {
