@@ -22,7 +22,7 @@ export class EngineRepository {
       where,
       include: {
         type: true,
-      }
+      },
     });
   }
 }

@@ -12,8 +12,6 @@ export class EngineTypesService {
   async findAllEngineTypes() {
     console.log('QUERY in api engine type');
 
-
-
     const engineTypesList = await this.repository.findAllEngineTypes();
     console.log('engineTypeList in API', engineTypesList);
     return engineTypesList;
