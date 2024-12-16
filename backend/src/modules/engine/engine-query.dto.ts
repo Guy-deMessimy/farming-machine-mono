@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { IsEnum, IsOptional } from 'class-validator';
+import { ArrayNotEmpty, IsArray, IsEnum, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { BaseQueryDto } from '../../common/dto/base-query.dto';
 import { QueryOptions } from '../../common/dto/query-options.interface';
@@ -36,6 +36,12 @@ class EngineWhereInput {
   @Field(() => String, { nullable: true })
   @IsOptional()
   readonly modelName?: string;
+
+  @Field(() => [Int], { nullable: true })
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  readonly typeId?: number[];
 }
 
 @InputType()
