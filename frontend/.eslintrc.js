@@ -19,6 +19,11 @@ module.exports = {
         node: true,
         es6: true,
         jest: true,
+  },
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
     },
     ignorePatterns: ['node_modules', 'build', 'dist', 'public'],
     rules: {
