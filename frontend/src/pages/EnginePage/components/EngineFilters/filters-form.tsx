@@ -8,7 +8,7 @@ import { ComplexFormValues } from '../../../../shared/types/forms.type';
 import { EngineTypes } from '../../../../shared/types/engines.type';
 
 // Temp
-import { brandSortOptions, categoryOptions } from './dummy-type-data';
+import { sortOptions } from './dummy-type-data';
 import './styles.scss';
 
 interface ReportComponentProps {
@@ -23,19 +23,16 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
 
   console.log('AAA engineTypes', engineTypesList);
 
-  const optionsB = engineTypesList.map((type) => {
+  const engineTypes = engineTypesList.map((type) => {
     return {
       label: type.name,
       value: type.id,
     };
   });
-  console.log('AAA optionsB', optionsB);
-
-  const filteredOptions = categoryOptions.filter((option) => !selectedItems.includes(option.label));
-  console.log('AAA filteredOptions ', filteredOptions);
+  console.log('AAA engineTypes', engineTypes);
 
   const handleSortChange = (selectedValue: string, field: ControllerRenderProps<ComplexFormValues, 'sort_filter'>) => {
-    const selectedOption = brandSortOptions.find((option) => option.value === selectedValue) || null;
+    const selectedOption = sortOptions.find((option) => option.value === selectedValue) || null;
     field.onChange(selectedOption);
   };
 
@@ -75,7 +72,7 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
             <Select
               {...field}
               prefix="Trier par"
-              options={brandSortOptions}
+              options={sortOptions}
               placeholder="Trier par"
               onChange={(value: string) => handleSortChange(value, field)}
               value={
@@ -100,7 +97,7 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
               filterSort={(optionA, optionB) =>
                 (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
               }
-              options={optionsB}
+              options={engineTypes}
               value={selectedItems}
               placeholder="Trier par"
               mode="multiple"

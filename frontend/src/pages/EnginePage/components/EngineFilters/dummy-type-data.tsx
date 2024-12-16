@@ -1,6 +1,6 @@
 import { DropdownStringOption, DropdownNumberOption } from '../../../../shared/types/filters.type';
 
-export const brandSortOptions: DropdownStringOption[] = [
+export const sortOptions: DropdownStringOption[] = [
   { value: 'ASC', label: 'Marque croissante' },
   {
     value: 'DESC',
