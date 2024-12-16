@@ -15,7 +15,7 @@ const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
   // const limit = 8;
   // const where = { brandName: 'New Holland' };
-  const where = { typeId: [10] };
+  const where = { typeId: [9] };
   const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes();
 

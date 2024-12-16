@@ -14,13 +14,19 @@ export class EngineRepository {
 
   async findAllEngines(query: EngineQueryDto): Promise<Engine[]> {
     const { limit, offset, cursor, orderBy, where } = query || {};
-    console.log('AAA where', where.typeId)
+    console.log('AAA where', where);
     const prismaWhere = {
-      ...where,
-      typeId: where?.typeId ? { in: Array.isArray(where.typeId) ? where.typeId : [where.typeId] } : undefined,
+      ...(where && {
+        ...where,
+        ...(where?.typeId && {
+          typeId: Array.isArray(where.typeId)
+            ? { in: where.typeId }  
+            : where.typeId 
+        })
+      })
     };
- 
-    console.log('prismaWhere', prismaWhere)
+
+    console.log('prismaWhere', prismaWhere);
     return this.prisma.engine.findMany({
       skip: limit,
       take: offset,
