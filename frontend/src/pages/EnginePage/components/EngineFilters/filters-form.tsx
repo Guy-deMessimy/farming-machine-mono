@@ -100,6 +100,10 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, engineTypesList 
           return (
             <Select
               {...field}
+              optionFilterProp="label"
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              }
               options={optionsB}
               value={selectedItems}
               placeholder="Trier par"
