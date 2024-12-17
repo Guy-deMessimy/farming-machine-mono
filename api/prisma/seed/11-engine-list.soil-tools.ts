@@ -16,9 +16,10 @@ const generateSoilToolsListSeeder = () => ({
   weightKg: faker.number.int({ min: 500, max: 10000 }),
   workingWidth: faker.number.int({ min: 1, max: 20 }),
   copiesNumber: faker.number.int({ min: 1, max: 5 }),
+  typeId: null,
   imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
 });
 
-export const ENGINE_LIST_SPRAYER_EQUIPMENT = Array.from({ length: 10 }, () =>
+export const ENGINE_LIST_SOI_TOOLS = Array.from({ length: 10 }, () =>
   generateSoilToolsListSeeder()
 );

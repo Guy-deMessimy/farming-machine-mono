@@ -16,6 +16,7 @@ const generateHaymakingEquipmentListSeeder = () => ({
   weightKg: faker.number.int({ min: 500, max: 10000 }),
   workingWidth: faker.number.int({ min: 1, max: 20 }),
   copiesNumber: faker.number.int({ min: 1, max: 5 }),
+  typeId: null,
   imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
 });
 
