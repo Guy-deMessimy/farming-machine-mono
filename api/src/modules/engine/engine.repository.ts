@@ -20,10 +20,10 @@ export class EngineRepository {
         ...where,
         ...(where?.typeId && {
           typeId: Array.isArray(where.typeId)
-            ? { in: where.typeId }  
-            : where.typeId 
-        })
-      })
+            ? { in: where.typeId }
+            : where.typeId,
+        }),
+      }),
     };
 
     console.log('prismaWhere', prismaWhere);
