@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
-import { ENGINE_LIST } from './engine';
+import { ENGINE_LIST } from './2-engine-list-original';
 import { ENGINE_TYPE } from './1-engineType';
 
 const prisma = new PrismaClient();
@@ -8,12 +8,16 @@ const prisma = new PrismaClient();
 interface EngineInput {
   modelName: string;
   brandName: string;
+  description: string,
+  ref: string,
   conception: string;
   engineKwPower: number;
   engineCcPower: number;
   maxKmhSpeed: number;
   petrolLitreTank: number;
   tankLitre: number;
+  autonomyMn: number,    
+  liftingHeightMeter: number,
   weightKg: number;
   workingWidth: number;
   copiesNumber: number;
@@ -76,12 +80,16 @@ const main = async (): Promise<void> => {
                 data: {
                   modelName: n.modelName,
                   brandName: n.brandName,
+                  description: n.description,
+                  ref: n.ref,
                   conception: n.conception,
                   engineKwPower: n.engineKwPower,
                   engineCcPower: n.engineCcPower,
                   maxKmhSpeed: n.maxKmhSpeed,
                   petrolLitreTank: n.petrolLitreTank,
                   tankLitre: n.tankLitre,
+                  autonomyMn: n.autonomyMn,    
+                  liftingHeightMeter: n.autonomyMn,
                   weightKg: n.weightKg,
                   workingWidth: n.workingWidth,
                   copiesNumber: n.copiesNumber,
