@@ -3,21 +3,23 @@ import { parseArgs } from 'node:util';
 // Types
 import { EngineInput, ParsedArgs, TypeInput } from './types/engines.type';
 // Dummy data lists
-import { ENGINE_TYPE } from './1-engineType';
-import { ENGINE_LIST_CRUSHERS } from './2-engine-list.crushers';
-import { ENGINE_LIST_VARIOUS_EQUIPMENT } from './3-engine-list.various-equipment';
-import { ENGINE_LIST_SPREADING } from './4-engine-list.spreading';
-import { ENGINE_LIST_HANDLING } from './5-engine-list.handling';
-import { ENGINE_LIST_SPECIALIZED_CULTURE } from './6-engine-list.specialized-cultures';
-import { ENGINE_LIST_BREEDING_EQUIPMENT } from './7-engine-list.breeding-equipment';
-import { ENGINE_LIST_IRRIGATION_EQUIPMENT } from './8-engine-list.irrigation-equipment';
-import { ENGINE_LIST_HAYMAKING_EQUIPMENT } from './9-engine-list.haymaking-equipment';
-import { ENGINE_LIST_HARVEST_EQUIPMENT } from './10-engine-list.harvest-equipment';
-import { ENGINE_LIST_SOI_TOOLS } from './11-engine-list.soil-tools';
-import { ENGINE_LIST_SPRAYER_EQUIPMENT } from './12-engine-list.sprayer-equipment';
-import { ENGINE_LIST_AGRICULTURAL_TRAILERS } from './13-engine-list.agricultural-trailers';
-import { ENGINE_LIST_SEEDERS_EQUIPMENT } from './14-engine-list.seeders-equipment';
-import { ENGINE_LIST_TRACTORS } from './15-engine-list.tractors';
+import { ENGINE_TYPE } from './1-populate-engine-types';
+import {
+  ENGINE_LIST_CRUSHERS,
+  ENGINE_LIST_HANDLING,
+  ENGINE_LIST_VARIOUS_EQUIPMENT,
+  ENGINE_LIST_SPREADING,
+  ENGINE_LIST_SPECIALIZED_CULTURE,
+  ENGINE_LIST_BREEDING_EQUIPMENT,
+  ENGINE_LIST_IRRIGATION_EQUIPMENT,
+  ENGINE_LIST_HAYMAKING_EQUIPMENT,
+  ENGINE_LIST_HARVEST_EQUIPMENT,
+  ENGINE_LIST_SOI_TOOLS,
+  ENGINE_LIST_SPRAYER_EQUIPMENT,
+  ENGINE_LIST_AGRICULTURAL_TRAILERS,
+  ENGINE_LIST_SEEDERS_EQUIPMENT,
+  ENGINE_LIST_TRACTORS
+} from './2-populate-engines';
 
 const prisma = new PrismaClient();
 
