@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 // Components
 import FiltersForm from './filters-form';
@@ -7,23 +7,30 @@ import { ComplexFormValues } from '../../../../shared/types/forms.type';
 import { EngineTypes } from '../../../../shared/types/engines.type';
 // Styles
 import './styles.scss';
+import { DropdownStringOption } from '../../../../shared/types/filters.type';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
-  onEngineTypesChange: (value: number[] | null) => void;
+  selectedEngineTypes: number[];
+  setSelectedEngineTypes: (value: number[]) => void;
   engineTypesList: EngineTypes[];
 }
 
-const Filters: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesChange, engineTypesList }) => {
+const Filters: FC<ReportComponentProps> = ({
+  onOrderChange,
+  selectedEngineTypes,
+  setSelectedEngineTypes,
+  engineTypesList,
+}) => {
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
-    engine_types_filter: [],
+    engine_types_filter: selectedEngineTypes,
     dropdown3: null,
     dropdown4: null,
   });
 
   const form = useForm<ComplexFormValues>({
-    shouldUnregister: true,
+    shouldUnregister: false,
     mode: 'onChange',
     criteriaMode: 'all',
     shouldUseNativeValidation: false,
@@ -51,7 +58,9 @@ const Filters: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesChange,
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FiltersForm
           onOrderChange={onOrderChange}
-          onEngineTypesChange={onEngineTypesChange}
+          // onEngineTypesChange={onEngineTypesChange}
+          selectedEngineTypes={selectedEngineTypes}
+          setSelectedEngineTypes={setSelectedEngineTypes}
           engineTypesList={engineTypesList}
         />
       </form>

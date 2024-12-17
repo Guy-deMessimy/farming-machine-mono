@@ -10,20 +10,20 @@ export const sortOptions: DropdownStringOption[] = [
 
 export const categoryOptions = [
   {
-    label: 'matériels agricoles',
-    value: 1,
+    name: 'matériels agricoles',
+    id: 1,
   },
   {
-    label: 'matériels forestier',
-    value: 2,
+    name: 'matériels forestier',
+    id: 2,
   },
   {
-    label: 'matériels viticole',
-    value: 3,
+    name: 'matériels viticole',
+    id: 3,
   },
   {
-    label: 'Travaux publics',
-    value: 4,
+    name: 'Travaux publics',
+    id: 9,
   },
 ];
 

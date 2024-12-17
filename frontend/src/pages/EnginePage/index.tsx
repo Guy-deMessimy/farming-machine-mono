@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 // Components
 import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
@@ -13,25 +13,19 @@ import './styles.scss';
 
 const EnginePage: FC = () => {
   const [orderBy, setOrderBy] = useState(DEFAULT_ENGINE_ORDER_BY);
-  const [selectedEngineTypes, setSelectedEngineTypes] = useState<{ typeId: number[] | null }>({ typeId: null });
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
   // const limit = 8;
-  // const where = { brandName: 'New Holland' };
-  console.log('AAA selectedEngineTypes', selectedEngineTypes);
-  // const where = { typeId: [9] };
-  const where = selectedEngineTypes.typeId ? { typeId: selectedEngineTypes.typeId } : {};
-  console.log('AAA where', where);
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
+  // // const where = { brandName: 'New Holland' };
+  const where = useMemo(() => {
+    return selectedEngineTypes.length > 0 ? { typeId: selectedEngineTypes } : {};
+  }, [selectedEngineTypes]);
+
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes();
+  const { engines, enginesLoading, enginesError } = useEngines({ where });
 
   const handleOrderChange = (value: string | null) => {
     const sortOrderValue = value as SortOrder;
     setOrderBy({ brandName: sortOrderValue });
-  };
-
-  const handleEngineTypesChange = (value: number[] | null) => {
-    const engineTypesValue = value;
-    console.log('AAA engineTypesValue', engineTypesValue);
-    setSelectedEngineTypes({ typeId: engineTypesValue });
   };
 
   if (enginesLoading) return <p>Loading...</p>;
@@ -43,7 +37,8 @@ const EnginePage: FC = () => {
       <hr className="engine__wrapper__hr"></hr>
       <Filters
         onOrderChange={handleOrderChange}
-        onEngineTypesChange={handleEngineTypesChange}
+        selectedEngineTypes={selectedEngineTypes}
+        setSelectedEngineTypes={setSelectedEngineTypes}
         engineTypesList={engineTypes}
       />
       <EngineList enginesList={engines} />

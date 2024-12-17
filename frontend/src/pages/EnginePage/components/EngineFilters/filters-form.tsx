@@ -13,11 +13,17 @@ import './styles.scss';
 
 interface ReportComponentProps {
   onOrderChange: (value: string | null) => void;
-  onEngineTypesChange: (value: number[] | null) => void;
+  selectedEngineTypes: number[];
+  setSelectedEngineTypes: (value: number[]) => void;
   engineTypesList: EngineTypes[];
 }
 
-const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesChange, engineTypesList }) => {
+const FiltersForm: FC<ReportComponentProps> = ({
+  onOrderChange,
+  selectedEngineTypes,
+  setSelectedEngineTypes,
+  engineTypesList,
+}) => {
   const { control, watch } = useFormContext<ComplexFormValues>();
 
   const handleSortChange = (selectedValue: string, field: ControllerRenderProps<ComplexFormValues, 'sort_filter'>) => {
@@ -25,19 +31,7 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesCha
     field.onChange(selectedOption);
   };
 
-  const handleEngineTypesChange = (
-    selectedValue: number[],
-    field: ControllerRenderProps<ComplexFormValues, 'engine_types_filter'>,
-  ) => {
-    // console.log('AAA selectedvalue on func', selectedValue);
-    // console.log('AAA field', field);
-    field.onChange(selectedValue);
-  };
-
   const watchSortValues = watch('sort_filter');
-  // console.log('AAA watchSortValues', watchSortValues);
-  const watchTypesValues = watch('engine_types_filter') as number[] | null;
-  console.log('AAA watchTypesValues', watchTypesValues);
 
   useEffect(() => {
     if (
@@ -52,11 +46,6 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesCha
     }
   }, [watchSortValues]);
 
-  useEffect(() => {
-    // console.log('AAA je passe dans le use', watchTypesValues);
-    onEngineTypesChange(watchTypesValues ?? null);
-  }, [watchTypesValues]);
-
   return (
     <div className="engine__filter__form">
       <Controller
@@ -65,7 +54,6 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesCha
         key="sort_filter"
         rules={{}}
         render={({ field }) => {
-          // console.log('AAA field value1', field.value);
           return (
             <Select
               {...field}
@@ -88,7 +76,6 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesCha
         key="engine_types_filter"
         rules={{}}
         render={({ field }) => {
-          // console.log('AAA field value2', field.value);
           return (
             <Select
               {...field}
@@ -102,10 +89,10 @@ const FiltersForm: FC<ReportComponentProps> = ({ onOrderChange, onEngineTypesCha
                   value: Number(type.id),
                 };
               })}
-              value={typeof field.value === 'object' && field.value !== null ? (field.value as number[]) : null}
+              value={selectedEngineTypes}
               placeholder="Trier par"
               mode="multiple"
-              onChange={(value: number[]) => handleEngineTypesChange(value, field)}
+              onChange={(value: number[]) => setSelectedEngineTypes(value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
             />
