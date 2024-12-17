@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
 import { ENGINE_LIST } from './engine';
-import { ENGINE_TYPE } from './engineType';
+import { ENGINE_TYPE } from './1-engineType';
 
 const prisma = new PrismaClient();
 
