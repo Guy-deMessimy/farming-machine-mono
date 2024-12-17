@@ -15,16 +15,20 @@ type Engine {
   id: ID!
   modelName: String!
   brandName: String!
-  conception: String!
-  engineKwPower: Int!
-  engineCcPower: Int!
-  maxKmhSpeed: Int!
-  petrolLitreTank: Int!
-  tankLitre: Int!
-  weightKg: Int!
-  workingWidth: Int!
+  conception: String
+  description: String
+  engineKwPower: Int
+  engineCcPower: Int
+  maxKmhSpeed: Int
+  petrolLitreTank: Int
+  tankLitre: Int
+  autonomyMn: Int
+  liftingHeightMeter: Int
+  weightKg: Int
+  workingWidth: Int
   copiesNumber: Int!
-  imageUrl: String!
+  imageUrl: String
+  ref: String
   type: EngineTypes
 }
 

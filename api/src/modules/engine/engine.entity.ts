@@ -13,35 +13,47 @@ export class Engine {
   @Field(() => String)
   brandName: EngineDB[`brandName`];
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   conception: EngineDB[`conception`];
 
-  @Field(() => Int)
+  @Field(() => String, { nullable: true })
+  description: EngineDB[`description`];
+
+  @Field(() => Int, { nullable: true })
   engineKwPower: EngineDB[`engineKwPower`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   engineCcPower: EngineDB[`engineCcPower`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   maxKmhSpeed: EngineDB[`maxKmhSpeed`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   petrolLitreTank: EngineDB[`petrolLitreTank`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   tankLitre: EngineDB[`tankLitre`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
+  autonomyMn: EngineDB[`autonomyMn`];
+
+  @Field(() => Int, { nullable: true })
+  liftingHeightMeter: EngineDB[`liftingHeightMeter`];
+
+  @Field(() => Int, { nullable: true })
   weightKg: EngineDB[`weightKg`];
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   workingWidth?: EngineDB[`workingWidth`];
 
   @Field(() => Int)
   copiesNumber: EngineDB[`copiesNumber`];
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   imageUrl: EngineDB[`imageUrl`];
+
+  @Field(() => String, { nullable: true })
+  ref: EngineDB[`ref`];
 
   @Field(() => EngineTypes, { nullable: true })
   type?: EngineTypes;

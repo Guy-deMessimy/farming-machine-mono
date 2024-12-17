@@ -12,35 +12,47 @@ export class Engine {
   @Field(() => String)
   brandName: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   conception: string;
 
-  @Field(() => Int)
+  @Field(() => String, { nullable: true })
+  description: string;
+
+  @Field(() => Int, { nullable: true })
   engineKwPower: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   engineCcPower: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   maxKmhSpeed: number;
 
-  @Field(() => Int)
+  @Field(() => Int,{ nullable: true })
   petrolLitreTank: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   tankLitre: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
+  autonomyMn: number;
+
+  @Field(() => Int, { nullable: true })
+  liftingHeightMeter: number;
+
+  @Field(() => Int, { nullable: true })
   weightKg: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   workingWidth?: number;
 
   @Field(() => Int)
   copiesNumber: number;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   imageUrl: string;
+
+  @Field(() => String, { nullable: true })
+  ref: string;
 
   @Field(() => EngineTypes, { nullable: true })
   type?: EngineTypes;

@@ -71,29 +71,34 @@ model File {
   @@index([fileName, key])
 }
 
-model Engine {
-  id              Int     @default(autoincrement()) @id
-  modelName       String  
-  brandName       String
-  conception      String
-  engineKwPower   Int
-  engineCcPower   Int
-  maxKmhSpeed     Int
-  petrolLitreTank Int
-  tankLitre       Int?
-  weightKg        Int
-  workingWidth    Int?
-  copiesNumber    Int
-  imageUrl        String?
-  type            EngineTypes?    @relation(fields: [typeId], references: [id])
-  typeId          Int?
-  @@index([brandName, modelName])
-}
-
 model EngineTypes {
   id          Int       @default(autoincrement()) @id
   name        String
   description String?   @db.LongText
   engines     Engine[] 
 }
+
+model Engine {
+  id                  Int       @default(autoincrement()) @id
+  modelName           String  
+  brandName           String
+  conception          String?
+  description         String?   @db.LongText
+  engineKwPower       Int?
+  engineCcPower       Int?
+  maxKmhSpeed         Int?
+  petrolLitreTank     Int?
+  tankLitre           Int?
+  autonomyMn          Int?
+  liftingHeightMeter  Int?
+  weightKg            Int?
+  workingWidth        Int?
+  copiesNumber        Int
+  imageUrl            String?
+  ref                 String?
+  type                EngineTypes?    @relation(fields: [typeId], references: [id])
+  typeId              Int?
+  @@index([brandName, modelName])
+}
+
 
