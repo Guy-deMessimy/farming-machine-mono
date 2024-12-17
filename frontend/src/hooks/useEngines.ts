@@ -4,7 +4,6 @@ import { EngineQueryDto } from '../shared/types/engines.type';
 
 export const useEngines = <T extends EngineQueryDto>(params: T) => {
   const query = { ...params };
-  console.log('AAA je suis dans mon hooks:', query);
   const { data, loading, error } = useQuery(GET_ENGINES, {
     variables: { query },
   });

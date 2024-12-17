@@ -9,7 +9,7 @@ export interface EngineQueryDto {
 }
 
 export interface EngineOrderByInput {
-  brandName?: SortOrder;
+  brandName?: string;
   id?: SortOrder;
   modelName?: SortOrder;
 }
@@ -20,10 +20,6 @@ export interface EngineWhereInput {
   brandName?: string;
   typeId?: number[] | null;
 }
-
-export const DEFAULT_ENGINE_ORDER_BY: EngineOrderByInput = {
-  brandName: SortOrder.DESC,
-};
 
 export interface Engine {
   id: number;

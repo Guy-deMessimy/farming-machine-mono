@@ -9,7 +9,6 @@ interface ReportComponentProps {
 }
 
 const EngineCard: FC<ReportComponentProps> = ({ engineItem }) => {
-  console.log('engineItem', engineItem);
   return (
     <div className="engine__card">
       <div className="engine__card__title">{`${engineItem.brandName} ${engineItem.modelName}`} | ou similaire</div>

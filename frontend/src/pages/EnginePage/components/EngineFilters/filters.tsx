@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 // Components
 import FiltersForm from './filters-form';
@@ -7,23 +7,24 @@ import { ComplexFormValues } from '../../../../shared/types/forms.type';
 import { EngineTypes } from '../../../../shared/types/engines.type';
 // Styles
 import './styles.scss';
-import { DropdownStringOption } from '../../../../shared/types/filters.type';
 
 interface ReportComponentProps {
-  onOrderChange: (value: string | null) => void;
+  order: string;
+  setOrder: (value: string) => void;
   selectedEngineTypes: number[];
   setSelectedEngineTypes: (value: number[]) => void;
   engineTypesList: EngineTypes[];
 }
 
 const Filters: FC<ReportComponentProps> = ({
-  onOrderChange,
+  order,
+  setOrder,
   selectedEngineTypes,
   setSelectedEngineTypes,
   engineTypesList,
 }) => {
   const myDefaultValues = (): ComplexFormValues => ({
-    sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
+    // sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
     engine_types_filter: selectedEngineTypes,
     dropdown3: null,
     dropdown4: null,
@@ -41,24 +42,24 @@ const Filters: FC<ReportComponentProps> = ({
 
   const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
     try {
-      console.log('je try', data, memoizedWatchValues);
+      console.info('je try', data, memoizedWatchValues);
     } catch (error) {
-      console.log('je error', error);
+      console.info('je error', error);
     } finally {
-      console.log('je finally');
+      console.info('je finally');
     }
   };
 
   const onError = (errors: FieldErrors<ComplexFormValues>) => {
-    console.log('onError', errors);
+    console.error('onError', errors);
   };
 
   const EngineFilterFormProvider = (
     <FormProvider {...form}>
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FiltersForm
-          onOrderChange={onOrderChange}
-          // onEngineTypesChange={onEngineTypesChange}
+          order={order}
+          setOrder={setOrder}
           selectedEngineTypes={selectedEngineTypes}
           setSelectedEngineTypes={setSelectedEngineTypes}
           engineTypesList={engineTypesList}

@@ -1,9 +1,8 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
 import { Select } from 'antd';
 
 // Types
-import { DropdownStringOption } from '../../../../shared/types/filters.type';
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
 import { EngineTypes } from '../../../../shared/types/engines.type';
 
@@ -12,39 +11,21 @@ import { sortOptions } from './dummy-type-data';
 import './styles.scss';
 
 interface ReportComponentProps {
-  onOrderChange: (value: string | null) => void;
+  order: string;
+  setOrder: (value: string) => void;
   selectedEngineTypes: number[];
   setSelectedEngineTypes: (value: number[]) => void;
   engineTypesList: EngineTypes[];
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({
-  onOrderChange,
+  order,
+  setOrder,
   selectedEngineTypes,
   setSelectedEngineTypes,
   engineTypesList,
 }) => {
-  const { control, watch } = useFormContext<ComplexFormValues>();
-
-  const handleSortChange = (selectedValue: string, field: ControllerRenderProps<ComplexFormValues, 'sort_filter'>) => {
-    const selectedOption = sortOptions.find((option) => option.value === selectedValue) || null;
-    field.onChange(selectedOption);
-  };
-
-  const watchSortValues = watch('sort_filter');
-
-  useEffect(() => {
-    if (
-      watchSortValues &&
-      typeof watchSortValues === 'object' &&
-      'value' in watchSortValues &&
-      typeof watchSortValues.value === 'string'
-    ) {
-      onOrderChange(watchSortValues.value);
-    } else {
-      onOrderChange('ASC');
-    }
-  }, [watchSortValues]);
+  const { control } = useFormContext<ComplexFormValues>();
 
   return (
     <div className="engine__filter__form">
@@ -60,12 +41,8 @@ const FiltersForm: FC<ReportComponentProps> = ({
               prefix="Trier par"
               options={sortOptions}
               placeholder="Trier par"
-              onChange={(value: string) => handleSortChange(value, field)}
-              value={
-                typeof field.value === 'object' && field.value !== null && 'value' in field.value
-                  ? (field.value as DropdownStringOption).value
-                  : null
-              }
+              onChange={(value: string) => setOrder(value)}
+              value={order}
             />
           );
         }}
