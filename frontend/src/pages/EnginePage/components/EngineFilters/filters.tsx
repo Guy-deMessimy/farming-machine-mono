@@ -24,7 +24,7 @@ const Filters: FC<ReportComponentProps> = ({
   engineTypesList,
 }) => {
   const myDefaultValues = (): ComplexFormValues => ({
-    // sort_filter: { value: 'ASC', label: 'Filtrer par: Marque croissante' },
+    sort_filter: order,
     engine_types_filter: selectedEngineTypes,
     dropdown3: null,
     dropdown4: null,
