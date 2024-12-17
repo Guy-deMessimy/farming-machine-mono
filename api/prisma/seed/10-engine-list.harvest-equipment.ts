@@ -14,7 +14,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 14,
     copiesNumber: 2,
     typeId: 10,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png'
   },
   {
     modelName: 'Lexion 8900',
@@ -31,7 +31,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 13.8,
     copiesNumber: 1,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
   },
   {
     modelName: 'S790',
@@ -48,7 +48,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 12.2,
     copiesNumber: 2,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
   },
   {
     modelName: 'Ideal 9T',
@@ -65,7 +65,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 12.2,
     copiesNumber: 1,
     typeId: 10,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png'
   },
   {
     modelName: 'CR10.90',
@@ -82,7 +82,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 13.7,
     copiesNumber: 1,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
   },
   {
     modelName: 'Trion 750',
@@ -99,7 +99,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 9.3,
     copiesNumber: 3,
     typeId: 10,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png'
   },
   {
     modelName: 'Tucano 580',
@@ -116,7 +116,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 7.7,
     copiesNumber: 2,
     typeId: 10,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
   },
   {
     modelName: 'TC5.90',
@@ -133,7 +133,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 6.1,
     copiesNumber: 4,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
   },
   {
     modelName: 'Deutz-Fahr 6095 HTS',
@@ -167,7 +167,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 7.6,
     copiesNumber: 3,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png'
   },
   {
     modelName: 'Rostselmash TORUM 785',
@@ -184,7 +184,7 @@ export const ENGINE_LIST_HARVEST_EQUIPMENT  = [
     workingWidth: 9.9,
     copiesNumber: 1,
     typeId: 10,
-    imageUrl: '',
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
   },
   
 ];

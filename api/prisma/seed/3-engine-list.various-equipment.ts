@@ -1,4 +1,4 @@
-export const ENGINE_LIST_VARIOUS_EQUIPMENT  = [
+export const ENGINE_LIST_VARIOUS_EQUIPMENT = [
   {
     modelName: 'DJI Agras T30',
     brandName: 'DJI',
@@ -15,7 +15,7 @@ export const ENGINE_LIST_VARIOUS_EQUIPMENT  = [
     workingWidth: null,
     copiesNumber: 2,
     typeId: 9,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png'
   },
   {
     modelName: 'P40',
@@ -33,7 +33,7 @@ export const ENGINE_LIST_VARIOUS_EQUIPMENT  = [
     workingWidth: null,
     copiesNumber: 2,
     typeId: 9,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png'
   },
   {
     modelName: 'TRX420 Fourtrax Rancher',
@@ -51,7 +51,7 @@ export const ENGINE_LIST_VARIOUS_EQUIPMENT  = [
     workingWidth: null,
     copiesNumber: 2,
     typeId: 9,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png'
   },
   {
     modelName: 'Sportsman 570 EPS',
@@ -69,7 +69,7 @@ export const ENGINE_LIST_VARIOUS_EQUIPMENT  = [
     workingWidth: null,
     copiesNumber: 2,
     typeId: 9,
-    imageUrl: ''
+    imageUrl: 'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png'
   },
   {
     modelName: 'CFX-750',
