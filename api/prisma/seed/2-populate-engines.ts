@@ -60,6 +60,14 @@ const images = {
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png'
   ],
+  harvest_equipment: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
+  ],
   soi_tools: [
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
