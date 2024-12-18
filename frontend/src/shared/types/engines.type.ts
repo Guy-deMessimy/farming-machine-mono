@@ -18,6 +18,7 @@ export interface EngineWhereInput {
   id?: number;
   modelName?: string;
   brandName?: string;
+  // engineModelId
   engineTypeId?: number[] | null;
 }
 
