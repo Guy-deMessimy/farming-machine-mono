@@ -1,9 +1,25 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
 // Types
-import { EngineInput, ParsedArgs, TypeInput } from './types/engines.type';
+import { EngineInput, EngineModelInput, ParsedArgs, TypeInput } from './types/engines.type';
 // Dummy data lists
 import { ENGINE_TYPE } from './1-populate-engine-types';
+import {
+  ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS,
+  ENGINE_MODEL_LIST_BREEDING_EQUIPMENT,
+  ENGINE_MODEL_LIST_CRUSHERS,
+  ENGINE_MODEL_LIST_HANDLING,
+  ENGINE_MODEL_LIST_HARVEST_EQUIPMENT,
+  ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT,
+  ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT,
+  ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT,
+  ENGINE_MODEL_LIST_SOI_TOOLS,
+  ENGINE_MODEL_LIST_SPECIALIZED_CULTURE,
+  ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT,
+  ENGINE_MODEL_LIST_SPREADING,
+  ENGINE_MODEL_LIST_TRACTORS,
+  ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT
+} from './2-populate-engine-models';
 import {
   ENGINE_LIST_CRUSHERS,
   ENGINE_LIST_HANDLING,
@@ -36,7 +52,7 @@ const main = async (): Promise<void> => {
 
   switch (environment) {
     case 'development':
-      const seedType = async (): Promise<boolean> => {
+      const seedEngineTypes = async (): Promise<boolean> => {
         try {
           await Promise.all(
             ENGINE_TYPE.map(async (n: TypeInput) =>
@@ -74,12 +90,58 @@ const main = async (): Promise<void> => {
         }
       };
 
-      const createEngineRecords = async (typeName: string, engineList: EngineInput[]): Promise<void> => {
+      const getEngineModelIdByName = async (typeName: string): Promise<number | null> => {
         try {
+          const engineModel = await prisma.engineModel.findFirst({
+            where: {
+              name: typeName,
+            },
+            select: {
+              id: true,
+            },
+          });
+          return engineModel?.id || null; // Retourne l'ID ou null si non trouvé
+        } catch (e) {
+          console.error(`[SEED] Failed to fetch engine model ID for name "${typeName}"`, e);
+          return null;
+        }
+      };
+
+      const createEngineModelRecords = async (typeName: string, engineList: EngineModelInput[]): Promise<boolean> => {
+        try {
+
           const typeId = await getEngineTypeIdByName(typeName);
         
           if (!typeId) {
             console.warn(`[SEED] Engine type "${typeName}" not found, skipping seeding`);
+            return;
+          }
+          await Promise.all(
+            engineList.map(async (n: TypeInput) =>
+              prisma.engineModel.create({
+                data: {
+                  name: n.name,
+                  description: n.description,
+                  engineTypeId: typeId,
+          
+                },
+              }),
+            ),
+          );
+          console.info('[SEED] Successfully created engine models records');
+          return true;
+        } catch (e) {
+          console.error('[SEED] Failed to create engine models records', e);
+          return false; 
+        }
+      };
+
+      const createEngineRecords = async (typeName: string, engineList: EngineInput[]): Promise<void> => {
+        try {
+          const typeId = await getEngineModelIdByName(typeName);
+        
+          if (!typeId) {
+            console.warn(`[SEED] Engine model "${typeName}" not found, skipping seeding`);
             return;
           }
       
@@ -102,7 +164,7 @@ const main = async (): Promise<void> => {
                   weightKg: engine.weightKg,
                   workingWidth: engine.workingWidth,
                   copiesNumber: engine.copiesNumber,
-                  engineTypeId: typeId,
+                  engineModelId: typeId,
                   imageUrl: engine.imageUrl,  
                 },
               }),
@@ -116,7 +178,8 @@ const main = async (): Promise<void> => {
 
       const seedCrushersList = async (): Promise<void> => {
         try {
-          await createEngineRecords("broyeurs épareuses", ENGINE_LIST_CRUSHERS);
+          await createEngineModelRecords("broyeurs épareuses", ENGINE_MODEL_LIST_CRUSHERS);
+          await createEngineRecords("Broyeuses", ENGINE_LIST_CRUSHERS);
           console.info('[SEED] Successfully created crushers equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create crushers equipment records', e);
@@ -125,7 +188,8 @@ const main = async (): Promise<void> => {
 
       const seedVariousEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("équipements divers", ENGINE_LIST_VARIOUS_EQUIPMENT);
+          await createEngineModelRecords("équipements divers", ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT);
+          await createEngineRecords("Quads", ENGINE_LIST_VARIOUS_EQUIPMENT);
           console.info('[SEED] Successfully created various equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create various equipment records', e);
@@ -134,7 +198,8 @@ const main = async (): Promise<void> => {
 
       const seedSpreadingList = async (): Promise<void> => {
         try {
-          await createEngineRecords("épandage", ENGINE_LIST_SPREADING);
+          await createEngineModelRecords("épandage", ENGINE_MODEL_LIST_SPREADING);
+          await createEngineRecords("Epandeurs", ENGINE_LIST_SPREADING);
           console.info('[SEED] Successfully created spreading equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create spreading equipment records', e);
@@ -143,7 +208,8 @@ const main = async (): Promise<void> => {
 
       const seedHandlingList = async (): Promise<void> => {
         try {
-          await createEngineRecords("manutention", ENGINE_LIST_HANDLING);
+          await createEngineModelRecords("manutention", ENGINE_MODEL_LIST_HANDLING);
+          await createEngineRecords("Chargeur frontal", ENGINE_LIST_HANDLING);
           console.info('[SEED] Successfully created handling equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create handling equipment records', e);
@@ -152,7 +218,8 @@ const main = async (): Promise<void> => {
 
       const seedSpecializedCulturesList = async (): Promise<void> => {
         try {
-          await createEngineRecords("matériels de cultures spécialisés", ENGINE_LIST_SPECIALIZED_CULTURE);
+          await createEngineModelRecords("matériels de cultures spécialisés", ENGINE_MODEL_LIST_SPECIALIZED_CULTURE);
+          await createEngineRecords("Arracheuses", ENGINE_LIST_SPECIALIZED_CULTURE);
           console.info('[SEED] Successfully created specialized cultures equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create specialized cultures equipment records', e);
@@ -161,7 +228,8 @@ const main = async (): Promise<void> => {
 
       const seedBreedingEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("matériels élevage", ENGINE_LIST_BREEDING_EQUIPMENT);
+          await createEngineModelRecords("matériels élevage", ENGINE_MODEL_LIST_BREEDING_EQUIPMENT);
+          await createEngineRecords("Bétaillères", ENGINE_LIST_BREEDING_EQUIPMENT);
           console.info('[SEED] Successfully created specialized cultures equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create breeding equipment records', e);
@@ -170,7 +238,8 @@ const main = async (): Promise<void> => {
 
       const seedIrrigationEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("matériels irrigation", ENGINE_LIST_IRRIGATION_EQUIPMENT);
+          await createEngineModelRecords("matériels irrigation", ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT);
+          await createEngineRecords("Pompes irrigation", ENGINE_LIST_IRRIGATION_EQUIPMENT);
           console.info('[SEED] Successfully created specialized cultures equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create irrigation equipment records', e);
@@ -179,7 +248,8 @@ const main = async (): Promise<void> => {
 
       const seedHaymakingEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("matériels de fenaison", ENGINE_LIST_HAYMAKING_EQUIPMENT);
+          await createEngineModelRecords("matériels de fenaison", ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT);
+          await createEngineRecords("Enrubanneuses", ENGINE_LIST_HAYMAKING_EQUIPMENT);
           console.info('[SEED] Successfully created specialized cultures equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create haymaking equipment records', e);
@@ -188,7 +258,8 @@ const main = async (): Promise<void> => {
 
       const seedHarvestList = async (): Promise<void> => {
         try {
-          await createEngineRecords("matériels de récolte", ENGINE_LIST_HARVEST_EQUIPMENT);
+          await createEngineModelRecords("matériels de récolte", ENGINE_MODEL_LIST_HARVEST_EQUIPMENT);
+          await createEngineRecords("Moissoneuses", ENGINE_LIST_HARVEST_EQUIPMENT);
           console.info('[SEED] Successfully created harvest equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create harvest equipment records', e);
@@ -197,7 +268,8 @@ const main = async (): Promise<void> => {
 
       const seedSoiToolsList = async (): Promise<void> => {
         try {
-          await createEngineRecords("outils de sols", ENGINE_LIST_SOI_TOOLS);
+          await createEngineModelRecords("outils de sols", ENGINE_MODEL_LIST_SOI_TOOLS);
+          await createEngineRecords("Déchaumeur", ENGINE_LIST_SOI_TOOLS);
           console.info('[SEED] Successfully created harvest equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create soi tools equipment records', e);
@@ -206,7 +278,8 @@ const main = async (): Promise<void> => {
 
       const seedSprayerEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("pulvérisateurs", ENGINE_LIST_SPRAYER_EQUIPMENT);
+          await createEngineModelRecords("pulvérisateurs", ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT);
+          await createEngineRecords("Pulvérisateurs trainé", ENGINE_LIST_SPRAYER_EQUIPMENT);
           console.info('[SEED] Successfully created seeders equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create sprayer equipment records', e);
@@ -215,7 +288,8 @@ const main = async (): Promise<void> => {
 
       const seedSeedersAgriculturalTrailersList = async (): Promise<void> => {
         try {
-          await createEngineRecords("remorques agricoles", ENGINE_LIST_AGRICULTURAL_TRAILERS);
+          await createEngineModelRecords("remorques agricoles", ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS);
+          await createEngineRecords("Transbordeur", ENGINE_LIST_AGRICULTURAL_TRAILERS);
           console.info('[SEED] Successfully created seeders equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create agricultural trailers equipment records', e);
@@ -224,7 +298,8 @@ const main = async (): Promise<void> => {
 
       const seedSeedersEquipmentList = async (): Promise<void> => {
         try {
-          await createEngineRecords("semoirs", ENGINE_LIST_SEEDERS_EQUIPMENT);
+          await createEngineModelRecords("semoirs", ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT);
+          await createEngineRecords("Semoirs céréales", ENGINE_LIST_SEEDERS_EQUIPMENT);
           console.info('[SEED] Successfully created seeders equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create seeders equipment records', e);
@@ -233,7 +308,8 @@ const main = async (): Promise<void> => {
 
       const seedTractorsList = async (): Promise<void> => {
         try {
-          await createEngineRecords("tracteurs", ENGINE_LIST_TRACTORS);
+          await createEngineModelRecords("tracteurs", ENGINE_MODEL_LIST_TRACTORS);
+          await createEngineRecords("Tracteurs agricole", ENGINE_LIST_TRACTORS);
           console.info('[SEED] Successfully created tractors equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create tractors equipment records', e);
@@ -241,7 +317,7 @@ const main = async (): Promise<void> => {
       };
 
    
-      const isTypeSeeded = await seedType();
+      const isTypeSeeded = await seedEngineTypes();
       if (isTypeSeeded) {
         await Promise.all([
           seedCrushersList(),
