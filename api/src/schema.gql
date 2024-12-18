@@ -72,6 +72,4 @@ input EngineWhereInput {
   modelName: String
   engineModelId: [Int!]
   engineTypeId: [Int!]
-  engineModel: EngineWhereInput
-  engineType: EngineWhereInput
 }
