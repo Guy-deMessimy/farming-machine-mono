@@ -19,7 +19,7 @@ import {
   ENGINE_LIST_AGRICULTURAL_TRAILERS,
   ENGINE_LIST_SEEDERS_EQUIPMENT,
   ENGINE_LIST_TRACTORS
-} from './2-populate-engines';
+} from './3-populate-engines';
 
 const prisma = new PrismaClient();
 
