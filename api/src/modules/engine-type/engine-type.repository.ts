@@ -14,7 +14,7 @@ export class EngineTypesRepository {
   async findAllEngineTypes(): Promise<EngineTypes[]> {
     return this.prisma.engineTypes.findMany({
       include: {
-        engines: true,
+        engineModels: true,
       },
     });
   }
