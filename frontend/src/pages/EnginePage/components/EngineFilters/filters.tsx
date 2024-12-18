@@ -31,18 +31,16 @@ const Filters: FC<ReportComponentProps> = ({
   });
 
   const form = useForm<ComplexFormValues>({
-    shouldUnregister: false,
+    shouldUnregister: true,
     mode: 'onChange',
     criteriaMode: 'all',
     shouldUseNativeValidation: false,
     defaultValues: myDefaultValues(),
   });
 
-  const memoizedWatchValues = useMemo(() => form.watch('sort_filter'), [form.watch('sort_filter')]);
-
   const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
     try {
-      console.info('je try', data, memoizedWatchValues);
+      console.info('je try', data);
     } catch (error) {
       console.info('je error', error);
     } finally {
