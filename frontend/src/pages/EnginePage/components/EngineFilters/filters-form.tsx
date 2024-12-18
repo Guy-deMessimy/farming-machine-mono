@@ -7,7 +7,6 @@ import { ComplexFormValues } from '../../../../shared/types/forms.type';
 import { EngineTypes } from '../../../../shared/types/engines.type';
 
 // Temp
-import { sortOptions } from './dummy-type-data';
 import './styles.scss';
 
 interface ReportComponentProps {
@@ -39,7 +38,13 @@ const FiltersForm: FC<ReportComponentProps> = ({
             <Select
               {...field}
               prefix="Trier par"
-              options={sortOptions}
+              options={[
+                { value: 'ASC', label: 'Marque croissante' },
+                {
+                  value: 'DESC',
+                  label: 'Marque décroissante',
+                },
+              ]}
               placeholder="Trier par"
               onChange={(value: string) => setOrder(value)}
               value={order}
