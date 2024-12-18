@@ -75,7 +75,16 @@ model EngineTypes {
   id          Int       @default(autoincrement()) @id
   name        String
   description String?   @db.LongText
-  engines     Engine[] 
+  engineModels EngineModel[]
+}
+
+model EngineModel {
+  id          Int       @default(autoincrement()) @id
+  name        String
+  description String?   @db.LongText
+  engineType  EngineTypes @relation(fields: [engineTypeId], references: [id])
+  engineTypeId Int
+  engines     Engine[]
 }
 
 model Engine {
@@ -96,9 +105,10 @@ model Engine {
   copiesNumber        Int
   imageUrl            String?
   ref                 String?
-  engineType                EngineTypes?    @relation(fields: [engineTypeId], references: [id])
-  engineTypeId              Int?
+  engineModel         EngineModel @relation(fields: [engineModelId], references: [id])
+  engineModelId       Int
   @@index([brandName, modelName])
 }
+
 
 
