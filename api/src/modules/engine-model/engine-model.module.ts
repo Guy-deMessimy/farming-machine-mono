@@ -3,6 +3,6 @@ import { EngineModelService } from './engine-model.service';
 import { EngineModelResolver } from './engine-model.resolver';
 
 @Module({
-  providers: [EngineModelService, EngineModelResolver]
+  providers: [EngineModelService, EngineModelResolver],
 })
 export class EngineModelModule {}
