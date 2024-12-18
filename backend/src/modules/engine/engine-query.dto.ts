@@ -41,7 +41,7 @@ class EngineWhereInput {
   @IsOptional()
   @IsArray()
   @ArrayNotEmpty()
-  readonly engineTypeId?: number[];
+  readonly engineModelId?: number[];
 }
 
 @InputType()
