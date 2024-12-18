@@ -18,7 +18,7 @@ const EnginePage: FC = () => {
   }, [order]);
 
   const where = useMemo(() => {
-    return selectedEngineTypes.length > 0 ? { typeId: selectedEngineTypes } : {};
+    return selectedEngineTypes.length > 0 ? { engineTypeId: selectedEngineTypes } : {};
   }, [selectedEngineTypes]);
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});

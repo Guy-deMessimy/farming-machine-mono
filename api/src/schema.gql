@@ -29,7 +29,7 @@ type Engine {
   copiesNumber: Int!
   imageUrl: String
   ref: String
-  type: EngineTypes
+  engineType: EngineTypes
 }
 
 type Query {
@@ -61,5 +61,5 @@ input EngineWhereInput {
   id: Int
   brandName: String
   modelName: String
-  typeId: [Int!]
+  engineTypeId: [Int!]
 }

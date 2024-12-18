@@ -18,10 +18,10 @@ export class EngineRepository {
     const prismaWhere = {
       ...(where && {
         ...where,
-        ...(where?.typeId && {
-          typeId: Array.isArray(where.typeId)
-            ? { in: where.typeId }
-            : where.typeId,
+        ...(where?.engineTypeId && {
+          engineTypeId: Array.isArray(where.engineTypeId)
+            ? { in: where.engineTypeId }
+            : where.engineTypeId,
         }),
       }),
     };
@@ -34,7 +34,7 @@ export class EngineRepository {
       orderBy,
       where: prismaWhere,
       include: {
-        type: true,
+        engineType: true,
       },
     });
   }

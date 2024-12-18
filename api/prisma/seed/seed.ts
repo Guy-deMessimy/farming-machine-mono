@@ -102,7 +102,7 @@ const main = async (): Promise<void> => {
                   weightKg: engine.weightKg,
                   workingWidth: engine.workingWidth,
                   copiesNumber: engine.copiesNumber,
-                  typeId: typeId,
+                  engineTypeId: typeId,
                   imageUrl: engine.imageUrl,  
                 },
               }),

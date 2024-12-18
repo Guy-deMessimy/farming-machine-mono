@@ -96,8 +96,8 @@ model Engine {
   copiesNumber        Int
   imageUrl            String?
   ref                 String?
-  type                EngineTypes?    @relation(fields: [typeId], references: [id])
-  typeId              Int?
+  engineType                EngineTypes?    @relation(fields: [engineTypeId], references: [id])
+  engineTypeId              Int?
   @@index([brandName, modelName])
 }
 

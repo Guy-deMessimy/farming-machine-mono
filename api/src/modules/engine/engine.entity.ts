@@ -56,5 +56,5 @@ export class Engine {
   ref: EngineDB[`ref`];
 
   @Field(() => EngineTypes, { nullable: true })
-  type?: EngineTypes;
+  engineType?: EngineTypes;
 }
