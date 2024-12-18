@@ -1,6 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { EngineTypes as EngineTypesDB } from '@prisma/client';
-import { Engine } from '../engine/engine.entity';
+import { EngineModel } from '../engine-model/engine-model.entity';
 
 @ObjectType({ description: 'engine type model' })
 export class EngineTypes {
@@ -13,6 +13,7 @@ export class EngineTypes {
   @Field(() => String)
   description: EngineTypesDB[`description`];
 
-  @Field(() => [Engine], { nullable: true })
-  engines?: Engine[];
+  // Relation avec EngineModel
+  @Field(() => [EngineModel], { nullable: true })
+  engineModels?: EngineModel[];
 }

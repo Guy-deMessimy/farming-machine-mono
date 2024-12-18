@@ -7,6 +7,15 @@ type EngineTypes {
   id: ID!
   name: String!
   description: String!
+  engineModels: [EngineModel!]
+}
+
+"""engine model"""
+type EngineModel {
+  id: ID!
+  name: String!
+  description: String!
+  engineType: EngineTypes
   engines: [Engine!]
 }
 
@@ -29,7 +38,7 @@ type Engine {
   copiesNumber: Int!
   imageUrl: String
   ref: String
-  engineType: EngineTypes
+  engineModel: EngineModel
 }
 
 type Query {
@@ -61,5 +70,8 @@ input EngineWhereInput {
   id: Int
   brandName: String
   modelName: String
+  engineModelId: [Int!]
   engineTypeId: [Int!]
+  engineModel: EngineWhereInput
+  engineType: EngineWhereInput
 }
