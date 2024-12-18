@@ -14,9 +14,16 @@ export interface EngineInput {
   weightKg: number;
   workingWidth: number;
   copiesNumber: number;
-  engineTypeId: number;
+  engineModelId: number;
   imageUrl: string;
 }
+
+export interface EngineModelInput {
+  name: string;
+  description: string,
+  engineTypeId: number,
+}
+
 
 
 export interface TypeInput {
