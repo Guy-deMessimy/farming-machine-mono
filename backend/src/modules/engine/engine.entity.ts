@@ -1,5 +1,5 @@
 import { ObjectType, Field, ID, Int } from '@nestjs/graphql';
-import { EngineTypes } from '../engine-type/engine-type.entity';
+import { EngineModel } from '../engine-model/engine-model.entity';
 
 @ObjectType({ description: 'engine model' })
 export class Engine {
@@ -27,7 +27,7 @@ export class Engine {
   @Field(() => Int, { nullable: true })
   maxKmhSpeed: number;
 
-  @Field(() => Int,{ nullable: true })
+  @Field(() => Int, { nullable: true })
   petrolLitreTank: number;
 
   @Field(() => Int, { nullable: true })
@@ -54,6 +54,6 @@ export class Engine {
   @Field(() => String, { nullable: true })
   ref: string;
 
-  @Field(() => EngineTypes, { nullable: true })
-  engineModel?: EngineTypes;
+  @Field(() => EngineModel, { nullable: true })
+  engineModel?: EngineModel;
 }

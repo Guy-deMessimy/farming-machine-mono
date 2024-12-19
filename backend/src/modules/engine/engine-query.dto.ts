@@ -42,6 +42,12 @@ class EngineWhereInput {
   @IsArray()
   @ArrayNotEmpty()
   readonly engineModelId?: number[];
+
+  @Field(() => [Int], { nullable: true })
+  @IsOptional()
+  @IsArray()
+  @ArrayNotEmpty()
+  readonly engineTypeId?: number[];
 }
 
 @InputType()
