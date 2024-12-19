@@ -15,6 +15,7 @@ export const GET_ENGINES = gql`
       weightKg
       workingWidth
       copiesNumber
+      ref
       imageUrl
     }
   }

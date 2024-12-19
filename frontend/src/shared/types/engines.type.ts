@@ -35,6 +35,7 @@ export interface Engine {
   WeightKg: number;
   WorkingWidth: number;
   CopiesNumber: number;
+  ref: string;
   imageUrl: string;
 }
 
