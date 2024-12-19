@@ -21,6 +21,7 @@ import {
   ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT
 } from './2-populate-engine-models';
 import { ENGINE_LIST_TRACTORS, ENGINE_LIST_WOOD_TRACTORS } from './17-engine-list-tractors';
+import { ENGINE_LIST_HARVEST_COMBINE_HARVESTER, ENGINE_LIST_HARVEST_FORAGE_HARVESTER, ENGINE_LIST_HARVEST_PICKER } from './12-engine-list-harvest';
 
 const prisma = new PrismaClient();
 
@@ -241,15 +242,17 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedHarvestList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("matériels de récolte", ENGINE_MODEL_LIST_HARVEST_EQUIPMENT);
-      //     await createEngineRecords("Moissoneuses", ENGINE_LIST_HARVEST_EQUIPMENT);
-      //     console.info('[SEED] Successfully created harvest equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create harvest equipment records', e);
-      //   }
-      // };
+      const seedHarvestList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("matériels de récolte", ENGINE_MODEL_LIST_HARVEST_EQUIPMENT);
+          await createEngineRecords("Moissoneuses", ENGINE_LIST_HARVEST_COMBINE_HARVESTER);
+          await createEngineRecords("Ensileuses", ENGINE_LIST_HARVEST_FORAGE_HARVESTER);
+          await createEngineRecords("Cueilleurs", ENGINE_LIST_HARVEST_PICKER);
+          console.info('[SEED] Successfully created harvest equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create harvest equipment records', e);
+        }
+      };
 
       // const seedSoiToolsList = async (): Promise<void> => {
       //   try {
@@ -314,7 +317,7 @@ const main = async (): Promise<void> => {
           // seedBreedingEquipmentList(),
           // seedIrrigationEquipmentList(),
           // seedHaymakingEquipmentList(),
-          // seedHarvestList(),
+          seedHarvestList(),
           // seedSoiToolsList(),
           // seedSprayerEquipmentList(),
           // seedSeedersAgriculturalTrailersList(),

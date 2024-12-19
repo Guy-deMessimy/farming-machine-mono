@@ -85,8 +85,8 @@ export const ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT = [
 ];
 
 export const ENGINE_MODEL_LIST_TRACTORS = [
-  { name: 'Tracteurs agricole', description: 'POur tracter', engineTypeId: null },
-  { name: 'Tracteurs forrestier', description: 'POur tracter', engineTypeId: null },
+  { name: 'Tracteurs agricole', description: 'Pour tracter', engineTypeId: null },
+  { name: 'Tracteurs forrestier', description: 'Pour tracter', engineTypeId: null },
 ];
 
 
