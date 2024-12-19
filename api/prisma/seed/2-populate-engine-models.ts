@@ -7,10 +7,11 @@ export const ENGINE_MODEL_LIST_CRUSHERS = [
 export const ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT = [
   { name: 'Guidages', description: 'Pour guider', engineTypeId: null },
   { name: 'Quads', description: 'Pour quader', engineTypeId: null },
-  { name: 'Nacelles', description: 'Pour naceller', engineTypeId: null },
+  { name: 'Nacelles élévatrices', description: 'Pour naceller', engineTypeId: null },
   { name: 'Balayeuses', description: 'Pour balayer', engineTypeId: null },
   { name: 'Lames de déneigement', description: 'Pour déneiger', engineTypeId: null },
   { name: 'Drones', description: 'Pour droner', engineTypeId: null },
+  { name: 'Camions autonomes', description: 'Pour livrer', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_SPREADING = [
@@ -73,13 +74,12 @@ export const ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT = [
 ];
 
 export const ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS = [
-  { name: 'Plateau', description: 'Pour platoifier', engineTypeId: null },
+  { name: 'Plateau fourrager', description: 'Pour platoifier', engineTypeId: null },
   { name: 'Remorques', description: 'Pour remorquer', engineTypeId: null },
   { name: 'Transbordeur', description: 'Pour transborder', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT = [
-  { name: 'Semoirs à grain', description: 'Pour semer', engineTypeId: null },
   { name: 'Semoirs céréales', description: 'Pour semer', engineTypeId: null },
   { name: 'Semoirs monograine', description: 'Pour semer', engineTypeId: null },
 ];

@@ -1,83 +1,37 @@
+import { generateEngineList } from "./3-populate-engines";
+
+const modelname = {
+  cereals: [
+    'Premia 3000',
+    'Tramline CX',
+  ],
+  single_seeds: [
+    'NG Plus 4',
+    'ED 6000-2C',
+  ],
+};
+
+const brandname = {
+  cereals: [
+    'Kuhn',
+    'Sulky',
+  ],
+  single_seeds: [
+    'Monosem',
+    'Amazone',
+  ],
+};
+
 const images = {
-    crushers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-    ],
-    handling: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/leve-palette.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal-2.png'
-    ],
-    various_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-    ],
-    spreading: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-    ],
-    specialized_culture: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-    ],
-    breeding_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-    ],
-    irrigation_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-    ],
-    haymaking_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png'
-    ],
-    harvest_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-    ],
-    soi_tools: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-    ],
-    sprayer_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-    ],
-    agricultural_trailers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-    ],
-    seeders_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-    ],
-    tractors: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-    ]
-  };
-  
+  cereals: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/seeders/semoirs-cereales-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/seeders/semoirs-cereales-2.png',
+  ],
+  single_seeds: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/seeders/semoirs-monograine-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/seeders/semoirs-monograine-2.png',
+  ],
+};
 
-
-export const ENGINE_LIST_SEEDERS_EQUIPMENT = generateEngineList('seeders_equipment', 3);
+export const ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS = generateEngineList(modelname['cereals'], brandname['cereals'], 2, 'Semoirs céréales', images['cereals']);
+export const ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS = generateEngineList(modelname['single_seeds'], brandname['single_seeds'], 2, 'Semoirs monograine', images['single_seeds']);

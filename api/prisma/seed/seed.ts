@@ -20,8 +20,19 @@ import {
   ENGINE_MODEL_LIST_TRACTORS,
   ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT
 } from './2-populate-engine-models';
-import { ENGINE_LIST_TRACTORS, ENGINE_LIST_WOOD_TRACTORS } from './17-engine-list-tractors';
+import {
+  ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_GUIDAGE,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK
+} from './5-engine-list-various-equipment';
 import { ENGINE_LIST_HARVEST_COMBINE_HARVESTER, ENGINE_LIST_HARVEST_FORAGE_HARVESTER, ENGINE_LIST_HARVEST_PICKER } from './12-engine-list-harvest';
+import { ENGINE_LIST_AGRICULTURAL_TRAILERS, ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY, ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY } from './15-engine-list-agricultural-trailers';
+import { ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS, ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS } from './16-engine-list-seeders-equipment';
+import { ENGINE_LIST_TRACTORS, ENGINE_LIST_WOOD_TRACTORS } from './17-engine-list-tractors';
 
 const prisma = new PrismaClient();
 
@@ -172,15 +183,21 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedVariousEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("équipements divers", ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT);
-      //     await createEngineRecords("Quads", ENGINE_LIST_VARIOUS_EQUIPMENT);
-      //     console.info('[SEED] Successfully created various equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create various equipment records', e);
-      //   }
-      // };
+      const seedVariousEquipmentList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("équipements divers", ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT);
+          await createEngineRecords("Guidages", ENGINE_LIST_VARIOUS_EQUIPMENT_GUIDAGE);
+          await createEngineRecords("Quads", ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS);
+          await createEngineRecords("nacelles élévatrices", ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES);
+          await createEngineRecords("Balayeuses", ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER);
+          await createEngineRecords("Lames de déneigement", ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE);
+          await createEngineRecords("Drones", ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES);
+          await createEngineRecords("Camions autonomes", ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK);
+          console.info('[SEED] Successfully created various equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create various equipment records', e);
+        }
+      };
 
       // const seedSpreadingList = async (): Promise<void> => {
       //   try {
@@ -274,25 +291,28 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedSeedersAgriculturalTrailersList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("remorques agricoles", ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS);
-      //     await createEngineRecords("Transbordeur", ENGINE_LIST_AGRICULTURAL_TRAILERS);
-      //     console.info('[SEED] Successfully created seeders equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create agricultural trailers equipment records', e);
-      //   }
-      // };
+      const seedSeedersAgriculturalTrailersList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("remorques agricoles", ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS);
+          await createEngineRecords("Plateau fourrager", ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY);
+          await createEngineRecords("Remorques", ENGINE_LIST_AGRICULTURAL_TRAILERS);
+          await createEngineRecords("Transbordeur", ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY);
+          console.info('[SEED] Successfully created seeders equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create agricultural trailers equipment records', e);
+        }
+      };
 
-      // const seedSeedersEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("semoirs", ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT);
-      //     await createEngineRecords("Semoirs céréales", ENGINE_LIST_SEEDERS_EQUIPMENT);
-      //     console.info('[SEED] Successfully created seeders equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create seeders equipment records', e);
-      //   }
-      // };
+      const seedSeedersEquipmentList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("semoirs", ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT);
+          await createEngineRecords("Semoirs céréales", ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS);
+          await createEngineRecords("Semoirs monograine", ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS);
+          console.info('[SEED] Successfully created seeders equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create seeders equipment records', e);
+        }
+      };
 
       const seedTractorsList = async (): Promise<void> => {
         try {
@@ -310,7 +330,7 @@ const main = async (): Promise<void> => {
       if (isTypeSeeded) {
         await Promise.all([
           // seedCrushersList(),
-          // seedVariousEquipmentList(),
+          seedVariousEquipmentList(),
           // seedHandlingList(),
           // seedSpreadingList(),
           // seedSpecializedCulturesList(),
@@ -320,8 +340,8 @@ const main = async (): Promise<void> => {
           seedHarvestList(),
           // seedSoiToolsList(),
           // seedSprayerEquipmentList(),
-          // seedSeedersAgriculturalTrailersList(),
-          // seedSeedersEquipmentList(),
+          seedSeedersAgriculturalTrailersList(),
+          seedSeedersEquipmentList(),
           seedTractorsList()
         ]);
       } else {
