@@ -23,7 +23,7 @@ const EnginePage: FC = () => {
   }, [selectedEngineTypes]);
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
-  const { engines, enginesLoading, enginesError } = useEngines({});
+  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
 
   if (enginesLoading || engineTypesLoading) return <p>Loading...</p>;
   if (enginesError || engineTypesError) return <p>Error: {enginesError?.message}</p>;
