@@ -43,6 +43,11 @@ import {
   ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER,
   ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL
 } from './9-engine-list-breeding-equipment';
+import {
+  ENGINE_LIST_HAYMAKING_EQUIPMENT_BALER_PRESS,
+  ENGINE_LIST_HAYMAKING_EQUIPMENT_TEDDER,
+  ENGINE_LIST_HAYMAKING_EQUIPMENT_WRAPPER
+} from './11-engine-list-haymaking-equipment';
 
 import {
   ENGINE_LIST_HARVEST_COMBINE_HARVESTER,
@@ -294,15 +299,17 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedHaymakingEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("matériels de fenaison", ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT);
-      //     await createEngineRecords("Enrubanneuses", ENGINE_LIST_HAYMAKING_EQUIPMENT);
-      //     console.info('[SEED] Successfully created specialized cultures equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create haymaking equipment records', e);
-      //   }
-      // };
+      const seedHaymakingEquipmentList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("matériels de fenaison", ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT);
+          await createEngineRecords("Enrubanneuses", ENGINE_LIST_HAYMAKING_EQUIPMENT_WRAPPER);
+          await createEngineRecords("Faneurs", ENGINE_LIST_HAYMAKING_EQUIPMENT_TEDDER);
+          await createEngineRecords("Presse à balles", ENGINE_LIST_HAYMAKING_EQUIPMENT_BALER_PRESS);
+          console.info('[SEED] Successfully created specialized cultures equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create haymaking equipment records', e);
+        }
+      };
 
       const seedHarvestList = async (): Promise<void> => {
         try {
@@ -385,7 +392,7 @@ const main = async (): Promise<void> => {
           seedSpecializedCulturesList(),
           seedBreedingEquipmentList(),
           // seedIrrigationEquipmentList(),
-          // seedHaymakingEquipmentList(),
+          seedHaymakingEquipmentList(),
           seedHarvestList(),
           seedSoiToolsList(),
           seedSprayerEquipmentList(),
