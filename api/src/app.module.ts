@@ -10,7 +10,9 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'src/prisma/prisma.module';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 import { EnginesModule } from './modules/engine/engines.module';
+import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
+
 
 @Module({
   imports: [
@@ -27,6 +29,7 @@ import { EngineTypesModule } from './modules/engine-type/engine-type.module';
     PrismaModule,
     PubSubModule,
     EnginesModule,
+    EngineModelModule,
     EngineTypesModule,
   ],
   controllers: [],

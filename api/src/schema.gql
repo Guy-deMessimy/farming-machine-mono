@@ -43,6 +43,7 @@ type Engine {
 
 type Query {
   findAllEngines(query: EngineQueryDto): [Engine!]
+  findAllEngineModel: [EngineModel!]!
   findAllEngineTypes: [EngineTypes!]!
 }
 

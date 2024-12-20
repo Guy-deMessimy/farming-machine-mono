@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, EngineTypes } from '@prisma/client';
+import { Prisma, EngineModel } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
@@ -10,4 +10,13 @@ export class EngineModelRepository {
       console.log('Duration: ' + event.duration + 'ms');
     });
   }
+
+  async findAllEngineModel(): Promise<EngineModel[]> {
+    return this.prisma.engineModel.findMany({
+      include: {
+        engineType: true,
+      },
+    });
+  }
 }
+
