@@ -50,6 +50,13 @@ import {
   ENGINE_LIST_HARVEST_PICKER
 } from './12-engine-list-harvest';
 import {
+  ENGINE_LIST_SOI_TOOLS_DETHATCHER,
+  ENGINE_LIST_SOI_TOOLS_GROWERS,
+  ENGINE_LIST_SOI_TOOLS_HARROWS,
+  ENGINE_LIST_SOI_TOOLS_TRIMMERS
+} from './13-engine-list-soi-tools';
+
+import {
   ENGINE_LIST_SPRAYER_EQUIPMENT,
   ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER
 } from './14-engine-list-sprayer-equipment';
@@ -309,15 +316,18 @@ const main = async (): Promise<void> => {
         }
       };
 
-      // const seedSoiToolsList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("outils de sols", ENGINE_MODEL_LIST_SOI_TOOLS);
-      //     await createEngineRecords("Déchaumeur", ENGINE_LIST_SOI_TOOLS);
-      //     console.info('[SEED] Successfully created harvest equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create soi tools equipment records', e);
-      //   }
-      // };
+      const seedSoiToolsList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("outils de sols", ENGINE_MODEL_LIST_SOI_TOOLS);
+          await createEngineRecords("Cultivateurs", ENGINE_LIST_SOI_TOOLS_GROWERS);
+          await createEngineRecords("Ecimeuses", ENGINE_LIST_SOI_TOOLS_TRIMMERS);
+          await createEngineRecords("Herses", ENGINE_LIST_SOI_TOOLS_HARROWS);
+          await createEngineRecords("Déchaumeur", ENGINE_LIST_SOI_TOOLS_DETHATCHER);
+          console.info('[SEED] Successfully created harvest equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create soi tools equipment records', e);
+        }
+      };
 
       const seedSprayerEquipmentList = async (): Promise<void> => {
         try {
@@ -377,7 +387,7 @@ const main = async (): Promise<void> => {
           // seedIrrigationEquipmentList(),
           // seedHaymakingEquipmentList(),
           seedHarvestList(),
-          // seedSoiToolsList(),
+          seedSoiToolsList(),
           seedSprayerEquipmentList(),
           seedSeedersAgriculturalTrailersList(),
           seedSeedersEquipmentList(),

@@ -1,66 +1,63 @@
 import { generateEngineList } from "./3-populate-engines";
 
 const modelname = {
-  cattlewoman: [
-    '',
-    '',
-    '',
+  growers: [
+    'Korund 8/750 K',
+    'Prolander 6000',
   ],
-  beet_harvester: [
-    '',
-    '',
-    '',
+  trimmers: [
+    'EcoCut 12',
+    'Classic 12m',
   ],
-  potato_planter: [
-    '',
-    '',
-    '',
+  harrows: [
+    'Aerostar-Exact 1200',
+    'Allrounder 750',
+  ],
+  dethatcher: [
+    'Terrano 5 FM',
+    'Carrier XL 625',
   ],
 };
 
 const brandname = {
-  cattlewoman: [
-    '',
-    '',
-    '',
+  growers: [
+    'Lemken',
+    'Kuhn',
   ],
-  beet_harvester: [
-    '',
-    '',
-    '',
+  trimmers: [
+    'Carré',
+    'Dario',
   ],
-  potato_planter: [
-    '',
-    '',
-    '',
+  harrows: [
+    'Einbock',
+    'Kockerling',
+  ],
+  dethatcher: [
+    'Horsch',
+    'Vaderstad',
   ],
 };
 
 const images = {
-  cattlewoman: [
-    '',
-    '',
-    '',
+  growers: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/growers-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/growers-2.png',
   ],
-  beet_harvester: [
-    '',
-    '',
-    '',
+  trimmers: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/trimmers-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/trimmers-2.png',
   ],
-  potato_planter: [
-    '',
-    '',
-    '',
+  harrows: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/harrows-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/harrows-2.png',
+  ],
+  dethatcher: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/dethatcher-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/soi-tools/dethatcher-2.png',
   ],
 };
 
-export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['windrowers'], brandname['windrowers'], 3, 'Andaineurs', images['windrowers']);
-export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['beet_harvester'], brandname['beet_harvester'], 3, 'Arracheuses de betteraves', images['beet_harvester']);
-export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['potato_planter'], brandname['potato_planter'], 3, 'Planteuses de pommes de terre', images['potato_planter']);
-
-
-
-export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList('breeding_equipment', 2);
-  
-
-export const ENGINE_LIST_SOI_TOOLS = generateEngineList('soi_tools', 4);
+export const ENGINE_LIST_SOI_TOOLS_GROWERS = generateEngineList(modelname['growers'], brandname['growers'], 2, 'Cultivateurs', images['growers']);
+export const ENGINE_LIST_SOI_TOOLS_TRIMMERS = generateEngineList(modelname['trimmers'], brandname['trimmers'], 2, 'Ecimeuses', images['trimmers']);
+export const ENGINE_LIST_SOI_TOOLS_HARROWS = generateEngineList(modelname['harrows'], brandname['harrows'], 2, 'Herses', images['harrows']);
+export const ENGINE_LIST_SOI_TOOLS_DETHATCHER = generateEngineList(modelname['dethatcher'], brandname['dethatcher'], 2, 'Déchaumeur', images['dethatcher']);

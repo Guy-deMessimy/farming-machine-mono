@@ -59,10 +59,7 @@ export const ENGINE_MODEL_LIST_SOI_TOOLS = [
   { name: 'Cultivateurs', description: 'Pour cultiver', engineTypeId: null },
   { name: 'Ecimeuses', description: 'Pour ecimer', engineTypeId: null },
   { name: 'Herses', description: 'Pour herser', engineTypeId: null },
-  { name: 'Bineuses', description: 'Pour biner', engineTypeId: null },
   { name: 'Déchaumeur', description: 'Pour déchaumer', engineTypeId: null },
-  { name: 'Roulleau', description: 'Pour rouler', engineTypeId: null },
-  { name: 'Strip till', description: 'Pour stripper', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT = [
