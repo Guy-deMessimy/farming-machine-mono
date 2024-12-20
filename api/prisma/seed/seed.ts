@@ -28,14 +28,44 @@ import {
   ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER,
   ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK
 } from './5-engine-list-various-equipment';
-import { ENGINE_LIST_HANDLING_FRONT_LOADER, ENGINE_LIST_HANDLING_PALLET_LIFT } from './7-engine-list-handling';
-import { ENGINE_LIST_HARVEST_COMBINE_HARVESTER, ENGINE_LIST_HARVEST_FORAGE_HARVESTER, ENGINE_LIST_HARVEST_PICKER } from './12-engine-list-harvest';
-import { ENGINE_LIST_AGRICULTURAL_TRAILERS, ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY, ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY } from './15-engine-list-agricultural-trailers';
-import { ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS, ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS } from './16-engine-list-seeders-equipment';
-import { ENGINE_LIST_TRACTORS, ENGINE_LIST_WOOD_TRACTORS } from './17-engine-list-tractors';
-import { ENGINE_LIST_SPECIALIZED_CULTURE_BEET_HARVESTER, ENGINE_LIST_SPECIALIZED_CULTURE_POTATO_PLANTER, ENGINE_LIST_SPECIALIZED_CULTURE_WINDROWERS } from './8-engine-list-specialized-culture';
-import { ENGINE_LIST_BREEDING_EQUIPMENT_CATTLEWOMAN, ENGINE_LIST_BREEDING_EQUIPMENT_MIXER, ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER, ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL } from './9-engine-list-breeding-equipment';
+import {
+  ENGINE_LIST_HANDLING_FRONT_LOADER,
+  ENGINE_LIST_HANDLING_PALLET_LIFT
+} from './7-engine-list-handling';
+import {
+  ENGINE_LIST_SPECIALIZED_CULTURE_BEET_HARVESTER,
+  ENGINE_LIST_SPECIALIZED_CULTURE_POTATO_PLANTER,
+  ENGINE_LIST_SPECIALIZED_CULTURE_WINDROWERS
+} from './8-engine-list-specialized-culture';
+import {
+  ENGINE_LIST_BREEDING_EQUIPMENT_CATTLEWOMAN,
+  ENGINE_LIST_BREEDING_EQUIPMENT_MIXER,
+  ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER,
+  ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL
+} from './9-engine-list-breeding-equipment';
 
+import {
+  ENGINE_LIST_HARVEST_COMBINE_HARVESTER,
+  ENGINE_LIST_HARVEST_FORAGE_HARVESTER,
+  ENGINE_LIST_HARVEST_PICKER
+} from './12-engine-list-harvest';
+import {
+  ENGINE_LIST_SPRAYER_EQUIPMENT,
+  ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER
+} from './14-engine-list-sprayer-equipment';
+import {
+  ENGINE_LIST_AGRICULTURAL_TRAILERS,
+  ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY,
+  ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY
+} from './15-engine-list-agricultural-trailers';
+import {
+  ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS,
+  ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS
+} from './16-engine-list-seeders-equipment';
+import {
+  ENGINE_LIST_TRACTORS,
+  ENGINE_LIST_WOOD_TRACTORS
+} from './17-engine-list-tractors';
 
 const prisma = new PrismaClient();
 
@@ -289,15 +319,16 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedSprayerEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("pulvérisateurs", ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT);
-      //     await createEngineRecords("Pulvérisateurs trainé", ENGINE_LIST_SPRAYER_EQUIPMENT);
-      //     console.info('[SEED] Successfully created seeders equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create sprayer equipment records', e);
-      //   }
-      // };
+      const seedSprayerEquipmentList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("pulvérisateurs", ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT);
+          await createEngineRecords("Atomiseurs", ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER);
+          await createEngineRecords("Pulvérisateurs", ENGINE_LIST_SPRAYER_EQUIPMENT);
+          console.info('[SEED] Successfully created seeders equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create sprayer equipment records', e);
+        }
+      };
 
       const seedSeedersAgriculturalTrailersList = async (): Promise<void> => {
         try {
@@ -347,7 +378,7 @@ const main = async (): Promise<void> => {
           // seedHaymakingEquipmentList(),
           seedHarvestList(),
           // seedSoiToolsList(),
-          // seedSprayerEquipmentList(),
+          seedSprayerEquipmentList(),
           seedSeedersAgriculturalTrailersList(),
           seedSeedersEquipmentList(),
           seedTractorsList()

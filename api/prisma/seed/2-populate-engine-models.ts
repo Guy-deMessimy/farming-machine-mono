@@ -67,7 +67,7 @@ export const ENGINE_MODEL_LIST_SOI_TOOLS = [
 
 export const ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT = [
   { name: 'Atomiseurs', description: 'Pour atomiser', engineTypeId: null },
-  { name: 'Pulvérisateurs trainé', description: 'Pour pulvériser', engineTypeId: null },
+  { name: 'Pulvérisateurs', description: 'Pour pulvériser', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS = [
