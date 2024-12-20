@@ -15,21 +15,21 @@ export class EngineRepository {
   async findAllEngines(query: EngineQueryDto): Promise<Engine[]> {
     const { limit, offset, cursor, orderBy, where } = query || {};
     console.log('AAA where', where);
-    const prismaWhere: Prisma.EngineWhereInput  = {
+    const prismaWhere: Prisma.EngineWhereInput = {
       ...(where && {
         ...(where?.engineModelId && {
           engineModelId: {
-            in: where.engineModelId
-          }
+            in: where.engineModelId,
+          },
         }),
         ...(where?.engineTypeId && {
           engineModel: {
             engineType: {
               id: {
-                in: where.engineTypeId
-              }
-            }
-          }
+                in: where.engineTypeId,
+              },
+            },
+          },
         }),
       }),
     };
@@ -49,6 +49,5 @@ export class EngineRepository {
         },
       },
     });
-    
   }
 }
