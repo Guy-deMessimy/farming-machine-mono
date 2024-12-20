@@ -22,6 +22,21 @@ export interface EngineWhereInput {
   engineTypeId?: number[] | null;
 }
 
+export interface EngineTypes {
+  id: number;
+  name: string;
+  description: string;
+  engineModels?: EngineModel[];
+}
+
+export interface EngineModel {
+  id: number;
+  name: string;
+  description: string;
+  engineType: EngineTypes[];
+  engines?: Engine[];
+}
+
 export interface Engine {
   id: number;
   modelName: string;
@@ -39,9 +54,3 @@ export interface Engine {
   imageUrl: string;
 }
 
-export interface EngineTypes {
-  id: number;
-  name: string;
-  description: string;
-  engines?: Engine[];
-}

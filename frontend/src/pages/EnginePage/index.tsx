@@ -5,6 +5,7 @@ import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
 import { useEngineTypes } from '../../hooks/useEngineTypes';
+import { useEngineModel } from '../../hooks/useEngineModel';
 // Types
 import { SortOrder } from '../../shared/types/enum.type';
 // Ui and assets
@@ -13,6 +14,7 @@ import './styles.scss';
 const EnginePage: FC = () => {
   const [order, setOrder] = useState<string>(SortOrder.ASC);
   const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
+  const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([]);
   const orderBy = useMemo(() => {
     return order.length > 0 ? { brandName: order } : {};
   }, [order]);
@@ -23,10 +25,12 @@ const EnginePage: FC = () => {
   }, [selectedEngineTypes]);
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
+  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({});
   const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
+  console.log('AAA engineModel', engineModel);
 
-  if (enginesLoading || engineTypesLoading) return <p>Loading...</p>;
-  if (enginesError || engineTypesError) return <p>Error: {enginesError?.message}</p>;
+  if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
+  if (enginesError || engineTypesError || engineModelError) return <p>Error: {enginesError?.message}</p>;
 
   return (
     <div className="engine__wrapper">
@@ -37,7 +41,10 @@ const EnginePage: FC = () => {
         setOrder={setOrder}
         selectedEngineTypes={selectedEngineTypes}
         setSelectedEngineTypes={setSelectedEngineTypes}
+        selectedEngineModel={selectedEngineModel}
+        setSelectedEngineModel={setSelectedEngineModel}
         engineTypesList={engineTypes}
+        engineModelList={engineModel}
       />
       <EngineList enginesList={engines} />
     </div>

@@ -4,7 +4,7 @@ import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-fo
 import FiltersForm from './filters-form';
 // Types
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
-import { EngineTypes } from '../../../../shared/types/engines.type';
+import { EngineModel, EngineTypes } from '../../../../shared/types/engines.type';
 // Styles
 import './styles.scss';
 
@@ -13,7 +13,10 @@ interface ReportComponentProps {
   setOrder: (value: string) => void;
   selectedEngineTypes: number[];
   setSelectedEngineTypes: (value: number[]) => void;
-  engineTypesList: EngineTypes[];
+  selectedEngineModel: number[];
+  setSelectedEngineModel: (value: number[]) => void;
+  engineTypesList: EngineModel[];
+  engineModelList: EngineTypes[];
 }
 
 const Filters: FC<ReportComponentProps> = ({
@@ -21,7 +24,10 @@ const Filters: FC<ReportComponentProps> = ({
   setOrder,
   selectedEngineTypes,
   setSelectedEngineTypes,
+  selectedEngineModel,
+  setSelectedEngineModel,
   engineTypesList,
+  engineModelList,
 }) => {
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: order,
@@ -60,7 +66,10 @@ const Filters: FC<ReportComponentProps> = ({
           setOrder={setOrder}
           selectedEngineTypes={selectedEngineTypes}
           setSelectedEngineTypes={setSelectedEngineTypes}
+          selectedEngineModel={selectedEngineModel}
+          setSelectedEngineModel={setSelectedEngineModel}
           engineTypesList={engineTypesList}
+          engineModelList={engineModelList}
         />
       </form>
     </FormProvider>

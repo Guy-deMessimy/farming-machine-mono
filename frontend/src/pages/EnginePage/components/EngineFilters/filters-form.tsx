@@ -4,7 +4,7 @@ import { Select } from 'antd';
 
 // Types
 import { ComplexFormValues } from '../../../../shared/types/forms.type';
-import { EngineTypes } from '../../../../shared/types/engines.type';
+import { EngineModel, EngineTypes } from '../../../../shared/types/engines.type';
 
 // Temp
 import './styles.scss';
@@ -14,7 +14,10 @@ interface ReportComponentProps {
   setOrder: (value: string) => void;
   selectedEngineTypes: number[];
   setSelectedEngineTypes: (value: number[]) => void;
-  engineTypesList: EngineTypes[];
+  selectedEngineModel: number[];
+  setSelectedEngineModel: (value: number[]) => void;
+  engineTypesList: EngineModel[];
+  engineModelList: EngineTypes[];
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({
@@ -22,7 +25,10 @@ const FiltersForm: FC<ReportComponentProps> = ({
   setOrder,
   selectedEngineTypes,
   setSelectedEngineTypes,
+  selectedEngineModel,
+  setSelectedEngineModel,
   engineTypesList,
+  engineModelList,
 }) => {
   const { control } = useFormContext<ComplexFormValues>();
 
@@ -75,6 +81,35 @@ const FiltersForm: FC<ReportComponentProps> = ({
               placeholder="Trier par"
               mode="multiple"
               onChange={(value: number[]) => setSelectedEngineTypes(value)}
+              optionLabelProp="label"
+              style={{ width: '100%' }}
+            />
+          );
+        }}
+      />
+      <Controller
+        name="engine_model_filter"
+        control={control}
+        key="engine_model_filter"
+        rules={{}}
+        render={({ field }) => {
+          return (
+            <Select
+              {...field}
+              optionFilterProp="label"
+              filterSort={(optionA, optionB) =>
+                (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+              }
+              options={engineModelList.map((type) => {
+                return {
+                  label: type.name,
+                  value: Number(type.id),
+                };
+              })}
+              value={selectedEngineModel}
+              placeholder="Trier par"
+              mode="multiple"
+              onChange={(value: number[]) => setSelectedEngineModel(value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
             />
