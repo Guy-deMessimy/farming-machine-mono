@@ -36,12 +36,6 @@ export const ENGINE_MODEL_LIST_BREEDING_EQUIPMENT = [
   { name: 'Tonne à eau', description: 'Pour tanker', engineTypeId: null },
 ];
 
-export const ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT = [
-  { name: 'Enrouleur', description: 'Pour enrouler', engineTypeId: null },
-  { name: 'Pompes irrigation', description: 'Pour irriguer', engineTypeId: null },
-  { name: 'Déboucheur de drain', description: 'Pour déboucher', engineTypeId: null },
-];
-
 export const ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT = [
   { name: 'Enrubanneuses', description: 'Pour enrubanner', engineTypeId: null },
   { name: 'Faneurs', description: 'Pour faner', engineTypeId: null },
@@ -64,6 +58,7 @@ export const ENGINE_MODEL_LIST_SOI_TOOLS = [
 export const ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT = [
   { name: 'Atomiseurs', description: 'Pour atomiser', engineTypeId: null },
   { name: 'Pulvérisateurs', description: 'Pour pulvériser', engineTypeId: null },
+  { name: 'Enrouleurs', description: 'Pour enrouler', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_AGRICULTURAL_TRAILERS = [

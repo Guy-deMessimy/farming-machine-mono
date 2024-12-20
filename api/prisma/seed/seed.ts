@@ -11,7 +11,6 @@ import {
   ENGINE_MODEL_LIST_HANDLING,
   ENGINE_MODEL_LIST_HARVEST_EQUIPMENT,
   ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT,
-  ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT,
   ENGINE_MODEL_LIST_SEEDERS_EQUIPMENT,
   ENGINE_MODEL_LIST_SOI_TOOLS,
   ENGINE_MODEL_LIST_SPECIALIZED_CULTURE,
@@ -57,37 +56,38 @@ import {
   ENGINE_LIST_HAYMAKING_EQUIPMENT_BALER_PRESS,
   ENGINE_LIST_HAYMAKING_EQUIPMENT_TEDDER,
   ENGINE_LIST_HAYMAKING_EQUIPMENT_WRAPPER
-} from './11-engine-list-haymaking-equipment';
+} from './10-engine-list-haymaking-equipment';
 
 import {
   ENGINE_LIST_HARVEST_COMBINE_HARVESTER,
   ENGINE_LIST_HARVEST_FORAGE_HARVESTER,
   ENGINE_LIST_HARVEST_PICKER
-} from './12-engine-list-harvest';
+} from './11-engine-list-harvest';
 import {
   ENGINE_LIST_SOI_TOOLS_DETHATCHER,
   ENGINE_LIST_SOI_TOOLS_GROWERS,
   ENGINE_LIST_SOI_TOOLS_HARROWS,
   ENGINE_LIST_SOI_TOOLS_TRIMMERS
-} from './13-engine-list-soi-tools';
+} from './12-engine-list-soi-tools';
 
 import {
   ENGINE_LIST_SPRAYER_EQUIPMENT,
-  ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER
-} from './14-engine-list-sprayer-equipment';
+  ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER,
+  ENGINE_LIST_SPRAYER_WINDER
+} from './13-engine-list-sprayer-equipment';
 import {
   ENGINE_LIST_AGRICULTURAL_TRAILERS,
   ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY,
   ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY
-} from './15-engine-list-agricultural-trailers';
+} from './14-engine-list-agricultural-trailers';
 import {
   ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS,
   ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS
-} from './16-engine-list-seeders-equipment';
+} from './15-engine-list-seeders-equipment';
 import {
   ENGINE_LIST_TRACTORS,
   ENGINE_LIST_WOOD_TRACTORS
-} from './17-engine-list-tractors';
+} from './16-engine-list-tractors';
 
 const prisma = new PrismaClient();
 
@@ -302,16 +302,6 @@ const main = async (): Promise<void> => {
         }
       };
 
-      // const seedIrrigationEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("matériels irrigation", ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT);
-      //     await createEngineRecords("Pompes irrigation", ENGINE_LIST_IRRIGATION_EQUIPMENT);
-      //     console.info('[SEED] Successfully created specialized cultures equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create irrigation equipment records', e);
-      //   }
-      // };
-
       const seedHaymakingEquipmentList = async (): Promise<void> => {
         try {
           await createEngineModelRecords("matériels de fenaison", ENGINE_MODEL_LIST_HAYMAKING_EQUIPMENT);
@@ -354,6 +344,7 @@ const main = async (): Promise<void> => {
           await createEngineModelRecords("pulvérisateurs", ENGINE_MODEL_LIST_SPRAYER_EQUIPMENT);
           await createEngineRecords("Atomiseurs", ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER);
           await createEngineRecords("Pulvérisateurs", ENGINE_LIST_SPRAYER_EQUIPMENT);
+          await createEngineRecords("Enrouleurs", ENGINE_LIST_SPRAYER_WINDER);
           console.info('[SEED] Successfully created seeders equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create sprayer equipment records', e);
@@ -404,7 +395,6 @@ const main = async (): Promise<void> => {
           seedSpreadingList(),
           seedSpecializedCulturesList(),
           seedBreedingEquipmentList(),
-          // seedIrrigationEquipmentList(),
           seedHaymakingEquipmentList(),
           seedHarvestList(),
           seedSoiToolsList(),

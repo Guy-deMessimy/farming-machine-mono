@@ -9,6 +9,10 @@ const modelname = {
     'UX 5201 Super',
     'R962i',
   ],
+  winder: [
+    'Optima 110',
+    'Magnum 110',
+  ],
 };
 
 const brandname = {
@@ -19,6 +23,10 @@ const brandname = {
   sprayer: [
     'Amazone',
     'John Deere',
+  ],
+  winder: [
+    'Irrifrance',
+    'RM',
   ],
 };
 
@@ -31,7 +39,12 @@ const images = {
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/sprayers/sprayer-1.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/sprayers/sprayer-2.png',
   ],
+  winder: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/sprayers/winder-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/sprayers/winder-2.png',
+  ],
 };
 
 export const ENGINE_LIST_SPRAYER_EQUIPMENT_ATOMIZER = generateEngineList(modelname['atomizer'], brandname['atomizer'], 2, 'Atomiseurs', images['atomizer']);
 export const ENGINE_LIST_SPRAYER_EQUIPMENT = generateEngineList(modelname['sprayer'], brandname['sprayer'], 2, 'Pulvérisateurs', images['sprayer']);
+export const ENGINE_LIST_SPRAYER_WINDER = generateEngineList(modelname['winder'], brandname['winder'], 2, 'Enrouleurs', images['winder']);
