@@ -1,5 +1,4 @@
 export const ENGINE_MODEL_LIST_CRUSHERS = [
-  { name: 'Broyeuses', description: 'Pour broyer', engineTypeId: null },
   { name: 'Faucheurs', description: 'Pour faucher', engineTypeId: null },
   { name: 'Epareuses', description: 'Pour ensiler', engineTypeId: null },
 ];
