@@ -1,11 +1,6 @@
 import { generateEngineList } from "./3-populate-engines";
 
 const modelname = {
-  guidage: [
-    'Farmer 400',
-    'RTK cloud',
-    'Base kkrtk',
-  ],
   quads: [
     'Sportsman 570 X2',
     'Grizzly 700 EPS',
@@ -31,20 +26,15 @@ const modelname = {
     'P40 Agricultural Drone',
     'Bluegrass Fields'
   ],
-  autonomous_truck: [
-    'AgriLifter X12',
-    'HydroHaul T100',
-    'SkyMover AX2000',
-    'Titan Hauler 5000',
+  truck: [
+    'FH16 750',
+    'Actros 2553',
+    'R 580 V8',
+    'T High 520',
   ],
 };
 
 const brandname = {
-  guidage: [
-    'Garmin',
-    'John Deere',
-    'Farmtek',
-  ],
   quads: [
     'Polaris',
     'Yamaha',
@@ -70,20 +60,15 @@ const brandname = {
     'XAG',
     'Parrot',
   ],
-  autonomous_truck: [
-    'AgriNova Motors',
-    'TerraFlow Dynamics',
-    'AeroFarm Tech',
-    'NeoAgro Transports',
+  truck: [
+    'Volvo',
+    'Mercedes',
+    'Scania',
+    'Renault trucks',
   ],
 };
 
 const images = {
-  guidage: [
-    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/gps-1.png',
-    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/gps-2.png',
-    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/gps-3.png',
-  ],
   quads: [
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/quad-1.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/quad-2.png',
@@ -109,7 +94,7 @@ const images = {
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/drone-2.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/drone-3.png',
   ],
-  autonomous_truck: [
+  truck: [
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/truck-1.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/truck-2.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/truck-3.png',
@@ -117,11 +102,9 @@ const images = {
   ],
 };
 
-
-export const ENGINE_LIST_VARIOUS_EQUIPMENT_GUIDAGE = generateEngineList(modelname['guidage'], brandname['guidage'], 3, 'Guidages', images['guidage']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS = generateEngineList(modelname['quads'], brandname['quads'], 3, 'Quads', images['quads']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES = generateEngineList(modelname['nacelles'], brandname['nacelles'], 3, 'Nacelles élévatrices', images['nacelles']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER = generateEngineList(modelname['sweeper'], brandname['sweeper'], 3, 'Balayeuses', images['sweeper']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE= generateEngineList(modelname['snow_blade'], brandname['snow_blade'], 3, 'Lames de déneigement', images['snow_blade']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES = generateEngineList(modelname['drones'], brandname['drones'], 3, 'Drones', images['drones']);
-export const ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK = generateEngineList(modelname['autonomous_truck'], brandname['autonomous_truck'], 4, 'Camions autonomes', images['autonomous_truck']);
+export const ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK = generateEngineList(modelname['truck'], brandname['truck'], 4, 'Camions', images['truck']);

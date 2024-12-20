@@ -5,13 +5,12 @@ export const ENGINE_MODEL_LIST_CRUSHERS = [
 ];
 
 export const ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT = [
-  { name: 'Guidages', description: 'Pour guider', engineTypeId: null },
   { name: 'Quads', description: 'Pour quader', engineTypeId: null },
   { name: 'Nacelles élévatrices', description: 'Pour naceller', engineTypeId: null },
   { name: 'Balayeuses', description: 'Pour balayer', engineTypeId: null },
   { name: 'Lames de déneigement', description: 'Pour déneiger', engineTypeId: null },
   { name: 'Drones', description: 'Pour droner', engineTypeId: null },
-  { name: 'Camions autonomes', description: 'Pour livrer', engineTypeId: null },
+  { name: 'Camions', description: 'Pour livrer', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_SPREADING = [
@@ -27,17 +26,15 @@ export const ENGINE_MODEL_LIST_HANDLING = [
 
 export const ENGINE_MODEL_LIST_SPECIALIZED_CULTURE = [
   { name: 'Andaineurs', description: 'Pour andainer', engineTypeId: null },
-  { name: 'Arracheuses', description: 'POur arracher', engineTypeId: null },
-  { name: 'Planteuses', description: 'Pour planter', engineTypeId: null },
-  { name: 'Presses enrouleuses', description: 'Pour presser', engineTypeId: null },
+  { name: 'Arracheuses de betteraves', description: 'POur arracher', engineTypeId: null },
+  { name: 'Planteuses de pommes de terre', description: 'Pour planter', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_BREEDING_EQUIPMENT = [
   { name: 'Bétaillères', description: 'Pour bétailler', engineTypeId: null },
-  { name: 'Dérouleuses de balle', description: 'Pour dérouler', engineTypeId: null },
-  { name: 'Désileuses', description: 'Pour désiler', engineTypeId: null },
+  { name: 'Mélangeuses', description: 'Pour désiler', engineTypeId: null },
   { name: 'Pailleuses', description: 'Pour pailler', engineTypeId: null },
-  { name: 'Tank a lait', description: 'Pour tanker', engineTypeId: null },
+  { name: 'Tonne à eau', description: 'Pour tanker', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_IRRIGATION_EQUIPMENT = [

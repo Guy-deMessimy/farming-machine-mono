@@ -22,17 +22,20 @@ import {
 } from './2-populate-engine-models';
 import {
   ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES,
-  ENGINE_LIST_VARIOUS_EQUIPMENT_GUIDAGE,
   ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES,
   ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS,
   ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE,
   ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER,
   ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK
 } from './5-engine-list-various-equipment';
+import { ENGINE_LIST_HANDLING_FRONT_LOADER, ENGINE_LIST_HANDLING_PALLET_LIFT } from './7-engine-list-handling';
 import { ENGINE_LIST_HARVEST_COMBINE_HARVESTER, ENGINE_LIST_HARVEST_FORAGE_HARVESTER, ENGINE_LIST_HARVEST_PICKER } from './12-engine-list-harvest';
 import { ENGINE_LIST_AGRICULTURAL_TRAILERS, ENGINE_LIST_AGRICULTURAL_TRAILERS_FERRY, ENGINE_LIST_AGRICULTURAL_TRAILERS_FORAGE_TRAY } from './15-engine-list-agricultural-trailers';
 import { ENGINE_LIST_SEEDERS_EQUIPMENT_CEREALS, ENGINE_LIST_WOOD_TRACTORS_SINGLE_SEEDS } from './16-engine-list-seeders-equipment';
 import { ENGINE_LIST_TRACTORS, ENGINE_LIST_WOOD_TRACTORS } from './17-engine-list-tractors';
+import { ENGINE_LIST_SPECIALIZED_CULTURE_BEET_HARVESTER, ENGINE_LIST_SPECIALIZED_CULTURE_POTATO_PLANTER, ENGINE_LIST_SPECIALIZED_CULTURE_WINDROWERS } from './8-engine-list-specialized-culture';
+import { ENGINE_LIST_BREEDING_EQUIPMENT_CATTLEWOMAN, ENGINE_LIST_BREEDING_EQUIPMENT_MIXER, ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER, ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL } from './9-engine-list-breeding-equipment';
+
 
 const prisma = new PrismaClient();
 
@@ -186,13 +189,12 @@ const main = async (): Promise<void> => {
       const seedVariousEquipmentList = async (): Promise<void> => {
         try {
           await createEngineModelRecords("équipements divers", ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT);
-          await createEngineRecords("Guidages", ENGINE_LIST_VARIOUS_EQUIPMENT_GUIDAGE);
           await createEngineRecords("Quads", ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS);
           await createEngineRecords("nacelles élévatrices", ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES);
           await createEngineRecords("Balayeuses", ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER);
           await createEngineRecords("Lames de déneigement", ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE);
           await createEngineRecords("Drones", ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES);
-          await createEngineRecords("Camions autonomes", ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK);
+          await createEngineRecords("Camions", ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK);
           console.info('[SEED] Successfully created various equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create various equipment records', e);
@@ -209,35 +211,41 @@ const main = async (): Promise<void> => {
       //   }
       // };
 
-      // const seedHandlingList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("manutention", ENGINE_MODEL_LIST_HANDLING);
-      //     await createEngineRecords("Chargeur frontal", ENGINE_LIST_HANDLING);
-      //     console.info('[SEED] Successfully created handling equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create handling equipment records', e);
-      //   }
-      // };
+      const seedHandlingList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("manutention", ENGINE_MODEL_LIST_HANDLING);
+          await createEngineRecords("Chargeur frontal", ENGINE_LIST_HANDLING_FRONT_LOADER);
+          await createEngineRecords("Lèves palette", ENGINE_LIST_HANDLING_PALLET_LIFT);
+          console.info('[SEED] Successfully created handling equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create handling equipment records', e);
+        }
+      };
 
-      // const seedSpecializedCulturesList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("matériels de cultures spécialisés", ENGINE_MODEL_LIST_SPECIALIZED_CULTURE);
-      //     await createEngineRecords("Arracheuses", ENGINE_LIST_SPECIALIZED_CULTURE);
-      //     console.info('[SEED] Successfully created specialized cultures equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create specialized cultures equipment records', e);
-      //   }
-      // };
+      const seedSpecializedCulturesList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("matériels de cultures spécialisés", ENGINE_MODEL_LIST_SPECIALIZED_CULTURE);
+          await createEngineRecords("Andaineurs", ENGINE_LIST_SPECIALIZED_CULTURE_WINDROWERS);
+          await createEngineRecords("Arracheuses de betteraves", ENGINE_LIST_SPECIALIZED_CULTURE_BEET_HARVESTER);
+          await createEngineRecords("Planteuses de pommes de terre", ENGINE_LIST_SPECIALIZED_CULTURE_POTATO_PLANTER);
+          console.info('[SEED] Successfully created specialized cultures equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create specialized cultures equipment records', e);
+        }
+      };
 
-      // const seedBreedingEquipmentList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("matériels élevage", ENGINE_MODEL_LIST_BREEDING_EQUIPMENT);
-      //     await createEngineRecords("Bétaillères", ENGINE_LIST_BREEDING_EQUIPMENT);
-      //     console.info('[SEED] Successfully created specialized cultures equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create breeding equipment records', e);
-      //   }
-      // };
+      const seedBreedingEquipmentList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("matériels élevage", ENGINE_MODEL_LIST_BREEDING_EQUIPMENT);
+          await createEngineRecords("Bétaillères", ENGINE_LIST_BREEDING_EQUIPMENT_CATTLEWOMAN);
+          await createEngineRecords("Mélangeuses", ENGINE_LIST_BREEDING_EQUIPMENT_MIXER);
+          await createEngineRecords("Pailleuses", ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER);
+          await createEngineRecords("Tonne à eau", ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL);
+          console.info('[SEED] Successfully created specialized cultures equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create breeding equipment records', e);
+        }
+      };
 
       // const seedIrrigationEquipmentList = async (): Promise<void> => {
       //   try {
@@ -331,10 +339,10 @@ const main = async (): Promise<void> => {
         await Promise.all([
           // seedCrushersList(),
           seedVariousEquipmentList(),
-          // seedHandlingList(),
+          seedHandlingList(),
           // seedSpreadingList(),
-          // seedSpecializedCulturesList(),
-          // seedBreedingEquipmentList(),
+          seedSpecializedCulturesList(),
+          seedBreedingEquipmentList(),
           // seedIrrigationEquipmentList(),
           // seedHaymakingEquipmentList(),
           seedHarvestList(),

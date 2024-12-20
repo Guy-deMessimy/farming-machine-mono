@@ -1,84 +1,65 @@
+import { generateEngineList } from "./3-populate-engines";
+
+const modelname = {
+  cattlewoman: [
+    'GB 126',
+    'Betalight 86',
+  ],
+  mixer: [
+    'Profile 24.2 DL',
+    'TrailedLine Classic 12',
+  ],
+  straw_blower: [
+    'Castor+ 60R',
+    'Tomahawk 8550',
+  ],
+  water_barrel: [
+    'CiternLight 3200',
+    'Aquatrans 7000',
+  ]
+};
+
+const brandname = {
+  cattlewoman: [
+    'Boche',
+    'Leboulch',
+  ],
+  mixer: [
+    'Kuhn',
+    'Siloking',
+  ],
+  straw_blower: [
+    'Lucas',
+    'Teagle',
+  ],
+  water_barrel: [
+    'Pichon',
+    'Joskin',
+  ]
+};
+
 const images = {
-    crushers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-    ],
-    handling: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/leve-palette.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal-2.png'
-    ],
-    various_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-    ],
-    spreading: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-    ],
-    specialized_culture: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-    ],
-    breeding_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-    ],
-    irrigation_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-    ],
-    haymaking_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png'
-    ],
-    harvest_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-    ],
-    soi_tools: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-    ],
-    sprayer_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-    ],
-    agricultural_trailers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-    ],
-    seeders_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-    ],
-    tractors: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-    ]
-  };
-  
+  cattlewoman: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/cattlewoman-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/cattlewoman-2.png',
+  ],
+  mixer: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/mixer-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/mixer-2.png',
+  ],
+  straw_blower: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/straw-blower-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/straw-blower-2.png',
+  ],
+  water_barrel: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/water-barrel-1.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/breeding/water-barrel-2.png',
+  ]
+};
+
+export const ENGINE_LIST_BREEDING_EQUIPMENT_CATTLEWOMAN = generateEngineList(modelname['cattlewoman'], brandname['cattlewoman'], 2, 'Bétaillères', images['cattlewoman']);
+export const ENGINE_LIST_BREEDING_EQUIPMENT_MIXER = generateEngineList(modelname['mixer'], brandname['mixer'], 2, 'Mélangeuses', images['mixer']);
+export const ENGINE_LIST_BREEDING_EQUIPMENT_STRAW_BLOWER = generateEngineList(modelname['straw_blower'], brandname['straw_blower'], 2, 'Pailleuses', images['straw_blower']);
+export const ENGINE_LIST_BREEDING_EQUIPMENT_WATER_BARREL = generateEngineList(modelname['water_barrel'], brandname['water_barrel'], 2, 'Tonne à eau', images['water_barrel']);
 
 
-
-export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList('breeding_equipment', 2);

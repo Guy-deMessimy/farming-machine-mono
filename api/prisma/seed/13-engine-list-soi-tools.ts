@@ -1,83 +1,66 @@
+import { generateEngineList } from "./3-populate-engines";
+
+const modelname = {
+  cattlewoman: [
+    '',
+    '',
+    '',
+  ],
+  beet_harvester: [
+    '',
+    '',
+    '',
+  ],
+  potato_planter: [
+    '',
+    '',
+    '',
+  ],
+};
+
+const brandname = {
+  cattlewoman: [
+    '',
+    '',
+    '',
+  ],
+  beet_harvester: [
+    '',
+    '',
+    '',
+  ],
+  potato_planter: [
+    '',
+    '',
+    '',
+  ],
+};
 
 const images = {
-    crushers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/broyeuse.png',
-    ],
-    handling: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/leve-palette.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/chargeur-frontal-2.png'
-    ],
-    various_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/drone.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/quad.png',
-    ],
-    spreading: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/epandeur.png',
-    ],
-    specialized_culture: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/arracheuse-betterave.png',
-    ],
-    breeding_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/desileuse.png',
-    ],
-    irrigation_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pompe.png',
-    ],
-    haymaking_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/enrubanneuse.png'
-    ],
-    harvest_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Massey-Ferguson.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Ks-Agrotech.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/John-Deere-2.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/New-Holland.png',
-    ],
-    soi_tools: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/outils-sols.png',
-    ],
-    sprayer_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/pulverisateur.png',
-    ],
-    agricultural_trailers: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/remorques.png',
-    ],
-    seeders_equipment: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/semoirs.png',
-    ],
-    tractors: [
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-      'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/Claas.png',
-    ]
-  };
+  cattlewoman: [
+    '',
+    '',
+    '',
+  ],
+  beet_harvester: [
+    '',
+    '',
+    '',
+  ],
+  potato_planter: [
+    '',
+    '',
+    '',
+  ],
+};
+
+export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['windrowers'], brandname['windrowers'], 3, 'Andaineurs', images['windrowers']);
+export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['beet_harvester'], brandname['beet_harvester'], 3, 'Arracheuses de betteraves', images['beet_harvester']);
+export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList(modelname['potato_planter'], brandname['potato_planter'], 3, 'Planteuses de pommes de terre', images['potato_planter']);
+
+
+
+export const ENGINE_LIST_BREEDING_EQUIPMENT = generateEngineList('breeding_equipment', 2);
   
 
 export const ENGINE_LIST_SOI_TOOLS = generateEngineList('soi_tools', 4);

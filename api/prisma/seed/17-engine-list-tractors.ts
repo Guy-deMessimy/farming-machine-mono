@@ -11,8 +11,8 @@ const modelname = {
     'Lexion 8900',
   ],
   tracteurs_forrestier: [
-    'Komatsu',
-    'Ponsse',
+    'Ideal 9T',
+    'Tucano 580',
   ],
 };
 
@@ -27,8 +27,8 @@ const brandname = {
     'Claas'
   ],
   tracteurs_forrestier: [
-    'Ideal 9T',
-    'Tucano 580',
+    'Komatsu',
+    'Ponsse',
   ],
 };
 
