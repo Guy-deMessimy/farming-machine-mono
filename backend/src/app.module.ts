@@ -5,6 +5,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 
 // Modules
 import { EnginesModule } from './modules/engine/engine.module';
+import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 
 @Module({
@@ -17,6 +18,7 @@ import { EngineTypesModule } from './modules/engine-type/engine-type.module';
       installSubscriptionHandlers: true,
     }),
     EnginesModule,
+    EngineModelModule,
     EngineTypesModule,
   ],
   controllers: [],
