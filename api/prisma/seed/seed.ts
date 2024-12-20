@@ -29,6 +29,12 @@ import {
   ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK
 } from './5-engine-list-various-equipment';
 import {
+  ENGINE_LIST_SPREADING_BURYER,
+  ENGINE_LIST_SPREADING_SLURRY_TON,
+  ENGINE_LIST_SPREADING_SPREADER
+} from './6-engine-list-spreading';
+
+import {
   ENGINE_LIST_HANDLING_FRONT_LOADER,
   ENGINE_LIST_HANDLING_PALLET_LIFT
 } from './7-engine-list-handling';
@@ -243,15 +249,17 @@ const main = async (): Promise<void> => {
         }
       };
 
-      // const seedSpreadingList = async (): Promise<void> => {
-      //   try {
-      //     await createEngineModelRecords("épandage", ENGINE_MODEL_LIST_SPREADING);
-      //     await createEngineRecords("Epandeurs", ENGINE_LIST_SPREADING);
-      //     console.info('[SEED] Successfully created spreading equipment records');
-      //   } catch (e) {
-      //     console.error('[SEED] Failed to create spreading equipment records', e);
-      //   }
-      // };
+      const seedSpreadingList = async (): Promise<void> => {
+        try {
+          await createEngineModelRecords("épandage", ENGINE_MODEL_LIST_SPREADING);
+          await createEngineRecords("Enfouisseurs", ENGINE_LIST_SPREADING_BURYER);
+          await createEngineRecords("Epandeurs", ENGINE_LIST_SPREADING_SPREADER);
+          await createEngineRecords("Tonne à lisier", ENGINE_LIST_SPREADING_SLURRY_TON);
+          console.info('[SEED] Successfully created spreading equipment records');
+        } catch (e) {
+          console.error('[SEED] Failed to create spreading equipment records', e);
+        }
+      };
 
       const seedHandlingList = async (): Promise<void> => {
         try {
@@ -388,7 +396,7 @@ const main = async (): Promise<void> => {
           // seedCrushersList(),
           seedVariousEquipmentList(),
           seedHandlingList(),
-          // seedSpreadingList(),
+          seedSpreadingList(),
           seedSpecializedCulturesList(),
           seedBreedingEquipmentList(),
           // seedIrrigationEquipmentList(),
