@@ -16,8 +16,8 @@ interface ReportComponentProps {
   setSelectedEngineTypes: (value: number[]) => void;
   selectedEngineModel: number[];
   setSelectedEngineModel: (value: number[]) => void;
-  engineTypesList: EngineModel[];
-  engineModelList: EngineTypes[];
+  engineTypesList: EngineTypes[];
+  engineModelList: EngineModel[];
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({
@@ -83,6 +83,9 @@ const FiltersForm: FC<ReportComponentProps> = ({
               onChange={(value: number[]) => setSelectedEngineTypes(value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
+              maxTagPlaceholder={'Sélectionnez un type de machines'}
+              maxTagCount={0}
+              showSearch={false}
             />
           );
         }}
@@ -112,6 +115,9 @@ const FiltersForm: FC<ReportComponentProps> = ({
               onChange={(value: number[]) => setSelectedEngineModel(value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
+              maxTagCount={0}
+              maxTagPlaceholder={'Sélectionnez un modèle de machines'}
+              showSearch={false}
             />
           );
         }}
