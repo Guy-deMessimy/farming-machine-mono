@@ -15,8 +15,8 @@ interface ReportComponentProps {
   setSelectedEngineTypes: (value: number[]) => void;
   selectedEngineModel: number[];
   setSelectedEngineModel: (value: number[]) => void;
-  engineTypesList: EngineModel[];
-  engineModelList: EngineTypes[];
+  engineTypesList: EngineTypes[];
+  engineModelList: EngineModel[];
 }
 
 const Filters: FC<ReportComponentProps> = ({
@@ -32,8 +32,7 @@ const Filters: FC<ReportComponentProps> = ({
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: order,
     engine_types_filter: selectedEngineTypes,
-    dropdown3: null,
-    dropdown4: null,
+    engine_model_filter: selectedEngineModel,
   });
 
   const form = useForm<ComplexFormValues>({
