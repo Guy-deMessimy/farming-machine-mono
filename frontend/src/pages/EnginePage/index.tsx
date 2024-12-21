@@ -10,19 +10,33 @@ import { useEngineModel } from '../../hooks/useEngineModel';
 import { SortOrder } from '../../shared/types/enum.type';
 // Ui and assets
 import './styles.scss';
+import { EngineModel } from '../../shared/types/engines.type';
 
 const EnginePage: FC = () => {
   const [order, setOrder] = useState<string>(SortOrder.ASC);
-  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
-  const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([]);
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([0]);
+  const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([0]);
   const orderBy = useMemo(() => {
     return order.length > 0 ? { brandName: order } : {};
   }, [order]);
 
   const where = useMemo(() => {
-    // engineModelId
-    return selectedEngineTypes.length > 0 ? { engineTypeId: selectedEngineTypes } : {};
+    if (selectedEngineTypes.length > 0) {
+      if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
+        return {};
+      } else {
+        return { engineTypeId: selectedEngineTypes };
+      }
+    }
+    return {};
   }, [selectedEngineTypes]);
+
+  // console.log('AAA selectedEngineTypes', selectedEngineTypes);
+  // console.log('AAA WHERE', where);
+
+  // selectionner les types => recuperer la liste des types => la passer à la route des models pour recuperer les models
+  // la passer a la route des machines => mise a jour de la liste des machines
+  // choisir les models => recuperer la liste des models => la passer a la liste des machines => mise a jour de la list des machines
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
   const { engineModel, engineModelLoading, engineModelError } = useEngineModel({});
