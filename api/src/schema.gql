@@ -43,7 +43,7 @@ type Engine {
 
 type Query {
   findAllEngines(query: EngineQueryDto): [Engine!]
-  findAllEngineModel: [EngineModel!]!
+  findAllEngineModel(query: EngineModelQueryDto): [EngineModel!]
   findAllEngineTypes(query: EngineTypesQueryDto): [EngineTypes!]
 }
 
@@ -72,6 +72,25 @@ input EngineWhereInput {
   brandName: String
   modelName: String
   engineModelId: [Int!]
+  engineTypeId: [Int!]
+}
+
+input EngineModelQueryDto {
+  offset: Int
+  limit: Int
+  cursor: Int
+  orderBy: EngineModelOrderByInput
+  where: EngineModelWhereInput
+}
+
+input EngineModelOrderByInput {
+  id: SortOrder
+  name: SortOrder
+}
+
+input EngineModelWhereInput {
+  id: Int
+  name: String
   engineTypeId: [Int!]
 }
 
