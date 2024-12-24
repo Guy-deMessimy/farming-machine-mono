@@ -8,17 +8,35 @@ export interface EngineQueryDto {
   where?: EngineWhereInput;
 }
 
+export interface EngineModelQueryDto {
+  limit?: number;
+  offset?: number;
+  cursor?: number;
+  orderBy?: EngineModelOrderByInput;
+  where?: EngineModelWhereInput;
+}
+
 export interface EngineOrderByInput {
   brandName?: string;
   id?: SortOrder;
   modelName?: SortOrder;
 }
 
+export interface EngineModelOrderByInput {
+  name?: string;
+  id?: SortOrder;
+}
+
 export interface EngineWhereInput {
   id?: number;
   modelName?: string;
   brandName?: string;
-  // engineModelId
+  engineTypeId?: number[] | null;
+}
+
+export interface EngineModelWhereInput {
+  id?: number;
+  name?: string;
   engineTypeId?: number[] | null;
 }
 

@@ -20,6 +20,17 @@ const EnginePage: FC = () => {
     return order.length > 0 ? { brandName: order } : {};
   }, [order]);
 
+  // const where = useMemo(() => {
+  //   if (selectedEngineTypes.length > 0) {
+  //     if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
+  //       return {};
+  //     } else {
+  //       return { engineTypeId: selectedEngineTypes };
+  //     }
+  //   }
+  //   return {};
+  // }, [selectedEngineTypes]);
+
   const where = useMemo(() => {
     if (selectedEngineTypes.length > 0) {
       if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
@@ -39,8 +50,10 @@ const EnginePage: FC = () => {
   // choisir les models => recuperer la liste des models => la passer a la liste des machines => mise a jour de la list des machines
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
-  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({});
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where });
+  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({ where });
+  const { engines, enginesLoading, enginesError } = useEngines({ orderBy });
+  console.log('AAA selectedEngineTypes', selectedEngineTypes);
+  console.log('AAA where', where);
   console.log('AAA engineModel', engineModel);
 
   if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
