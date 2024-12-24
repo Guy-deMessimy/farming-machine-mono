@@ -1,9 +1,10 @@
-import { Resolver, Query, Context } from '@nestjs/graphql';
+import { Resolver, Query, Context, Args } from '@nestjs/graphql';
 import { Logger } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { EngineModelService } from './engine-model.service';
 import { EngineModel } from './engine-model.entity';
+import { EngineModelQueryDto } from './engine-model-query.dto';
 
 @Resolver()
 export class EngineModelResolver {
@@ -13,6 +14,7 @@ export class EngineModelResolver {
   @Query(() => [EngineModel], { nullable: true })
   findAllEngineModel(
     @Context() context?: { req: Request },
+    @Args('query', { nullable: true }) query?: EngineModelQueryDto,
   ): Observable<EngineModel[]> {
     try {
       const graphQlQuery = context.req.body.query;
@@ -21,6 +23,7 @@ export class EngineModelResolver {
       }
       const result = this.engineModelService.findAllEngineModel({
         graphQlQuery,
+        query,
       });
       return result;
     } catch (error) {

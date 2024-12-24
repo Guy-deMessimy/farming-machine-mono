@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { Engine } from './engine.entity';
 import { GraphqlApiService } from '../graphql-api/graphql-api.service';
+import { EngineQueryDto } from './engine-query.dto';
 
 @Injectable()
 export class EngineService {
@@ -12,7 +13,7 @@ export class EngineService {
     query,
   }: {
     graphQlQuery: string;
-    query: any;
+    query: EngineQueryDto;
   }): Observable<Engine[]> {
     const response = this.graphqlApiService.execute<Engine[]>(
       graphQlQuery,
