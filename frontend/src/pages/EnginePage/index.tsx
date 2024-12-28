@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 // Components
 import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
@@ -8,45 +8,65 @@ import { useEngineTypes } from '../../hooks/useEngineTypes';
 import { useEngineModel } from '../../hooks/useEngineModel';
 // Types
 import { SortOrder } from '../../shared/types/enum.type';
+import { Engine, EngineModel } from '../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
 
 const EnginePage: FC = () => {
   const [order, setOrder] = useState<string>(SortOrder.ASC);
-  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([0]);
-  const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([0]);
-  const orderBy = useMemo(() => {
-    return order.length > 0 ? { brandName: order } : {};
-  }, [order]);
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
+  const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([]);
+  const [filteredEngines, setFilteredEngines] = useState<Engine[]>([]);
+  const [filteredEngineModel, setFilteredEngineModel] = useState<EngineModel[]>([]);
 
-  const whereTypes = useMemo(() => {
-    if (selectedEngineTypes.length > 0) {
-      if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
-        return {};
-      } else {
-        return { engineTypeId: selectedEngineTypes };
-      }
-    }
-    return {};
-  }, [selectedEngineTypes]);
-
-  const whereModel = useMemo(() => {
-    if (selectedEngineModel.length > 0) {
-      if (selectedEngineModel.length === 1 && selectedEngineModel[0] === 0) {
-        return {};
-      } else {
-        return { engineModelId: selectedEngineModel };
-      }
-    }
-    return {};
-  }, [selectedEngineModel]);
-
+  // LOad initial data from GraphQl
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
-  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({ where: whereTypes });
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where: whereModel });
-  // console.log('AAA ');
-  // console.log('AAA ');
-  // console.log('AAA ');
+  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({});
+  const { engines, enginesLoading, enginesError } = useEngines({});
+
+  useEffect(() => {
+    if (!engineModelLoading && engineModel) {
+      setFilteredEngineModel(engineModel);
+    }
+  }, [engineModel, engineModelLoading]);
+
+  useEffect(() => {
+    let filtered = engineModel;
+    if (selectedEngineTypes.length > 0) {
+      filtered = engineModel.filter((model: EngineModel) => selectedEngineTypes.includes(Number(model.engineType.id)));
+    }
+    setFilteredEngineModel(filtered);
+  }, [selectedEngineTypes, engineModel]);
+
+  useEffect(() => {
+    if (!enginesLoading && engines) {
+      setFilteredEngines(engines);
+    }
+  }, [engines, enginesLoading]);
+
+  useEffect(() => {
+    let filtered = engines;
+
+    if (selectedEngineTypes.length > 0) {
+      filtered = filtered.filter((engine: Engine) =>
+        selectedEngineTypes.includes(Number(engine.engineModel.engineType.id)),
+      );
+    }
+
+    if (selectedEngineModel.length > 0) {
+      filtered = filtered.filter((engine: Engine) => selectedEngineModel.includes(Number(engine.engineModel.id)));
+    }
+
+    if (order) {
+      order.length > 0
+        ? (filtered = [...filtered].sort((a: Engine, b: Engine) =>
+            order === SortOrder.ASC ? a.brandName.localeCompare(b.brandName) : b.brandName.localeCompare(a.brandName),
+          ))
+        : {};
+    }
+
+    setFilteredEngines(filtered); 
+  }, [selectedEngineTypes, selectedEngineModel, order, engines]);
 
   if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
   if (enginesError || engineTypesError || engineModelError) return <p>Error: {enginesError?.message}</p>;
@@ -63,9 +83,9 @@ const EnginePage: FC = () => {
         selectedEngineModel={selectedEngineModel}
         setSelectedEngineModel={setSelectedEngineModel}
         engineTypesList={engineTypes}
-        engineModelList={engineModel}
+        engineModelList={filteredEngineModel}
       />
-      <EngineList enginesList={engines} />
+      <EngineList enginesList={filteredEngines} />
     </div>
   );
 };

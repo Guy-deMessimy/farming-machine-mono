@@ -17,6 +17,14 @@ export const GET_ENGINES = gql`
       copiesNumber
       ref
       imageUrl
+      engineModel {
+        id
+        name
+        engineType {
+          id
+          name
+        }
+      }
     }
   }
 `;

@@ -5,6 +5,10 @@ export const GET_ENGINES_MODEL = gql`
     findAllEngineModel(query: $query) {
       id
       name
+      engineType {
+        id
+        name
+      }
     }
   }
 `;

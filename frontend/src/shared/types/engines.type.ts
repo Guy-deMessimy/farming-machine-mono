@@ -52,7 +52,7 @@ export interface EngineModel {
   id: number;
   name: string;
   description: string;
-  engineType: EngineTypes[];
+  engineType: EngineTypes;
   engines?: Engine[];
 }
 
@@ -71,4 +71,5 @@ export interface Engine {
   CopiesNumber: number;
   ref: string;
   imageUrl: string;
+  engineModel: EngineModel;
 }
