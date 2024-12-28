@@ -65,7 +65,7 @@ const EnginePage: FC = () => {
         : {};
     }
 
-    setFilteredEngines(filtered); 
+    setFilteredEngines(filtered);
   }, [selectedEngineTypes, selectedEngineModel, order, engines]);
 
   if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
