@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
 import { Select } from 'antd';
 
@@ -31,6 +31,16 @@ const FiltersForm: FC<ReportComponentProps> = ({
   engineModelList,
 }) => {
   const { control } = useFormContext<ComplexFormValues>();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [localSelectedEngineTypes, setLocalSelectedEngineTypes] = useState(selectedEngineTypes);
+
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     setSelectedEngineTypes(localSelectedEngineTypes);
+  //   }, 300); // Attente de 300ms avant de déclencher l'API
+
+  //   return () => clearTimeout(timeout);
+  // }, [localSelectedEngineTypes, setSelectedEngineTypes]);
 
   return (
     <div className="engine__filter__form">
@@ -83,9 +93,12 @@ const FiltersForm: FC<ReportComponentProps> = ({
               onChange={(value: number[]) => setSelectedEngineTypes(value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
-              maxTagPlaceholder={'Sélectionnez un type de machines'}
+              // maxTagPlaceholder={'Sélectionnez un type de machines'}
               maxTagCount={0}
+              tagRender={() => <span>type de machines ({selectedEngineTypes.length})</span>}
               showSearch={false}
+              // onDropdownVisibleChange={(open) => setIsDropdownOpen(open)}
+              // open={isDropdownOpen}
             />
           );
         }}

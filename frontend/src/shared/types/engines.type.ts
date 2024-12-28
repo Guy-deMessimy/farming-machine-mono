@@ -32,6 +32,7 @@ export interface EngineWhereInput {
   modelName?: string;
   brandName?: string;
   engineTypeId?: number[] | null;
+  engineModelId?: number[] | null;
 }
 
 export interface EngineModelWhereInput {

@@ -10,7 +10,6 @@ import { useEngineModel } from '../../hooks/useEngineModel';
 import { SortOrder } from '../../shared/types/enum.type';
 // Ui and assets
 import './styles.scss';
-import { EngineModel } from '../../shared/types/engines.type';
 
 const EnginePage: FC = () => {
   const [order, setOrder] = useState<string>(SortOrder.ASC);
@@ -20,18 +19,7 @@ const EnginePage: FC = () => {
     return order.length > 0 ? { brandName: order } : {};
   }, [order]);
 
-  // const where = useMemo(() => {
-  //   if (selectedEngineTypes.length > 0) {
-  //     if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
-  //       return {};
-  //     } else {
-  //       return { engineTypeId: selectedEngineTypes };
-  //     }
-  //   }
-  //   return {};
-  // }, [selectedEngineTypes]);
-
-  const where = useMemo(() => {
+  const whereTypes = useMemo(() => {
     if (selectedEngineTypes.length > 0) {
       if (selectedEngineTypes.length === 1 && selectedEngineTypes[0] === 0) {
         return {};
@@ -42,19 +30,23 @@ const EnginePage: FC = () => {
     return {};
   }, [selectedEngineTypes]);
 
-  // console.log('AAA selectedEngineTypes', selectedEngineTypes);
-  // console.log('AAA WHERE', where);
-
-  // selectionner les types => recuperer la liste des types => la passer à la route des models pour recuperer les models
-  // la passer a la route des machines => mise a jour de la liste des machines
-  // choisir les models => recuperer la liste des models => la passer a la liste des machines => mise a jour de la list des machines
+  const whereModel = useMemo(() => {
+    if (selectedEngineModel.length > 0) {
+      if (selectedEngineModel.length === 1 && selectedEngineModel[0] === 0) {
+        return {};
+      } else {
+        return { engineModelId: selectedEngineModel };
+      }
+    }
+    return {};
+  }, [selectedEngineModel]);
 
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
-  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({ where });
-  const { engines, enginesLoading, enginesError } = useEngines({ orderBy });
-  console.log('AAA selectedEngineTypes', selectedEngineTypes);
-  console.log('AAA where', where);
-  console.log('AAA engineModel', engineModel);
+  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({ where: whereTypes });
+  const { engines, enginesLoading, enginesError } = useEngines({ orderBy, where: whereModel });
+  // console.log('AAA ');
+  // console.log('AAA ');
+  // console.log('AAA ');
 
   if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
   if (enginesError || engineTypesError || engineModelError) return <p>Error: {enginesError?.message}</p>;
