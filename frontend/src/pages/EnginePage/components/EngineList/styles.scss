@@ -2,10 +2,11 @@
 .engine__list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: dense;
   background: #f3f3f3;
+  border: none; 
   gap: 20px;
   overflow: auto;
-  border: none; 
   padding: 10px;
 
   &__item {
@@ -13,13 +14,12 @@
     border-radius: 8px;
     list-style-type: none;
     padding: 10px;
+  }
 
-    &__link {
-      text-decoration: none ;
-      :hover {
-          text-decoration: none;
-      }
-    }
+  &__subcard {
+    grid-column: 1 / -1;
+    width: 100%;
+    border: none;
   }
 }
 
@@ -44,3 +44,28 @@
         border-radius: 4px;
     }
 }
+
+.engine__subcard {
+  padding: 1rem;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  border: solid 1px red;
+  color: black;
+    display: block;
+//   margin-top: 1rem;
+//   text-align: right;
+//   color: #007bff;
+//   text-decoration: none;
+}
+
+// &__link {
+//   text-decoration: none ;
+//   :hover {
+//       text-decoration: none;
+//   }
+// }
+
+// .sub__card__link:hover {
+//   text-decoration: underline;
+// }
+
