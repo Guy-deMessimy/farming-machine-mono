@@ -1,4 +1,4 @@
-import { Button } from '@mui/base/Button';
+import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 // Components
@@ -53,9 +53,13 @@ const MainNavigationComponent = () => {
       <h3 className="baseline"> trouvez votre farming machine</h3>
       <div className="button-group">
         <User alt={'logo'} title={'logo_farming'} width="30px" height="30px" path={''} />
-        <Button className="button">Connexion</Button>
+        <Button className="button" type="link">
+          Connexion
+        </Button>
         <>|</>
-        <Button className="button">Inscription</Button>
+        <Button className="button" type="link">
+          Inscription
+        </Button>
       </div>
     </header>
   );
