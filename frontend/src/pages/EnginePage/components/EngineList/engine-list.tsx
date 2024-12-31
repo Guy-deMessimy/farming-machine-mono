@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // Components
@@ -15,9 +15,19 @@ interface ReportComponentProps {
 
 const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
   const [activeEngineId, setActiveEngineId] = useState<number | null>(null);
+  const subcardRef = useRef<HTMLLIElement>(null);
 
   const toggleSubCard = (engineId: number) => {
-    setActiveEngineId((prev) => (prev === engineId ? null : engineId)); // Toggle sub-card visibility
+    setActiveEngineId((prev) => (prev === engineId ? null : engineId));
+    setTimeout(() => {
+      if (subcardRef.current) {
+        subcardRef.current.focus();
+        subcardRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+    }, 100);
   };
 
   return (
@@ -28,7 +38,7 @@ const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
             <EngineCard engineItem={engine} />
           </li>
           {activeEngineId === engine.id && (
-            <li className="engine__list__subcard" key={`subcard-${engine.id}`}>
+            <li className="engine__list__subcard" key={`subcard-${engine.id}`} ref={subcardRef}>
               <SubCard engineItem={engine} />
             </li>
           )}
