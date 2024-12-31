@@ -10,6 +10,7 @@ export const ENGINE_MODEL_LIST_VARIOUS_EQUIPMENT = [
   { name: 'Lames de déneigement', description: 'Pour déneiger', engineTypeId: null },
   { name: 'Drones', description: 'Pour droner', engineTypeId: null },
   { name: 'Camions', description: 'Pour livrer', engineTypeId: null },
+  { name: 'Pick-up', description: 'pour livrer', engineTypeId: null },
 ];
 
 export const ENGINE_MODEL_LIST_SPREADING = [

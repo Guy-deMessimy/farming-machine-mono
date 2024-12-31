@@ -26,6 +26,7 @@ import {
 import {
   ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES,
   ENGINE_LIST_VARIOUS_EQUIPMENT_NACELLES,
+  ENGINE_LIST_VARIOUS_EQUIPMENT_PICKUP,
   ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS,
   ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE,
   ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER,
@@ -248,6 +249,7 @@ const main = async (): Promise<void> => {
           await createEngineRecords("Lames de déneigement", ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE);
           await createEngineRecords("Drones", ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES);
           await createEngineRecords("Camions", ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK);
+          await createEngineRecords("Pick-up", ENGINE_LIST_VARIOUS_EQUIPMENT_PICKUP);
           console.info('[SEED] Successfully created various equipment records');
         } catch (e) {
           console.error('[SEED] Failed to create various equipment records', e);

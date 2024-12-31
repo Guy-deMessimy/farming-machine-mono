@@ -11,9 +11,9 @@ export class EngineModelResolver {
     private readonly pubSub: PubSub,
   ) {}
 
-  @Query(() => [EngineModel], { name: 'findAllEngineModel', nullable: true  })
+  @Query(() => [EngineModel], { name: 'findAllEngineModel', nullable: true })
   async findAllEngineTypes(
-     @Args('query', { nullable: true }) query?: EngineModelQueryDto,
+    @Args('query', { nullable: true }) query?: EngineModelQueryDto,
   ): Promise<EngineModel[]> {
     return this.enginesTypeService.findAllEngineModel(query);
   }

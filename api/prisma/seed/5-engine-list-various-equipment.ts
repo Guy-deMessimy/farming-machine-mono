@@ -32,6 +32,11 @@ const modelname = {
     'R 580 V8',
     'T High 520',
   ],
+  pickup: [
+    'Classe X',
+    'Alaskan',
+    'Hilux', 
+  ]
 };
 
 const brandname = {
@@ -66,6 +71,11 @@ const brandname = {
     'Scania',
     'Renault trucks',
   ],
+  pickup: [
+    'Mercedes',
+    'Renault',
+    'Toyota',
+  ]
 };
 
 const images = {
@@ -100,6 +110,12 @@ const images = {
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/truck-3.png',
     'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/truck-4.png',
   ],
+  pickup: [
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/pikup-merco.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/pikup-renault.png',
+    'https://nestjsfileuploadfarmingmachine.s3.eu-west-3.amazonaws.com/various/pikup-toyota.png',
+    
+  ]
 };
 
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_QUADS = generateEngineList(modelname['quads'], brandname['quads'], 3, 'Quads', images['quads']);
@@ -108,3 +124,4 @@ export const ENGINE_LIST_VARIOUS_EQUIPMENT_SWEEPER = generateEngineList(modelnam
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_SNOW_BLADE= generateEngineList(modelname['snow_blade'], brandname['snow_blade'], 3, 'Lames de déneigement', images['snow_blade']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_DRONES = generateEngineList(modelname['drones'], brandname['drones'], 3, 'Drones', images['drones']);
 export const ENGINE_LIST_VARIOUS_EQUIPMENT_TRUCK = generateEngineList(modelname['truck'], brandname['truck'], 4, 'Camions', images['truck']);
+export const ENGINE_LIST_VARIOUS_EQUIPMENT_PICKUP = generateEngineList(modelname['pickup'], brandname['pickup'], 3, 'Pick-up', images['pickup']);
