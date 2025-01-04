@@ -6,26 +6,30 @@ import {
 } from '@nestjs/common';
 import { PrismaClient, Prisma } from '@prisma/client';
 
-// Need to see https://docs.nestjs.com/techniques/configuration#using-the-configservice
 @Injectable()
 export class PrismaService
   extends PrismaClient<Prisma.PrismaClientOptions, Prisma.LogLevel>
   implements OnModuleInit
 {
-  // constructor() {
-  //   super({
-  //     log: [
-  //       // type of event you would like to log.
-  //       { emit: 'event', level: 'query' },
-  //       { emit: 'stdout', level: 'info' },
-  //       { emit: 'stdout', level: 'warn' },
-  //       { emit: 'stdout', level: 'error' },
-  //     ],
-  //     errorFormat: 'colorless',
-  //   });
-  // }
   private readonly logger = new Logger(PrismaService.name);
+
+  constructor() {
+    const isDev = process.env.NODE_ENV !== 'production';
+    super({
+      log: isDev
+        ? [
+            { emit: 'event', level: 'query' },
+            { emit: 'stdout', level: 'info' },
+            { emit: 'stdout', level: 'warn' },
+            { emit: 'stdout', level: 'error' },
+          ]
+        : [],
+      errorFormat: 'colorless',
+    });
+  }
+
   async onModuleInit() {
+    this.logger.log('Prisma service initialized');
     await this.$connect();
 
     this.$on('error', ({ message }) => {
@@ -37,14 +41,17 @@ export class PrismaService
     this.$on('info', ({ message }) => {
       this.logger.debug(message);
     });
-    this.$on('query', ({ query, params }) => {
-      this.logger.log(`${query}; ${params}`);
+    this.$on('query', ({ query, params, duration }) => {
+      this.logger.log(`Query: ${query}`);
+      this.logger.log(`Params: ${params}`);
+      this.logger.log(`Duration: ${duration}ms`);
     });
   }
 
   async enableShutdownHooks(app: INestApplication) {
-    process.on('beforeExit', async () => {
-      await app.close();
+    app.enableShutdownHooks();
+    app.getHttpServer().on('close', async () => {
+      await this.$disconnect();
     });
   }
 }

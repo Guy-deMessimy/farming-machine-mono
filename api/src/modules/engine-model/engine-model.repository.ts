@@ -1,19 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { Prisma, EngineModel } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { EngineModelQueryDto } from './engine-model-query.dto';
 
 @Injectable()
 export class EngineModelRepository {
-  constructor(private prisma: PrismaService) {
-    prisma.$on<any>('query', (event: Prisma.QueryEvent) => {
-      console.log('Query: ' + event.query);
-      console.log('Duration: ' + event.duration + 'ms');
-    });
-  }
+  private readonly logger = new Logger(EngineModelRepository.name);
+  constructor(private prisma: PrismaService) {}
 
   async findAllEngineModel(query: EngineModelQueryDto): Promise<EngineModel[]> {
     const { limit, offset, cursor, orderBy, where } = query || {};
+    // this.logger.debug(`findAllEngineModel called in repository with where: ${where}`);
     const prismaWhere: Prisma.EngineModelWhereInput = {
       ...(where && {
         ...(where?.engineTypeId && {
@@ -23,7 +21,6 @@ export class EngineModelRepository {
         }),
       }),
     };
-    console.log('AAA where', where);
     return this.prisma.engineModel.findMany({
       skip: offset,
       take: limit,
