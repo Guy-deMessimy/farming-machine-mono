@@ -85,6 +85,7 @@ model EngineModel {
   engineType  EngineTypes @relation(fields: [engineTypeId], references: [id])
   engineTypeId Int
   engines     Engine[]
+  @@index([engineTypeId])
 }
 
 model Engine {
@@ -107,7 +108,7 @@ model Engine {
   ref                 String?
   engineModel         EngineModel @relation(fields: [engineModelId], references: [id])
   engineModelId       Int
-  @@index([brandName, modelName])
+  @@index([brandName, modelName, engineModelId])
 }
 
 
