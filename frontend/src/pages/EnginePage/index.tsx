@@ -5,7 +5,6 @@ import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
 import { useEngineTypes } from '../../hooks/useEngineTypes';
-import { useEngineModel } from '../../hooks/useEngineModel';
 // Types
 import { SortOrder } from '../../shared/types/enum.type';
 import { Engine, EngineModel } from '../../shared/types/engines.type';
@@ -18,17 +17,23 @@ const EnginePage: FC = () => {
   const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([]);
   const [filteredEngines, setFilteredEngines] = useState<Engine[]>([]);
   const [filteredEngineModel, setFilteredEngineModel] = useState<EngineModel[]>([]);
+  const [engineModel, setEngineModel] = useState<EngineModel[]>([]);
 
   // LOad initial data from GraphQl
   const { engineTypes, engineTypesLoading, engineTypesError } = useEngineTypes({});
-  const { engineModel, engineModelLoading, engineModelError } = useEngineModel({});
   const { engines, enginesLoading, enginesError } = useEngines({});
 
   useEffect(() => {
-    if (!engineModelLoading && engineModel) {
-      setFilteredEngineModel(engineModel);
+    if (!enginesLoading && engines) {
+      const uniqueEngineModels = engines
+        .flatMap((engine: Engine) => engine.engineModel)
+        .filter(
+          (model: EngineModel, index: number, self: EngineModel[]) =>
+            index === self.findIndex((m) => m.id === model.id),
+        );
+      setEngineModel(uniqueEngineModels);
     }
-  }, [engineModel, engineModelLoading]);
+  }, [engines, enginesLoading]);
 
   useEffect(() => {
     let filtered = engineModel;
@@ -68,8 +73,8 @@ const EnginePage: FC = () => {
     setFilteredEngines(filtered);
   }, [selectedEngineTypes, selectedEngineModel, order, engines]);
 
-  if (enginesLoading || engineTypesLoading || engineModelLoading) return <p>Loading...</p>;
-  if (enginesError || engineTypesError || engineModelError) return <p>Error: {enginesError?.message}</p>;
+  if (enginesLoading || engineTypesLoading) return <p>Loading...</p>;
+  if (enginesError || engineTypesError) return <p>Error: {enginesError?.message}</p>;
 
   return (
     <div className="engine__wrapper">

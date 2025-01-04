@@ -18,9 +18,6 @@ export class EngineTypesRepository {
       cursor: cursor ? { id: cursor } : undefined,
       orderBy,
       where,
-      include: {
-        engineModels: true,
-      },
     });
   }
 }
