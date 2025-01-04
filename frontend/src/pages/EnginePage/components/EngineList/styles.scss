@@ -46,16 +46,30 @@
 }
 
 .engine__subcard {
-  padding: 1rem;
-  border: 1px solid #ddd;
-  background-color: #f9f9f9;
-  border: solid 1px red;
+  border: 1px solid lightgrey;
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  gap: 15px;
   color: black;
-    display: block;
-//   margin-top: 1rem;
-//   text-align: right;
-//   color: #007bff;
-//   text-decoration: none;
+
+    &__photo {
+      border: none;
+      flex: 4;
+      &__img {
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+    }
+
+    &__details {
+    border: solid 1px pink;
+    flex: 6; /* 40% */
+    height: 100%;
+    }
 }
 
 // &__link {
