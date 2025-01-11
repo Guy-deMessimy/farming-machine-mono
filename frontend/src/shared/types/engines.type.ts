@@ -61,13 +61,14 @@ export interface Engine {
   modelName: string;
   brandName: string;
   conception: string;
+  description: string;
   engineKwPower: number;
   engineCcPower: number;
-  MaxKmhSpeed: number;
-  PetrolLitreTank: number;
+  maxKmhSpeed: number;
+  petrolLitreTank: number;
   TankLitre: number;
-  WeightKg: number;
-  WorkingWidth: number;
+  weightKg: number;
+  workingWidth: number;
   CopiesNumber: number;
   ref: string;
   imageUrl: string;

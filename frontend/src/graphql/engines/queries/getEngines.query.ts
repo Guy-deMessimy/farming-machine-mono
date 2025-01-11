@@ -7,6 +7,7 @@ export const GET_ENGINES = gql`
       modelName
       brandName
       conception
+      description
       engineKwPower
       engineCcPower
       maxKmhSpeed
