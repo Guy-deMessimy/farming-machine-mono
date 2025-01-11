@@ -38,6 +38,16 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
     console.log('radio checked', e.target.value);
     setHourValue(e.target.value);
   };
+
+  const modalContent = (
+    <Modal title="Détails du prix" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+      <p>Voici les détails des prix pour cette machine :</p>
+      <ul>
+        <li>22.94 € / heure standard</li>
+        <li>Forfait journée : 150 €</li>
+      </ul>
+    </Modal>
+  );
   return (
     <div className="engine__subcard">
       <div className="engine__subcard__photo">
@@ -131,13 +141,7 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
           </Button>
         </div>
       </div>
-      <Modal title="Détails du prix" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>Voici les détails des prix pour cette machine :</p>
-        <ul>
-          <li>22.94 € / heure standard</li>
-          <li>Forfait journée : 150 €</li>
-        </ul>
-      </Modal>
+      {isModalOpen && modalContent}
     </div>
   );
 };
