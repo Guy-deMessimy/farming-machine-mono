@@ -46,48 +46,128 @@
 }
 
 .engine__subcard {
-  border: 1px solid lightgrey;
-  background-color: white;
+  border: 2px solid lightgrey;
+  background-color: #3a3a3a; /* Gris plus clair au survol */
   border-radius: 8px;
   display: flex;
-  gap: 15px;
-  color: black;
+  gap: 45px;
+  color: white;
+  height: 100%;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 
-    &__photo {
+  &__photo {
+    border: none;
+    flex: 4; 
+
+    &__img {
+      width: 100%;
+      height: 100%;
       border: none;
-      flex: 4;
-      &__img {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+  }
+
+  &__details {
+  border: none;
+  margin: 15px 15px 15px 15px;
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 10px;
+
+    &__info {
+    border: none;
+    font-size: 1.125rem;
+    font-weight: 500;
+    }
+
+    &__price {
+      border: none;
+      &__radio {
+        border: 1px solid lightgrey;
+        border-radius: 8px;
         width: 100%;
-        height: 100%;
-        border: none;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
+        &__label{
+          color: white;
+        }
+        &__legend{
+          color: white;
+        }
       }
     }
 
-    &__details {
-    border: solid 1px pink;
-    flex: 6;
-    height: 100%;
+    &__hour {
+      border: none;
+      &__radio {
+        border: 1px solid lightgrey;
+        border-radius: 8px;
+        width: 100%;
+        &__label{
+          color: white;
+        }
+        &__legend{
+          color: white;
+        }
+      }
+    }
 
-    &__price {
+    &__link {
+      display: flex;
       border: 1px solid lightgrey;
       border-radius: 8px;
-      display: flex;
-      flex-direction: column;
-      // padding: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 35px 0px 0px 0px;
+      padding: 8px;
+
+      &__price {
+        border: none;
+      }
+      &__info {
+        color: orange; 
+        text-decoration: underline; 
+        cursor: pointer; 
+        font-size: 0.9rem;
+        margin-top: 8px; /* Espacement au-dessus */
+        display: inline-block; /* S'assure que le texte occupe une ligne seule */
+      }
+
+      &__button {
+        border: 1px solid chocolate;
+        background-color: orange;
+        color: white;
+        font-weight: 600;
+      }
     }
-    }
+  }
 }
 
-// &__link {
-//   text-decoration: none ;
-//   :hover {
-//       text-decoration: none;
-//   }
-// }
+.engine__subcard:hover {
+  background-color: #222222; 
+}
 
-// .sub__card__link:hover {
-//   text-decoration: underline;
-// }
+.engine__subcard__details__price__radio .ant-radio-checked .ant-radio-inner {
+  border-color: orange !important; 
+  background-color: orange !important; 
+}
+
+.engine__subcard__details__price__radio .ant-radio-checked .ant-radio-inner::after {
+  background-color: white !important; 
+}
+
+.engine__subcard__details__hour__radio .ant-radio-checked .ant-radio-inner {
+  border-color: orange !important; 
+  background-color: orange !important;
+}
+
+.engine__subcard__details__hour__radio .ant-radio-checked .ant-radio-inner::after {
+  background-color: white !important;
+}
+
+.engine__subcard__link:hover {
+  color: orange; /* Change la couleur au survol */
+  text-decoration: none; /* Ajoute une ligne au survol */
+}
 
