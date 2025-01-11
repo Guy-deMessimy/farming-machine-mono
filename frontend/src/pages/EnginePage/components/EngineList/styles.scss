@@ -78,7 +78,7 @@
 
     &__info {
     border: none;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     }
 
@@ -91,7 +91,7 @@
         padding: 15px;
         &__label{
           color: white;
-          font-size: 1.125rem;
+          font-size: 1rem;
         }
         &__legend{
           color: white;
@@ -108,7 +108,7 @@
         padding: 15px;
         &__label{
           color: white;
-          font-size: 1.125rem;
+          font-size: 1rem;
         }
         &__legend{
           color: white;
@@ -118,7 +118,6 @@
 
     &__link {
       display: flex;
-      border: 1px solid lightgrey;
       border-radius: 8px;
       align-items: center;
       justify-content: space-between;
