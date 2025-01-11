@@ -50,9 +50,8 @@
   background-color: #3a3a3a; /* Gris plus clair au survol */
   border-radius: 8px;
   display: flex;
-  gap: 45px;
+  gap: 25px;
   color: white;
-  height: 100%;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 
   &__photo {
@@ -75,7 +74,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 10px;
+  gap: 5px;
 
     &__info {
     border: none;
@@ -89,8 +88,10 @@
         border: 1px solid lightgrey;
         border-radius: 8px;
         width: 100%;
+        padding: 15px;
         &__label{
           color: white;
+          font-size: 1.125rem;
         }
         &__legend{
           color: white;
@@ -104,8 +105,10 @@
         border: 1px solid lightgrey;
         border-radius: 8px;
         width: 100%;
+        padding: 15px;
         &__label{
           color: white;
+          font-size: 1.125rem;
         }
         &__legend{
           color: white;
