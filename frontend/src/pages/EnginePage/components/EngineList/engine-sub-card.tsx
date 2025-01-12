@@ -56,19 +56,10 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
       <div className="engine__subcard__details">
         <div className="engine__subcard__details__info">
           <p>
-            <strong>Catégorie :</strong> {engineItem.ref}
-          </p>
-          <p>
             <strong>Marque :</strong> {engineItem.brandName}
           </p>
           <p>
             <strong>Modèle :</strong> {engineItem.modelName}
-          </p>
-          <p>
-            <strong>Conception :</strong> {engineItem.conception}
-          </p>
-          <p>
-            <strong>Description :</strong> {engineItem.description}
           </p>
         </div>
 

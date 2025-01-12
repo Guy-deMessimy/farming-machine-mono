@@ -8,6 +8,7 @@
   gap: 20px;
   overflow: auto;
   padding: 10px;
+  height: 100%;
 
   &__item {
     border: 1px solid lightgrey;
@@ -19,6 +20,8 @@
   &__subcard {
     grid-column: 1 / -1;
     width: 100%;
+    height: 90%;
+    position: relative;
     border: none;
   }
 }
@@ -46,11 +49,12 @@
 }
 
 .engine__subcard {
-  border: 2px solid lightgrey;
-  background-color: #3a3a3a; /* Gris plus clair au survol */
-  border-radius: 8px;
   display: flex;
-  gap: 25px;
+  gap: 15px;
+  height: 100%;
+  border: 2px solid lightgrey;
+  border-radius: 8px;
+  background-color: #3a3a3a;
   color: white;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
 
@@ -68,13 +72,16 @@
   }
 
   &__details {
-  border: none;
-  margin: 15px 15px 15px 15px;
-  flex: 6;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  gap: 5px;
+    display: flex;
+    flex: 6;
+    gap: 2px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    border: none;
+    margin: 2px 15px 2px 15px;
+    padding: 10px;
+    overflow: auto;
 
     &__info {
     border: none;
@@ -88,7 +95,7 @@
         border: 1px solid lightgrey;
         border-radius: 8px;
         width: 100%;
-        padding: 15px;
+        padding: 5px;
         &__label{
           color: white;
           font-size: 1rem;
@@ -105,7 +112,7 @@
         border: 1px solid lightgrey;
         border-radius: 8px;
         width: 100%;
-        padding: 15px;
+        padding: 5px;
         &__label{
           color: white;
           font-size: 1rem;
@@ -121,8 +128,8 @@
       border-radius: 8px;
       align-items: center;
       justify-content: space-between;
-      margin: 35px 0px 0px 0px;
-      padding: 8px;
+      margin: 8px 0px 0px 0px;
+      padding: 5px;
 
       &__price {
         border: none;
@@ -132,8 +139,8 @@
         text-decoration: underline; 
         cursor: pointer; 
         font-size: 0.9rem;
-        margin-top: 8px; /* Espacement au-dessus */
-        display: inline-block; /* S'assure que le texte occupe une ligne seule */
+        margin-top: 5px;
+        display: inline-block;
       }
 
       &__button {
