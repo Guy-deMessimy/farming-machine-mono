@@ -134,7 +134,7 @@ const SubCard: FC<SubCardProps> = ({ engineItem, handleClose }) => {
           </div>
 
           <Button className="engine__subcard__details__link__button" type="link">
-            <Link to={`/engine/${engineItem.id}`} className="engine__subcard__link">
+            <Link to={`/engines/${engineItem.id}`} className="engine__subcard__link">
               Voir plus de détails
             </Link>
           </Button>

@@ -8,6 +8,7 @@ import Layout from '../LayoutComponent/index';
 import ErrorPage from '../../pages/ErrorPage';
 import WelcomePage from '../../pages/WelcomePage/index';
 import EnginePage from '../../pages/EnginePage/index';
+import EngineDetailsPage from '../../pages/EnginePage/components/EngineDetails';
 
 import './styles.scss';
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EnginePage />,
+          },
+          {
+            path: '/engines/:id',
+            element: <EngineDetailsPage />,
           },
         ],
       },

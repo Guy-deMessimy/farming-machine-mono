@@ -1,3 +1,5 @@
+import './styles.scss';
+
 const WelcomePage = () => {
   return (
     <main>
