@@ -181,7 +181,10 @@
   background-color: white !important;
 }
 
-.engine__subcard__link:hover {
+.engine__subcard__link:hover,
+.engine__subcard__link:focus,
+.engine__subcard__link:active
+ {
   color: orange; /* Change la couleur au survol */
   text-decoration: none; /* Ajoute une ligne au survol */
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
+import './styles.scss';
 
 const EngineDetailsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -21,8 +22,12 @@ const EngineDetailsPage: React.FC = () => {
       >
         Retour
       </Button>
-      <h1>Détails du moteur</h1>
-      {/* Contenu de la page ici */}
+      <div className="enine__details__container">
+        {' '}
+        <p>Bloc photos de machines et tableau de caractéristiques</p>
+        <p>Bloc profil du proprietaire</p>
+        <p>Bloc dates, agences de retrait et localisation</p>
+      </div>
     </div>
   );
 };
