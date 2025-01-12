@@ -10,24 +10,20 @@ import './styles.scss';
 
 interface ReportComponentProps {
   order: string;
-  setOrder: (value: string) => void;
   selectedEngineTypes: number[];
-  setSelectedEngineTypes: (value: number[]) => void;
   selectedEngineModel: number[];
-  setSelectedEngineModel: (value: number[]) => void;
   engineTypesList: EngineTypes[];
   engineModelList: EngineModel[];
+  handleFilterChange: (key: 'engineTypes' | 'engineModels' | 'order', value: string | number[]) => void;
 }
 
 const Filters: FC<ReportComponentProps> = ({
   order,
-  setOrder,
   selectedEngineTypes,
-  setSelectedEngineTypes,
   selectedEngineModel,
-  setSelectedEngineModel,
   engineTypesList,
   engineModelList,
+  handleFilterChange,
 }) => {
   const myDefaultValues = (): ComplexFormValues => ({
     sort_filter: order,
@@ -62,13 +58,11 @@ const Filters: FC<ReportComponentProps> = ({
       <form className={`engine__filter`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
         <FiltersForm
           order={order}
-          setOrder={setOrder}
           selectedEngineTypes={selectedEngineTypes}
-          setSelectedEngineTypes={setSelectedEngineTypes}
           selectedEngineModel={selectedEngineModel}
-          setSelectedEngineModel={setSelectedEngineModel}
           engineTypesList={engineTypesList}
           engineModelList={engineModelList}
+          handleFilterChange={handleFilterChange}
         />
       </form>
     </FormProvider>

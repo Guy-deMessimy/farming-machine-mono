@@ -1,4 +1,5 @@
 import { FC, useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 // Components
 import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
@@ -12,6 +13,9 @@ import { Engine, EngineModel, EngineTypes } from '../../shared/types/engines.typ
 import './styles.scss';
 
 const EnginePage: FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [filters, setFilters] = useState({ type: '', brand: '' });
   const [order, setOrder] = useState<string>(SortOrder.ASC);
   const [engineTypes, setEngineTypes] = useState<EngineTypes[]>([]);
   const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
@@ -20,6 +24,42 @@ const EnginePage: FC = () => {
   const [filteredEngines, setFilteredEngines] = useState<Engine[]>([]);
   const [filteredEngineModel, setFilteredEngineModel] = useState<EngineModel[]>([]);
   const { engines, enginesLoading, enginesError } = useEngines({});
+
+  // Synchroniser les filtres avec les paramètres d’URL
+  // useEffect(() => {
+  //   const searchParams = new URLSearchParams(location.search);
+  //   setFilters({
+  //     type: searchParams.get('type') || '',
+  //     brand: searchParams.get('brand') || '',
+  //   });
+  // }, [location.search]);
+
+  // const handleFilterChange = (key: 'type' | 'brand', value: string | number) => {
+  //   const newFilters: Record<string, string> = {
+  //     ...filters,
+  //     [key]: value.toString(), // Convertit en chaîne pour compatibilité avec les URL
+  //   };
+  //   setFilters(newFilters as { type: string; brand: string });
+
+  //   const searchParams = new URLSearchParams(newFilters);
+  //   navigate(`?${searchParams.toString()}`, { replace: true });
+  // };
+
+  const handleFilterChange = (key: string, value: string | number[]) => {
+    switch (key) {
+      case 'engineTypes':
+        setSelectedEngineTypes(value as number[]);
+        break;
+      case 'engineModels':
+        setSelectedEngineModel(value as number[]);
+        break;
+      case 'order':
+        setOrder(value as string);
+        break;
+      default:
+        console.warn(`Unknown filter key: ${key}`);
+    }
+  };
 
   useEffect(() => {
     if (!enginesLoading && engines) {
@@ -92,13 +132,11 @@ const EnginePage: FC = () => {
       <hr className="engine__wrapper__hr"></hr>
       <Filters
         order={order}
-        setOrder={setOrder}
         selectedEngineTypes={selectedEngineTypes}
-        setSelectedEngineTypes={setSelectedEngineTypes}
         selectedEngineModel={selectedEngineModel}
-        setSelectedEngineModel={setSelectedEngineModel}
         engineTypesList={engineTypes}
         engineModelList={filteredEngineModel}
+        handleFilterChange={handleFilterChange}
       />
       <EngineList enginesList={filteredEngines} />
     </div>

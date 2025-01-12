@@ -42,9 +42,14 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
   const modalContent = (
     <Modal title="Détails du prix" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
       <p>Voici les détails des prix pour cette machine :</p>
+      <hr />
       <ul>
         <li>22.94 € / heure standard</li>
         <li>Forfait journée : 150 €</li>
+        <li>Taxe TVA et frais : 20%</li>
+        <li>
+          <strong>Total TTC : 180 € </strong>
+        </li>
       </ul>
     </Modal>
   );

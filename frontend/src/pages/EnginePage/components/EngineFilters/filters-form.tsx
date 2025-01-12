@@ -11,24 +11,20 @@ import './styles.scss';
 
 interface ReportComponentProps {
   order: string;
-  setOrder: (value: string) => void;
   selectedEngineTypes: number[];
-  setSelectedEngineTypes: (value: number[]) => void;
   selectedEngineModel: number[];
-  setSelectedEngineModel: (value: number[]) => void;
   engineTypesList: EngineTypes[];
   engineModelList: EngineModel[];
+  handleFilterChange: (key: 'engineTypes' | 'engineModels' | 'order', value: string | number[]) => void;
 }
 
 const FiltersForm: FC<ReportComponentProps> = ({
   order,
-  setOrder,
   selectedEngineTypes,
-  setSelectedEngineTypes,
   selectedEngineModel,
-  setSelectedEngineModel,
   engineTypesList,
   engineModelList,
+  handleFilterChange,
 }) => {
   const { control } = useFormContext<ComplexFormValues>();
 
@@ -52,7 +48,7 @@ const FiltersForm: FC<ReportComponentProps> = ({
                 },
               ]}
               placeholder="Trier par"
-              onChange={(value: string) => setOrder(value)}
+              onChange={(value: string) => handleFilterChange('order', value)}
               value={order}
             />
           );
@@ -80,7 +76,7 @@ const FiltersForm: FC<ReportComponentProps> = ({
               value={selectedEngineTypes}
               placeholder="Trier par"
               mode="multiple"
-              onChange={(value: number[]) => setSelectedEngineTypes(value)}
+              onChange={(value: number[]) => handleFilterChange('engineTypes', value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
               maxTagCount={0}
@@ -112,7 +108,7 @@ const FiltersForm: FC<ReportComponentProps> = ({
               value={selectedEngineModel}
               placeholder="Trier par"
               mode="multiple"
-              onChange={(value: number[]) => setSelectedEngineModel(value)}
+              onChange={(value: number[]) => handleFilterChange('engineModels', value)}
               optionLabelProp="label"
               style={{ width: '100%' }}
               maxTagCount={0}
