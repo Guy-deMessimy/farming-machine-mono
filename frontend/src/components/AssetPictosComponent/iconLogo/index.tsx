@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import FarmingMachineLogoSvg from './svg/index';
-import { Logo } from '../utils/interface';
+import { Icon } from '../utils/interface';
 import './styles.scss';
 
-const FarmingMachineLogo: React.FC<Logo> = ({ title, alt, width, height, path }) => {
+const FarmingMachineLogo: React.FC<Icon> = ({ title, alt, width, height, path }) => {
   const navigate = useNavigate();
   return (
     <div className="logo" onClick={() => navigate(path)}>

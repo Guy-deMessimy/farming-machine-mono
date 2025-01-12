@@ -1,4 +1,4 @@
-export interface Logo {
+export interface Icon {
   title: string;
   alt: string;
   width?: number | string;
