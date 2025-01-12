@@ -30,6 +30,10 @@ const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
     }, 100);
   };
 
+  const handleClose = () => {
+    setActiveEngineId(null);
+  };
+
   return (
     <ul className="engine__list">
       {enginesList.map((engine: Engine, index: number) => (
@@ -39,7 +43,7 @@ const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
           </li>
           {activeEngineId === engine.id && (
             <li className="engine__list__subcard" key={`subcard-${engine.id}`} ref={subcardRef}>
-              <SubCard engineItem={engine} />
+              <SubCard engineItem={engine} handleClose={handleClose} />
             </li>
           )}
         </Fragment>

@@ -4,6 +4,7 @@ export interface Icon {
   width?: number | string;
   height?: number | string;
   path: string;
+  onclick?: () => void;
 }
 
 export interface SvgLogo extends React.SVGProps<SVGSVGElement> {

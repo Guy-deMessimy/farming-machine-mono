@@ -5,14 +5,16 @@ import type { RadioChangeEvent } from 'antd';
 import { Modal } from 'antd';
 // Types
 import { Engine } from '../../../../shared/types/engines.type';
+import Cross from '../../../../components/AssetPictosComponent/iconCross/index';
 // Styles
 import './styles.scss';
 
 interface SubCardProps {
   engineItem: Engine;
+  handleClose: () => void;
 }
 
-const SubCard: FC<SubCardProps> = ({ engineItem }) => {
+const SubCard: FC<SubCardProps> = ({ engineItem, handleClose }) => {
   console.log('AAA item', engineItem);
   const [priceValue, setPriceValue] = useState(1);
   const [hourValue, setHourValue] = useState(3);
@@ -60,6 +62,7 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
       </div>
       <div className="engine__subcard__details">
         <div className="engine__subcard__details__info">
+          <Cross alt={'logo'} title={'logo_farming'} width="20px" height="20px" path={''} onclick={handleClose} />
           <p>
             <strong>Marque :</strong> {engineItem.brandName}
           </p>
@@ -121,12 +124,12 @@ const SubCard: FC<SubCardProps> = ({ engineItem }) => {
         </div>
 
         <div className="engine__subcard__details__link">
-          <div>
-            <p className="engine__subcard__details__link__price">
+          <div className="engine__subcard__details__link__container">
+            <p className="engine__subcard__details__link__container__price">
               <strong>Prix :</strong> {'22.94 € / heure'}
             </p>
-            <span className="engine__subcard__details__link__info" onClick={showModal}>
-              Voir les détails des prix
+            <span className="engine__subcard__details__link__container__info" onClick={showModal}>
+              Voir les détails du prix
             </span>
           </div>
 

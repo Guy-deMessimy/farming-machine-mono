@@ -80,7 +80,7 @@
     justify-content: space-around;
     border: none;
     margin: 2px 15px 2px 15px;
-    padding: 10px;
+    padding: 2px;
     overflow: auto;
 
     &__info {
@@ -131,16 +131,22 @@
       margin: 8px 0px 0px 0px;
       padding: 5px;
 
-      &__price {
+      &__container {
         border: none;
-      }
-      &__info {
-        color: orange; 
-        text-decoration: underline; 
-        cursor: pointer; 
-        font-size: 0.9rem;
-        margin-top: 5px;
-        display: inline-block;
+        align-items: center;
+        display: flex;
+        gap: 45px;
+        &__price {
+          border: none;
+        }
+        &__info {
+          color: orange; 
+          text-decoration: underline; 
+          cursor: pointer; 
+          font-size: 0.9rem;
+          margin-top: 5px;
+          display: inline-block;
+        }
       }
 
       &__button {
