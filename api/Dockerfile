@@ -14,12 +14,16 @@ RUN npm install
 WORKDIR /app/shared
 RUN npm install
 
+# Copier les fichiers source
 WORKDIR /app
 COPY api ./api
 COPY shared ./shared
 
 # Définir le répertoire de travail pour l'exécution
 WORKDIR /app/api
+
+# Préparer Prisma (génération du client) avec .env racine
+RUN npx prisma generate
 
 # Exposer le port utilisé par l'api en développement
 EXPOSE 3002

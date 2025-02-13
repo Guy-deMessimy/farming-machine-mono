@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -76,7 +74,8 @@ services:
       - DATABASE_HOST=${DATABASE_HOST} # Hôte de la base de données
       - CHOKIDAR_USEPOLLING=true # Active le polling pour la détection de changements de fichiers
     depends_on:
-      - database  # Assure que le service database démarre avant l'API
+      database:  # Assure que le service database démarre avant l'API
+        condition: service_healthy  # Attendre que MySQL soit prêt
     networks:
       - app-network # Connecte le service au réseau app-network
 
@@ -91,6 +90,12 @@ services:
       - "3306:3306" # Ceci mappe le port 3006 du conteneur au port 3006 de l'hôte
     networks:
       - app-network  # Connecte le service au réseau app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
 
 
   prisma-studio:
