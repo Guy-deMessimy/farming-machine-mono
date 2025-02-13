@@ -1,5 +1,5 @@
 # frontend/Dockerfile
-FROM node:18-alpine
+FROM node:20-bullseye AS builder
 
 # Définir le répertoire de travail
 WORKDIR /app
