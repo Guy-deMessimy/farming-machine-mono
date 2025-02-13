@@ -67,7 +67,7 @@ services:
     - /app/api/node_modules # Ignore les node_modules pour éviter les conflits
     environment:
       - NODE_ENV=${NODE_ENV} # Définit l'environnement Node.js
-      - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@${DATABASE_HOST}:3306/${DATABASE_NAME} # URL de connexion à la base de données
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:3306/${DATABASE_NAME} # URL de connexion à la base de données
       - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
       - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
       - DATABASE_PASSWORD=${DATABASE_PASSWORD} # Mot de passe de la base de données
@@ -108,11 +108,11 @@ services:
       - ./shared:/app/shared # Point de montage du répertoire partagé dans le conteneur
     environment:
       - NODE_ENV=${NODE_ENV}
-      - DATABASE_URL=mysql://root:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME} # URL de connexion à la base de données
+      - DATABASE_URL=mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}:3306/${DATABASE_NAME} # URL de connexion à la base de données
       - DATABASE_NAME=${DATABASE_NAME} # Nom de la base de données
       - DATABASE_USER=${DATABASE_USER} # Utilisateur de la base de données
       - DATABASE_PASSWORD=${DATABASE_PASSWORD}  # Mot de passe de la base de données
-      - DATABASE_HOST=database # Hôte de la base de données
+      - DATABASE_HOST=${DATABASE_HOST} # Hôte de la base de données
     ports:
       - "5555:5555" # Ceci mappe le port 3006 du conteneur au port 3006 de l'hôte
     depends_on:
