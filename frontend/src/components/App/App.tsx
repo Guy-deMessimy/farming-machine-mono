@@ -9,6 +9,7 @@ import ErrorPage from '../../pages/ErrorPage';
 import WelcomePage from '../../pages/WelcomePage/index';
 import EnginePage from '../../pages/EnginePage/index';
 import EngineDetailsPage from '../../pages/EnginePage/components/EngineDetails';
+import AuthenticationPage from '../../pages/Authentication';
 
 import './styles.scss';
 
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { index: true, element: <WelcomePage /> },
+      { path: '/auth', element: <AuthenticationPage /> },
       {
         path: '/engines',
         element: <Layout />,
