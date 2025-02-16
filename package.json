@@ -1,0 +1,20 @@
+{
+  "name": "farming-machine-mono",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:seed": "docker compose exec api npm run seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guy-deMessimy/farming-machine-mono.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Guy-deMessimy/farming-machine-mono/issues"
+  },
+  "homepage": "https://github.com/Guy-deMessimy/farming-machine-mono#readme",
+  "description": ""
+}

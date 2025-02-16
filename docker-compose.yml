@@ -84,6 +84,7 @@ services:
     environment:
       - MYSQL_DATABASE=${DATABASE_NAME} # Nom de la base de données à créer
       - MYSQL_ROOT_PASSWORD=${DATABASE_PASSWORD} # Mot de passe root pour MySQL
+      # ajouter autre user
     volumes:
       - mysql_data:/var/lib/mysql # Persiste les données MySQL
     ports:
