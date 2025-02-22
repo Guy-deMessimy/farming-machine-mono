@@ -1,23 +1,22 @@
-// import AuthForm from '../components/AuthForm';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
-import { ComplexFormValues } from '../../shared/types/forms.type';
+import { LoginFormValues } from '../../shared/types/forms.type';
 import AuthForm from './components/auth-form';
 import './styles.scss';
 
 const AuthenticationPage = () => {
-  // return <AuthForm />;
-  const myDefaultValues = (): ComplexFormValues => ({
+  const myDefaultValues = (): LoginFormValues => ({
     email: '',
     password: '',
   });
-  const form = useForm<ComplexFormValues>({
+  const form = useForm<LoginFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
     criteriaMode: 'all',
     shouldUseNativeValidation: false,
     defaultValues: myDefaultValues(),
   });
-  const onSubmit: SubmitHandler<ComplexFormValues> = async (data) => {
+
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       console.info('je try', data);
     } catch (error) {
@@ -27,7 +26,7 @@ const AuthenticationPage = () => {
     }
   };
 
-  const onError = (errors: FieldErrors<ComplexFormValues>) => {
+  const onError = (errors: FieldErrors<LoginFormValues>) => {
     console.error('onError', errors);
   };
 

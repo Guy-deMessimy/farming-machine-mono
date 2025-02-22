@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { ComplexFormValues } from '../../../shared/types/forms.type';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { LoginFormValues } from '../../../shared/types/forms.type';
 import { Input } from 'antd';
 import { Button } from 'antd';
 
@@ -8,13 +9,16 @@ import { Button } from 'antd';
 
 import './styles.scss';
 
-const AuthForm = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const { control } = useFormContext<ComplexFormValues>();
+interface ReportComponentProps {}
 
-  function switchAuthHandler() {
+const AuthForm: FC<ReportComponentProps> = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const { control } = useFormContext<LoginFormValues>();
+
+  const switchAuthHandler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.preventDefault();
     setIsLogin((isCurrentlyLogin) => !isCurrentlyLogin);
-  }
+  };
 
   return (
     <div className="authentification_form">
@@ -26,10 +30,13 @@ const AuthForm = () => {
         rules={{}}
         render={({ field }) => {
           return (
-            <>
-              <label htmlFor="email">Email</label>
-              <Input placeholder="Basic usage" />
-            </>
+            <Input
+              {...field}
+              placeholder="email"
+              value={field.value ?? ''}
+              onChange={(e) => field.onChange(e.target.value)}
+              style={{ width: '100%' }}
+            />
           );
         }}
       />
@@ -42,16 +49,23 @@ const AuthForm = () => {
           return (
             <>
               <label htmlFor="image">Password</label>
-              <Input placeholder="Basic usage" id="password" type="password" />
+              <Input.Password
+                placeholder="input password"
+                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                value={field.value ?? ''}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
             </>
           );
         }}
       />
       <div className={''}>
-        <button onClick={switchAuthHandler} type="button">
+        <Button onClick={switchAuthHandler} type="text">
           {isLogin ? 'Create new user' : 'Login'}
-        </button>
-        <button>Save</button>
+        </Button>
+        <Button type="primary" htmlType="submit">
+          Save
+        </Button>
       </div>
     </div>
   );
