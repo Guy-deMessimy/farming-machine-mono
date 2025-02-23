@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { Form, Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Form, Link, useNavigate, useRouteLoaderData, useSearchParams } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 // Components
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';
@@ -7,11 +7,13 @@ import User from '../AssetPictosComponent/iconUser/index';
 import DropdownMenu from '../MenuComponent/index';
 // UI and assets
 import './styles.scss';
+import { Fragment } from 'react/jsx-runtime';
 
 const MainNavigationComponent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get('mode') === 'login';
+  const token = useRouteLoaderData('root') as string | null;
 
   const items: MenuProps['items'] = [
     {
@@ -59,15 +61,22 @@ const MainNavigationComponent = () => {
       <h3 className="baseline"> trouvez votre farming machine</h3>
       <div className="button-group">
         <User alt={'logo'} title={'logo_farming'} width="30px" height="30px" path={''} />
-        <Button className="button">
-          <Link to={`?mode=${isLogin ? 'signup' : 'login'}`}>{isLogin ? 'Inscription' : 'Connexion'}</Link>
-        </Button>
-        <>|</>
-        <Form action="/logout" method="post">
-          <Button type="primary" htmlType="submit" className="button">
-            Logout
+        {!token && (
+          <Button className="button">
+            <Link to={`auth?mode=${isLogin ? 'signup' : 'login'}`}>{isLogin ? 'Inscription' : 'Connexion'}</Link>
           </Button>
-        </Form>
+        )}
+
+        {token && (
+          <Fragment>
+            <>|</>
+            <Form action="/logout" method="post">
+              <Button type="primary" htmlType="submit" className="button">
+                Logout
+              </Button>
+            </Form>
+          </Fragment>
+        )}
       </div>
     </header>
   );

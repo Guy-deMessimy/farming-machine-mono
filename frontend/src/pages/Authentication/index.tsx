@@ -1,11 +1,12 @@
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
-import { useSearchParams, json, redirect } from 'react-router-dom';
+import { useSearchParams, json, useNavigate } from 'react-router-dom';
 import { LoginFormValues } from '../../shared/types/forms.type';
 import AuthForm from './components/auth-form';
 import './styles.scss';
 
 const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const myDefaultValues = (): LoginFormValues => ({
     email: '',
     password: '',
@@ -33,9 +34,10 @@ const AuthenticationPage = () => {
       //   const resData = response.json();
       //   const token = resData.token;
       //   localStorage.setItem('token', token);
-
+      localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
       console.info('je try', data);
-      //   return redirect('/');
+
+      navigate('/');
     } catch (error) {
       console.info('je error', error);
       throw json({ message: 'Could not authenticate user mode.' }, { status: 500 });

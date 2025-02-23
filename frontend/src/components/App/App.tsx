@@ -11,6 +11,7 @@ import EnginePage from '../../pages/EnginePage/index';
 import EngineDetailsPage from '../../pages/EnginePage/components/EngineDetails';
 import AuthenticationPage from '../../pages/Authentication';
 import { logoutAction } from '../../pages/Logout';
+import { checkAuthLoader, tokenLoader } from '../../shared/utils/auth';
 
 import './styles.scss';
 
@@ -19,6 +20,8 @@ const router = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     errorElement: <ErrorPage />,
+    id: 'root',
+    loader: tokenLoader,
     children: [
       { index: true, element: <WelcomePage /> },
       { path: '/auth', element: <AuthenticationPage /> },
@@ -33,6 +36,7 @@ const router = createBrowserRouter([
           {
             path: '/engines/:id',
             element: <EngineDetailsPage />,
+            loader: checkAuthLoader,
           },
         ],
       },
