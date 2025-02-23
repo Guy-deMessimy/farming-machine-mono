@@ -16,6 +16,7 @@ const AuthenticationPage = () => {
     criteriaMode: 'all',
     shouldUseNativeValidation: false,
     defaultValues: myDefaultValues(),
+    // use joi shema
   });
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
@@ -29,7 +30,10 @@ const AuthenticationPage = () => {
       //   if (response.status === 422 || response.status === 401) {
       //     return response;
       //   }
-      // soon manage the token
+      //   const resData = response.json();
+      //   const token = resData.token;
+      //   localStorage.setItem('token', token);
+
       console.info('je try', data);
       //   return redirect('/');
     } catch (error) {

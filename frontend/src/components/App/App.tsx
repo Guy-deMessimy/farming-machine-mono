@@ -10,6 +10,7 @@ import WelcomePage from '../../pages/WelcomePage/index';
 import EnginePage from '../../pages/EnginePage/index';
 import EngineDetailsPage from '../../pages/EnginePage/components/EngineDetails';
 import AuthenticationPage from '../../pages/Authentication';
+import { logoutAction } from '../../pages/Logout';
 
 import './styles.scss';
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             element: <EngineDetailsPage />,
           },
         ],
+      },
+      {
+        path: 'logout',
+        action: logoutAction,
       },
     ],
   },

@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Form, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 // Components
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';
@@ -19,31 +19,35 @@ const MainNavigationComponent = () => {
       key: '0',
     },
     {
+      label: <div onClick={() => navigate('/auth?mode=login')}>Connexion</div>,
+      key: '1',
+    },
+    {
       type: 'divider',
     },
     {
       label: <div onClick={() => navigate('/services')}>Services</div>,
-      key: '1',
-      disabled: true,
-    },
-    {
-      label: <div onClick={() => navigate('/rent')}>Rent</div>,
       key: '2',
       disabled: true,
     },
     {
-      label: <div onClick={() => navigate('/share')}>Share</div>,
+      label: <div onClick={() => navigate('/rent')}>Rent</div>,
       key: '3',
       disabled: true,
     },
     {
-      label: <div onClick={() => navigate('/blog')}>Blog</div>,
+      label: <div onClick={() => navigate('/share')}>Share</div>,
       key: '4',
       disabled: true,
     },
     {
-      label: <div onClick={() => navigate('/configurations')}>Configuration</div>,
+      label: <div onClick={() => navigate('/blog')}>Blog</div>,
       key: '5',
+      disabled: true,
+    },
+    {
+      label: <div onClick={() => navigate('/configurations')}>Configuration</div>,
+      key: '6',
       disabled: true,
     },
   ];
@@ -58,6 +62,12 @@ const MainNavigationComponent = () => {
         <Button className="button">
           <Link to={`?mode=${isLogin ? 'signup' : 'login'}`}>{isLogin ? 'Inscription' : 'Connexion'}</Link>
         </Button>
+        <>|</>
+        <Form action="/logout" method="post">
+          <Button type="primary" htmlType="submit" className="button">
+            Logout
+          </Button>
+        </Form>
       </div>
     </header>
   );

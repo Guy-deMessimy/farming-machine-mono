@@ -8,7 +8,7 @@ const ErrorPage = () => {
   return (
     <div className="error-page">
       <MainNavigation />
-      <main id="error-content">
+      <main id="error-content" className="error_wrapper">
         <h1>An error occurred!</h1>
         {isRouteErrorResponse(error) && (
           <p>
