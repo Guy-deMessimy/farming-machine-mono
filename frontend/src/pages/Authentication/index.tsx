@@ -30,6 +30,13 @@ const AuthenticationPage = () => {
       if (mode === 'signup') {
         navigate('/FGFGFG');
         localStorage.removeItem('token');
+      } else if (mode === 'login') {
+        const expiration = new Date();
+        expiration.setHours(expiration.getHours() + 1);
+        console.log('AAA EXPIRATION ON SUBMIT', expiration.toISOString());
+        localStorage.setItem('expiration', expiration.toISOString());
+        localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
+        console.info('je try', data);
       }
       //   const response = await myGraphqlPost(mode);
       //   if (response.status === 422 || response.status === 401) {
@@ -38,9 +45,6 @@ const AuthenticationPage = () => {
       //   const resData = response.json();
       //   const token = resData.token;
       //   localStorage.setItem('token', token);
-      else localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
-      console.info('je try', data);
-
       navigate('/');
     } catch (error) {
       console.info('je error', error);
