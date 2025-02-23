@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 // Components
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';
@@ -10,6 +10,8 @@ import './styles.scss';
 
 const MainNavigationComponent = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const isLogin = searchParams.get('mode') === 'login';
 
   const items: MenuProps['items'] = [
     {
@@ -53,12 +55,8 @@ const MainNavigationComponent = () => {
       <h3 className="baseline"> trouvez votre farming machine</h3>
       <div className="button-group">
         <User alt={'logo'} title={'logo_farming'} width="30px" height="30px" path={''} />
-        <Button className="button" type="link">
-          Connexion
-        </Button>
-        <>|</>
-        <Button className="button" type="link">
-          Inscription
+        <Button className="button">
+          <Link to={`?mode=${isLogin ? 'signup' : 'login'}`}>{isLogin ? 'Inscription' : 'Connexion'}</Link>
         </Button>
       </div>
     </header>

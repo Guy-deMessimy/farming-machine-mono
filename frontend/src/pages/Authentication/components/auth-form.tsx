@@ -1,28 +1,32 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
+import { Input, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { LoginFormValues } from '../../../shared/types/forms.type';
-import { Input } from 'antd';
-import { Button } from 'antd';
-
 // Types
+import { LoginFormValues } from '../../../shared/types/forms.type';
 
 import './styles.scss';
 
 interface ReportComponentProps {}
 
 const AuthForm: FC<ReportComponentProps> = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const { control } = useFormContext<LoginFormValues>();
-
-  const switchAuthHandler = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    event.preventDefault();
-    setIsLogin((isCurrentlyLogin) => !isCurrentlyLogin);
-  };
+  const [searchParams] = useSearchParams();
+  const isLogin = searchParams.get('mode') === 'login';
+  const { control, formState } = useFormContext<LoginFormValues>();
+  console.log('AAA formstate', formState);
 
   return (
     <div className="authentification_form">
       <h1>{isLogin ? 'Log in' : 'Create a new user'}</h1>
+      {/* {data?.errors && (
+        <ul>
+          {Object.values(data.errors).map((err) => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
+      {data?.message && <p>{data.message}</p>} */}
       <Controller
         name="email"
         control={control}
@@ -35,7 +39,6 @@ const AuthForm: FC<ReportComponentProps> = () => {
               placeholder="email"
               value={field.value ?? ''}
               onChange={(e) => field.onChange(e.target.value)}
-              style={{ width: '100%' }}
             />
           );
         }}
@@ -60,11 +63,8 @@ const AuthForm: FC<ReportComponentProps> = () => {
         }}
       />
       <div className={''}>
-        <Button onClick={switchAuthHandler} type="text">
-          {isLogin ? 'Create new user' : 'Login'}
-        </Button>
-        <Button type="primary" htmlType="submit">
-          Save
+        <Button type="primary" htmlType="submit" disabled={formState.isSubmitting}>
+          {formState.isSubmitting ? 'Submitting...' : 'Save'}
         </Button>
       </div>
     </div>
