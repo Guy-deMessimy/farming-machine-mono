@@ -13,6 +13,7 @@ import { EnginesModule } from './modules/engine/engines.module';
 import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 import { UsersModule } from './modules/users/users.module';
+import { IamModule } from './iam/iam.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UsersModule } from './modules/users/users.module';
     EngineModelModule,
     EngineTypesModule,
     UsersModule,
+    IamModule,
   ],
   controllers: [],
   providers: [],
