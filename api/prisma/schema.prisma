@@ -11,105 +11,111 @@ datasource db {
 }
 
 model User {
-  id      Int       @default(autoincrement()) @id
-  email   String    @unique
-  // optional name filed : ?
-  name    String?   @db.VarChar(255)
-  posts   Post[]
-  customer Customer?
+  // cuid(): crée un identifiant unique alphanumérique, stable, non prévisible, en format string.
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String? // nullabe si Google ou autre
+  name      String?   @db.VarChar(255)
+  // role      Role        @default(USER)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  // Relations
+  posts     Post[] // Un user peut avoir plusieurs posts (avis)
+  customer  Customer? // Un user peut être lié à un customer (relation 1:1 optionnelle)
 }
 
 model Customer {
-  id          Int       @default(autoincrement()) @id
-  name        String    @db.VarChar(255)
-  lastName    String    @db.VarChar(255)
-  phone       String?   @db.VarChar(255)
-  adress      String    @db.VarChar(255)
-  zipCode     String    @db.VarChar(255)
-  country     String    @db.VarChar(255)
-  user        User      @relation(fields: [userId], references: [id])
-  userId      Int       @unique
+  id       Int     @id @default(autoincrement())
+  name     String  @db.VarChar(255)
+  lastName String  @db.VarChar(255)
+  phone    String? @db.VarChar(255)
+  adress   String  @db.VarChar(255)
+  zipCode  String  @db.VarChar(255)
+  country  String  @db.VarChar(255)
+  userId   String  @unique
+  user     User    @relation(fields: [userId], references: [id])
 }
 
 model Post {
-  id          Int      @default(autoincrement()) @id
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  title       String
-  content     String?
-  published   Boolean? @default(false)
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  title     String
+  content   String?
+  published Boolean? @default(false)
+  authorId  String
+  author    User?    @relation(fields: [authorId], references: [id])
+
   @@index([title, content])
 }
 
 model Category {
-  id          Int      @default(autoincrement()) @id
+  id          Int       @id @default(autoincrement())
   title       String
-  description String? @db.LongText
-  file        File?   @relation(fields: [fileId], references: [id])
-  fileId      Int?     @unique
-  services     Service[]
+  description String?   @db.LongText
+  file        File?     @relation(fields: [fileId], references: [id])
+  fileId      Int?      @unique
+  services    Service[]
 }
 
 model Service {
-  id          Int       @default(autoincrement()) @id
+  id          Int       @id @default(autoincrement())
   title       String
   description String?   @db.LongText
-  categories  Category?    @relation(fields: [categoryId], references: [id]) 
+  categories  Category? @relation(fields: [categoryId], references: [id])
   categoryId  Int?
 }
 
 model File {
-  id          Int      @default(autoincrement()) @id
-  fileName    String
-  fileUrl     String   @db.LongText
-  key         String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  category    Category?
+  id        Int       @id @default(autoincrement())
+  fileName  String
+  fileUrl   String    @db.LongText
+  key       String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  category  Category?
+
   @@index([fileName, key])
 }
 
 model EngineTypes {
-  id          Int       @default(autoincrement()) @id
-  name        String
-  description String?   @db.LongText
+  id           Int           @id @default(autoincrement())
+  name         String
+  description  String?       @db.LongText
   engineModels EngineModel[]
 }
 
 model EngineModel {
-  id          Int       @default(autoincrement()) @id
-  name        String
-  description String?   @db.LongText
-  engineType  EngineTypes @relation(fields: [engineTypeId], references: [id])
+  id           Int         @id @default(autoincrement())
+  name         String
+  description  String?     @db.LongText
+  engineType   EngineTypes @relation(fields: [engineTypeId], references: [id])
   engineTypeId Int
-  engines     Engine[]
+  engines      Engine[]
+
   @@index([engineTypeId])
 }
 
 model Engine {
-  id                  Int       @default(autoincrement()) @id
-  modelName           String  
-  brandName           String
-  conception          String?
-  description         String?   @db.LongText
-  engineKwPower       Int?
-  engineCcPower       Int?
-  maxKmhSpeed         Int?
-  petrolLitreTank     Int?
-  tankLitre           Int?
-  autonomyMn          Int?
-  liftingHeightMeter  Int?
-  weightKg            Int?
-  workingWidth        Int?
-  copiesNumber        Int
-  imageUrl            String?
-  ref                 String?
-  engineModel         EngineModel @relation(fields: [engineModelId], references: [id])
-  engineModelId       Int
+  id                 Int         @id @default(autoincrement())
+  modelName          String
+  brandName          String
+  conception         String?
+  description        String?     @db.LongText
+  engineKwPower      Int?
+  engineCcPower      Int?
+  maxKmhSpeed        Int?
+  petrolLitreTank    Int?
+  tankLitre          Int?
+  autonomyMn         Int?
+  liftingHeightMeter Int?
+  weightKg           Int?
+  workingWidth       Int?
+  copiesNumber       Int
+  imageUrl           String?
+  ref                String?
+  engineModel        EngineModel @relation(fields: [engineModelId], references: [id])
+  engineModelId      Int
+
   @@index([brandName, modelName, engineModelId])
 }
-
-
-
