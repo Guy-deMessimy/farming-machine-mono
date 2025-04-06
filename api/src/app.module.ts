@@ -12,7 +12,7 @@ import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 import { EnginesModule } from './modules/engine/engines.module';
 import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
-import { UsersModule } from './users/users.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
