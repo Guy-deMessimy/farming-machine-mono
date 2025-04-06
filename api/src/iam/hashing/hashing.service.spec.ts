@@ -28,6 +28,4 @@ describe('HashingService', () => {
 
     expect(isValid).toBe(true);
   });
-
-
 });
