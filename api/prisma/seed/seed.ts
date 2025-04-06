@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { parseArgs } from 'node:util';
+import * as bcrypt from 'bcrypt';
 // Types
 import { EngineInput, EngineModelInput, ParsedArgs, TypeInput } from './types/engines.type';
 // Dummy data lists
@@ -89,6 +90,7 @@ import {
   ENGINE_LIST_TRACTORS,
   ENGINE_LIST_WOOD_TRACTORS
 } from './16-engine-list-tractors';
+import { generateFakeUsers } from './17-populate-users';
 
 const prisma = new PrismaClient();
 
@@ -387,6 +389,25 @@ const main = async (): Promise<void> => {
         }
       };
 
+       const seedFakeUsers = async (count = 10): Promise<void> => {
+        const fakeUsers = generateFakeUsers(count);
+      
+        await Promise.all(
+          fakeUsers.map(async (user) => {
+            const hashedPassword = await bcrypt.hash(user.password, 10);
+      
+            await prisma.user.create({
+              data: {
+                email: user.email,
+                name: user.name,
+                password: hashedPassword,
+              },
+            });
+          })
+        );
+      
+        console.info(`[SEED] Successfully created ${count} users`);
+      };
    
       const isTypeSeeded = await seedEngineTypes();
       if (isTypeSeeded) {
@@ -403,7 +424,8 @@ const main = async (): Promise<void> => {
           seedSprayerEquipmentList(),
           seedSeedersAgriculturalTrailersList(),
           seedSeedersEquipmentList(),
-          seedTractorsList()
+          seedTractorsList(),
+          seedFakeUsers(20),
         ]);
       } else {
         console.warn('[SEED] Skipping engine seeding due to type seeding failure');
