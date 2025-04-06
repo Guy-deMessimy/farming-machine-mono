@@ -25,7 +25,7 @@ export class UsersResolver {
 
   @Query(() => User, { nullable: true })
   async getUser(@Args('input') input: GetUserInput): Promise<User | null> {
-    return this.usersService.findById(input);
+    return this.usersService.findUser(input);
   }
 
   @Mutation(() => DeleteUserResponse)

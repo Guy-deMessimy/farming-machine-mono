@@ -26,9 +26,9 @@ export class UsersRepository {
     });
   }
 
-  async findById({ id }: GetUserInput): Promise<User | null> {
+  async findOneBy(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
     return this.prisma.user.findUnique({
-      where: { id },
+      where,
       include: {
         customer: true,
         posts: true,

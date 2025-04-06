@@ -6,6 +6,7 @@ import { GetUserInput } from './dto/get-user.dto';
 import { UserQueryDto } from './dto/user-query.dto';
 import { DeleteUserResponse } from './dto/delete-user-response';
 import { CreateUserInput } from './dto/create-user.dto';
+import { User } from './users.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,22 +21,28 @@ export class UsersService {
     return usersList;
   }
 
-  async findById(userId: GetUserInput) {
-    const user = await this.repository.findById(userId);
-    return user;
+  async findUser(input: GetUserInput): Promise<User | null> {
+    const { id, email } = input;
+
+    if (!id && !email) {
+      throw new Error('At least id or email must be provided');
+    }
+
+    return this.repository.findOneBy(id ? { id } : { email });
   }
 
   async deleteById(input: GetUserInput): Promise<DeleteUserResponse> {
-    const user = await this.repository.findById(input);
+    const { id, email } = input;
+    const user = this.repository.findOneBy(id ? { id } : { email });
     if (!user) {
-      throw new NotFoundException(`User with id ${input.id} not found`);
+      throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    await this.repository.delete(input);
+    await this.repository.delete(id ? { id } : { email });
 
     return {
       success: true,
-      userId: input.id,
+      userId: id,
       message: `User ${input.id} successfully deleted`,
     };
   }

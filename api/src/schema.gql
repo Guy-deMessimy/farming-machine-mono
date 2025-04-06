@@ -154,9 +154,10 @@ input UserWhereInput {
   idIn: [String!]
 }
 
-"""user input model"""
+"""User input model for querying by ID or email"""
 input GetUserInput {
-  id: String!
+  id: String
+  email: String
 }
 
 type Mutation {

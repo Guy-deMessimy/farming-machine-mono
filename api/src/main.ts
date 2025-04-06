@@ -26,18 +26,12 @@ async function bootstrap() {
     app.use(graphqlUploadExpress({ maxFileSize: 50000000, maxFiles: 10 }));
     app.useGlobalPipes(
       new ValidationPipe({
-        // have error message in case of incorrect request
-        disableErrorMessages: false,
-        // filter out properties that should not be received by the method handler and removed it
-        whitelist: true,
-        //  stop a request if any non-white listed properties are present
-        forbidNonWhitelisted: false,
-        // transform payloads on an instance of their dto
-        transform: true,
-        // perform conversion of primitive types comes from the network (ex request id = string to number)
-        // if true @type on DTO can be disable
+        disableErrorMessages: false, // Affiche les messages d'erreurs détaillés en cas de requêtes invalides
+        whitelist: true, // retire les champs non-déclarés dans le DTO
+        forbidNonWhitelisted: false, // on ignore l'erreur si un champ non attendu est envoyé
+        transform: true, // transforme les types (ex: string → number)
         transformOptions: {
-          enableImplicitConversion: true,
+          enableImplicitConversion: true, // Permet la conversion implicite des types (ex: "1" → 1 pour un champ number)
         },
       }),
     );
