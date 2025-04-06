@@ -5,6 +5,7 @@ import { UsersRepository } from './users.repository';
 import { GetUserInput } from './dto/get-user.dto';
 import { UserQueryDto } from './dto/user-query.dto';
 import { DeleteUserResponse } from './dto/delete-user-response';
+import { CreateUserInput } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -37,5 +38,9 @@ export class UsersService {
       userId: input.id,
       message: `User ${input.id} successfully deleted`,
     };
+  }
+
+  createUser(input: CreateUserInput) {
+    return 'This action adds a new user';
   }
 }

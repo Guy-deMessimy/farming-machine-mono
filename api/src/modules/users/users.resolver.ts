@@ -6,6 +6,7 @@ import { GetUserInput } from './dto/get-user.dto';
 import { UserQueryDto } from './dto//user-query.dto';
 import { User } from './users.entity';
 import { DeleteUserResponse } from './dto/delete-user-response';
+import { CreateUserInput } from './dto/create-user.dto';
 
 @Resolver()
 export class UsersResolver {
@@ -32,5 +33,10 @@ export class UsersResolver {
     @Args('input') input: GetUserInput,
   ): Promise<DeleteUserResponse> {
     return this.usersService.deleteById(input);
+  }
+
+  @Mutation(() => User)
+  async createUser(@Args('input') input: CreateUserInput): Promise<string> {
+    return this.usersService.createUser(input);
   }
 }
