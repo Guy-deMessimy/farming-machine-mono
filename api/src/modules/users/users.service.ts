@@ -33,16 +33,16 @@ export class UsersService {
 
   async deleteById(input: GetUserInput): Promise<DeleteUserResponse> {
     const { id, email } = input;
-    const user = this.repository.findOneBy(id ? { id } : { email });
+    const user = await this.repository.findOneBy(id ? { id } : { email });
     if (!user) {
       throw new NotFoundException(`User with id ${id} not found`);
     }
 
-    await this.repository.delete(id ? { id } : { email });
+    await this.repository.delete({ id: user.id });
 
     return {
       success: true,
-      userId: id,
+      userId: user.id,
       message: `User ${input.id} successfully deleted`,
     };
   }
