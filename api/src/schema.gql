@@ -41,10 +41,31 @@ type Engine {
   engineModel: EngineModel
 }
 
+type User {
+  id: ID!
+  email: String!
+  name: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteUserResponse {
+  success: Boolean!
+  userId: String!
+  message: String
+}
+
 type Query {
   findAllEngines(query: EngineQueryDto): [Engine!]
   findAllEngineModel(query: EngineModelQueryDto): [EngineModel!]
   findAllEngineTypes(query: EngineTypesQueryDto): [EngineTypes!]
+  findAllUsers(query: UserQueryDto): [User!]
+  getUser(input: GetUserInput!): User
 }
 
 input EngineQueryDto {
@@ -110,4 +131,34 @@ input EngineTypesOrderByInput {
 input EngineTypesWhereInput {
   id: Int
   name: String
+}
+
+input UserQueryDto {
+  offset: Int
+  limit: Int
+  cursor: Int
+  orderBy: UserOrderByInput
+  where: UserWhereInput
+}
+
+input UserOrderByInput {
+  id: SortOrder
+  email: SortOrder
+  name: SortOrder
+  createdAt: SortOrder
+}
+
+input UserWhereInput {
+  email: String
+  name: String
+  idIn: [String!]
+}
+
+"""user input model"""
+input GetUserInput {
+  id: String!
+}
+
+type Mutation {
+  deleteUser(input: GetUserInput!): DeleteUserResponse!
 }
