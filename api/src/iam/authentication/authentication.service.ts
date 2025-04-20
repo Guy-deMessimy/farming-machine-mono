@@ -17,13 +17,15 @@ export class AuthenticationService {
     private repository: UsersRepository,
     private readonly hashingService: HashingService,
   ) {}
-  async signUp(signUpDto: SignUpDto) {
-    try {
-      const user = new User();
-      user.email = signUpDto.email;
-      user.password = await this.hashingService.hash(signUpDto.password);
 
-      await this.repository.create(user);
+  // register new user
+  async signUp(signUpDto: SignUpDto): Promise<User> {
+    try {
+      const user = await this.repository.create({
+        email: signUpDto.email,
+        password: await this.hashingService.hash(signUpDto.password),
+      });
+      return user;
     } catch (err) {
       const pgUniqueViolationErrorCode = '23505';
       if (err.code === pgUniqueViolationErrorCode) {
@@ -33,6 +35,7 @@ export class AuthenticationService {
     }
   }
 
+  // verifying existed user credentials
   async signIn(signInDto: SignInDto) {
     const user = await this.repository.findOneBy({
       email: signInDto.email,

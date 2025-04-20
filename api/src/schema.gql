@@ -163,9 +163,16 @@ input GetUserInput {
 type Mutation {
   deleteUser(input: GetUserInput!): DeleteUserResponse!
   createUser(input: CreateUserInput!): User!
+  signUp(input: SignUpDto!): User!
 }
 
 input CreateUserInput {
+  email: String!
+  password: String!
+  name: String
+}
+
+input SignUpDto {
   email: String!
   password: String!
   name: String
