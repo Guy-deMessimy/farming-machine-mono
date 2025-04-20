@@ -5,6 +5,7 @@ import { AuthenticationService } from './authentication.service';
 import { User } from '../../modules/users/users.entity';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import { AuthPayload } from './dto/auth-payload.dto';
 
 @Resolver()
 export class AuthenticationResolver {
@@ -20,9 +21,8 @@ export class AuthenticationResolver {
     return this.authenticationService.signUp(input);
   }
 
-  @Mutation(() => Boolean)
-  async signIn(@Args('input') input: SignInDto): Promise<boolean> {
-    return this.authenticationService.signIn(input)
+  @Mutation(() => AuthPayload)
+  async signIn(@Args('input') input: SignInDto): Promise<AuthPayload> {
+    return this.authenticationService.signIn(input);
   }
-
 }

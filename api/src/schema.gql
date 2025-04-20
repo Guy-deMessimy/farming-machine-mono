@@ -60,6 +60,11 @@ type DeleteUserResponse {
   message: String
 }
 
+type AuthPayload {
+  accessToken: String!
+  user: User!
+}
+
 type Query {
   findAllEngines(query: EngineQueryDto): [Engine!]
   findAllEngineModel(query: EngineModelQueryDto): [EngineModel!]
@@ -164,7 +169,7 @@ type Mutation {
   deleteUser(input: GetUserInput!): DeleteUserResponse!
   createUser(input: CreateUserInput!): User!
   signUp(input: SignUpDto!): User!
-  signIn(input: SignInDto!): Boolean!
+  signIn(input: SignInDto!): AuthPayload!
 }
 
 input CreateUserInput {
