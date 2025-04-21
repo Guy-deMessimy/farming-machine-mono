@@ -18,7 +18,7 @@ export class EngineModelService {
     // console.log('Payload sent to API:', JSON.stringify(payload, null, 2));
     const response = this.graphqlApiService.execute<EngineModel[]>(
       graphQlQuery,
-      { query } 
+      { query },
     );
     return response;
   }

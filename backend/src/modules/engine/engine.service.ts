@@ -15,10 +15,9 @@ export class EngineService {
     graphQlQuery: string;
     query: EngineQueryDto;
   }): Observable<Engine[]> {
-    const response = this.graphqlApiService.execute<Engine[]>(
-      graphQlQuery,
-      { query } 
-    );
+    const response = this.graphqlApiService.execute<Engine[]>(graphQlQuery, {
+      query,
+    });
     return response;
   }
 }
