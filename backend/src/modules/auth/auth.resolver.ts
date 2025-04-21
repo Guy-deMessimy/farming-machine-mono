@@ -40,16 +40,19 @@ export class AuthResolver {
     @Context() context?: { req: Request },
     @Args('input') input?: SignInDto,
   ): Observable<AuthPayload> {
-    try {
-      const graphQlQuery = context.req.body.query;
-      if (typeof graphQlQuery !== 'string') {
-        throw new Error('Request body query is not a string');
-      }
+    const graphQlQuery = context.req.body.query;
+    return this.authService.signIn({ graphQlQuery, input });
 
-      return this.authService.signIn({ graphQlQuery, input });
-    } catch (error) {
-      this.logger.error('Resolver: signIn error:', error.stack);
-      throw error;
-    }
+    // try {
+    //   const graphQlQuery = context.req.body.query;
+    //   if (typeof graphQlQuery !== 'string') {
+    //     throw new Error('Request body query is not a string');
+    //   }
+
+    //   return this.authService.signIn({ graphQlQuery, input });
+    // } catch (error) {
+    //   this.logger.error('Resolver: signIn error:', error.stack);
+    //   throw error;
+    // }
   }
 }

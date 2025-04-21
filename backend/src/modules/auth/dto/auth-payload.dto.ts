@@ -3,9 +3,9 @@ import { User } from '../../users/users.entity';
 
 @ObjectType()
 export class AuthPayload {
-  @Field()
-  accessToken: string;
+  @Field({ nullable: true })
+  accessToken?: string;
 
-  @Field(() => User)
-  user: User;
+  @Field(() => User, { nullable: true })
+  user?: User;
 }
