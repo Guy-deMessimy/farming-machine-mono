@@ -15,16 +15,16 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule, { cors: true });
 
     app.use((req, res, next) => {
-      console.log('Full request:', {
-        method: req.method,
-        url: req.url,
-        headers: req.headers,
-        body: req.body,
-      });
+      // console.log('Full request:', {
+      //   method: req.method,
+      //   url: req.url,
+      //   headers: req.headers,
+      //   body: req.body,
+      // });
       next();
     });
 
-  app.use(cookieParser()); // ✅ ici
+    app.use(cookieParser());
 
     app.use(graphqlUploadExpress({ maxFileSize: 50000000, maxFiles: 10 }));
     app.useGlobalPipes(

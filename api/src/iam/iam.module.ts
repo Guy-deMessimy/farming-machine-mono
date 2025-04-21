@@ -7,6 +7,8 @@ import { UsersModule } from '../modules/users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PubSubModule } from 'src/modules/pub-sub/pub-sub.module';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';
 
 @Module({
   imports: [
@@ -14,11 +16,16 @@ import { ConfigModule } from '@nestjs/config';
     forwardRef(() => AuthenticationModule),
     PubSubModule,
     JwtModule.registerAsync(jwtConfig.asProvider()), // configure Jwt service with env value via jwtConfig
+    ConfigModule.forFeature(jwtConfig),
   ],
   providers: [
     {
       provide: HashingService, // serve as an abstract interface, useful in case of diffrent hashing provider migration
       useClass: BcryptService, // concrete implementation of that service
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AccessTokenGuard,
     },
   ],
   exports: [
