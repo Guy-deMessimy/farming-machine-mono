@@ -8,6 +8,7 @@ import { EnginesModule } from './modules/engine/engine.module';
 import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthModule } from './modules/auth/auth.module';
     EngineModelModule,
     EngineTypesModule,
     AuthModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],

@@ -5,19 +5,22 @@ import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Observable } from 'rxjs';
+import { User } from '../users/users.entity';
 
 @Resolver()
 export class AuthResolver {
   private readonly logger = new Logger(AuthResolver.name);
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => String) // ou un type `AuthPayload`
+  @Mutation(() => User)
   signUp(
     @Context() context?: { req: Request },
     @Args('input') input?: SignUpDto,
-  ): Observable<any[]> {
+  ): Observable<User> {
     try {
       const graphQlQuery = context.req.body.query;
+      // console.log('graphQlQuery RESOLVER', graphQlQuery)
+      // console.log('input RESOLVER', input)
       if (typeof graphQlQuery !== 'string') {
         throw new Error('Request body query is not a string');
       }
