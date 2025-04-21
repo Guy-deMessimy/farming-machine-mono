@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { PrismaService } from './prisma/prisma.service';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { graphqlUploadExpress } from 'graphql-upload';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -22,6 +23,8 @@ async function bootstrap() {
       });
       next();
     });
+
+  app.use(cookieParser()); // ✅ ici
 
     app.use(graphqlUploadExpress({ maxFileSize: 50000000, maxFiles: 10 }));
     app.useGlobalPipes(
