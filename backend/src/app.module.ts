@@ -7,6 +7,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { EnginesModule } from './modules/engine/engine.module';
 import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { EngineTypesModule } from './modules/engine-type/engine-type.module';
     EnginesModule,
     EngineModelModule,
     EngineTypesModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
