@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     UsersModule,
     forwardRef(() => AuthenticationModule),
     PubSubModule,
-    JwtModule.registerAsync(jwtConfig.asProvider()),
+    JwtModule.registerAsync(jwtConfig.asProvider()), // configure Jwt service with env value via jwtConfig
   ],
   providers: [
     {

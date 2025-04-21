@@ -7,8 +7,8 @@ import jwtConfig from '../config/jwt.config';
 
 @Module({
   imports: [
-    forwardRef(() => IamModule),
-    ConfigModule.forFeature(jwtConfig),
+    forwardRef(() => IamModule), // get back iam services
+    ConfigModule.forFeature(jwtConfig), // inject jwtConfig.KEY
   ],
   providers: [AuthenticationService, AuthenticationResolver],
 })

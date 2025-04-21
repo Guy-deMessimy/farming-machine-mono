@@ -3,7 +3,7 @@ import {
   ConflictException,
   UnauthorizedException,
   Inject,
-  Logger
+  Logger,
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
