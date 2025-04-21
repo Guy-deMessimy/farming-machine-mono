@@ -1,6 +1,7 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
 import { Logger } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
+import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { User } from '../../modules/users/users.entity';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -22,7 +23,23 @@ export class AuthenticationResolver {
   }
 
   @Mutation(() => AuthPayload)
-  async signIn(@Args('input') input: SignInDto): Promise<AuthPayload> {
-    return this.authenticationService.signIn(input);
+  async signIn(
+    @Args('input') input: SignInDto,
+    @Context() { req }: { req: Request }
+  ): Promise<AuthPayload> {
+    const { accessToken, user } = await this.authenticationService.signIn(
+      input,
+    );
+    console.log('CONTEXT', req);
+    // securiser le cookie avec le context (acceder au cookie necessite de le tester via react car apollo sandbox ne renvoit pas de cookes)
+    // context.res.cookie('accessToken', accessToken, {
+    //   httpOnly: true,
+    //   // secure: process.env.NODE_ENV === 'production',
+    //   secure: true,
+    //   // sameSite: 'lax', // ou strict
+    //   sameSite: true,
+    //   // maxAge: 1000 * 60 * 60, // 1h
+    // });
+    return { accessToken, user };
   }
 }
