@@ -2,13 +2,17 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
+  Inject,
+  Logger
 } from '@nestjs/common';
-import { Logger } from '@nestjs/common';
+import { ConfigType } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import { UsersRepository } from '../../modules/users/users.repository';
 import { User } from '../../modules/users/users.entity';
 import { HashingService } from '../hashing/hashing.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import jwtConfig from '../config/jwt.config';
 
 @Injectable()
 export class AuthenticationService {
@@ -16,6 +20,9 @@ export class AuthenticationService {
   constructor(
     private repository: UsersRepository,
     private readonly hashingService: HashingService,
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY)
+    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
   ) {}
 
   // register new user
@@ -50,6 +57,21 @@ export class AuthenticationService {
     if (!isEqual) {
       throw new UnauthorizedException('Password does not match');
     }
-    return true;
+    const accessToken = await this.jwtService.signAsync(
+      {
+        sub: user.id,
+        email: user.email,
+      },
+      {
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+        secret: this.jwtConfiguration.secret,
+        expiresIn: this.jwtConfiguration.accessTokenTtl,
+      },
+    );
+    return {
+      accessToken,
+      user,
+    };
   }
 }

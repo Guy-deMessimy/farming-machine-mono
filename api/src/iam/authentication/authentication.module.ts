@@ -2,9 +2,14 @@ import { Module, forwardRef } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationResolver } from './authentication.resolver';
 import { IamModule } from '../iam.module';
+import { ConfigModule } from '@nestjs/config';
+import jwtConfig from '../config/jwt.config';
 
 @Module({
-  imports: [forwardRef(() => IamModule)],
+  imports: [
+    forwardRef(() => IamModule),
+    ConfigModule.forFeature(jwtConfig),
+  ],
   providers: [AuthenticationService, AuthenticationResolver],
 })
 export class AuthenticationModule {}
