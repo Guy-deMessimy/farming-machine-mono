@@ -10,6 +10,7 @@ import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { AccessTokenGuard } from '../access-token/access-token.guard';
 
+// the can activate function should return a boolean, indicating whether the current request is allowed or not.
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
   private static readonly defaultAuthType = AuthType.Bearer;
@@ -27,8 +28,9 @@ export class AuthenticationGuard implements CanActivate {
     private readonly accessTokenGuard: AccessTokenGuard,
   ) {}
 
+  // les gardes ont accès à l'instance ExecutionContext et savent donc exactement ce qui va être exécuté ensuite. 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    console.log('authTypeGuardMap', this.authTypeGuardMap)
+    // console.log('authTypeGuardMap', this.authTypeGuardMap)
     // le Reflector permet de lire les metadata posées avec des décorateurs custom (@Auth() ici).
     // getAllAndOverride va chercher la metadata AUTH_TYPE_KEY (définie avec SetMetadata) sur la méthode (context.getHandler()) et sur la classe (context.getClass()).
     // Si la méthode a une metadata, elle override celle de la classe. ((voir resolver))
@@ -50,6 +52,8 @@ export class AuthenticationGuard implements CanActivate {
 
       if (canActivate) {
         return true;
+        // if it returns true, the request will be processed.
+        // if it returns false, Nest will deny the request.
       }
     }
     // Si aucun guard ne valide, il lève l’erreur capturée (typiquement UnauthorizedException).
