@@ -14,11 +14,11 @@ export class EngineModelService {
     graphQlQuery: string;
     query: EngineModelQueryDto;
   }): Observable<EngineModel[]> {
-    const payload = { query: graphQlQuery };
-    console.log('Payload sent to API:', JSON.stringify(payload, null, 2));
+    // const payload = { query: graphQlQuery };
+    // console.log('Payload sent to API:', JSON.stringify(payload, null, 2));
     const response = this.graphqlApiService.execute<EngineModel[]>(
       graphQlQuery,
-      query,
+      { query } 
     );
     return response;
   }
