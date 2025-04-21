@@ -7,7 +7,10 @@ import { User } from '../../modules/users/users.entity';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthPayload } from './dto/auth-payload.dto';
+import { Auth } from './decorators/auth.decorator';
+import { AuthType } from './enums/auth-type.enum';
 
+@Auth(AuthType.None)
 @Resolver()
 export class AuthenticationResolver {
   private readonly logger = new Logger(AuthenticationResolver.name);

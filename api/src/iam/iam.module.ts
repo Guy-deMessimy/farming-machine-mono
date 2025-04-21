@@ -9,6 +9,7 @@ import { PubSubModule } from 'src/modules/pub-sub/pub-sub.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';
+import { AuthenticationGuard } from './authentication/guards/authentication/authentication.guard';
 
 @Module({
   imports: [
@@ -24,9 +25,10 @@ import { AccessTokenGuard } from './authentication/guards/access-token/access-to
       useClass: BcryptService, // concrete implementation of that service
     },
     {
-      provide: APP_GUARD,
-      useClass: AccessTokenGuard,
+      provide: APP_GUARD, // guard global qui lit la metadata @auth et applique dynamiquement les guards correspondant
+      useClass: AuthenticationGuard,
     },
+    AccessTokenGuard // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
   ],
   exports: [
     HashingService,
