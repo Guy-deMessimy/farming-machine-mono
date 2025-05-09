@@ -12,11 +12,11 @@ export class User {
 
   @Field({ nullable: true })
   name?: string;
-
-  @Field()
+  
+  @Field(() => Date, { nullable: true })
   createdAt: Date;
 
-  @Field()
+  @Field(() => Date, { nullable: true })
   updatedAt: Date;
 
   //   @Field(() => [Post], { nullable: true })
