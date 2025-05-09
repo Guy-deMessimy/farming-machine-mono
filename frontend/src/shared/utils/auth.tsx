@@ -1,17 +1,18 @@
 import { redirect } from 'react-router-dom';
 
-export const getTokenDuration = () => {
-  const storedExpirationDate: string | null = localStorage.getItem('expiration');
-  const expirationDate: Date | null = storedExpirationDate ? new Date(storedExpirationDate) : null;
-  console.log('BBB expirationDate', expirationDate);
-  const now = new Date();
-  console.log('BBB now', now);
-  let duration;
-  if (expirationDate && !isNaN(expirationDate.getTime())) {
-    duration = expirationDate.getTime() - now.getTime();
-  } else duration = 0;
-  return duration;
-};
+// Désactivé : gestion de l'expiration
+// export const getTokenDuration = () => {
+//   const storedExpirationDate: string | null = localStorage.getItem('expiration');
+//   const expirationDate: Date | null = storedExpirationDate ? new Date(storedExpirationDate) : null;
+//   console.log('BBB expirationDate', expirationDate);
+//   const now = new Date();
+//   console.log('BBB now', now);
+//   let duration;
+//   if (expirationDate && !isNaN(expirationDate.getTime())) {
+//     duration = expirationDate.getTime() - now.getTime();
+//   } else duration = 0;
+//   return duration;
+// };
 
 export const getAuthToken = () => {
   const token = localStorage.getItem('token');
@@ -20,11 +21,11 @@ export const getAuthToken = () => {
     return null;
   }
 
-  const tokenDuration = getTokenDuration();
+  // const tokenDuration = getTokenDuration();
 
-  if (tokenDuration <= 0) {
-    return 'EXPIRED';
-  }
+  // if (tokenDuration <= 0) {
+  //   return 'EXPIRED';
+  // }
   return token;
 };
 

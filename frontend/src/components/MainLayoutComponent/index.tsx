@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useLoaderData, useSubmit } from 'react-router-dom';
 import MainNavigation from '../MainNavigationComponent/index';
 import './styles.scss';
-import { getTokenDuration } from '../../shared/utils/auth';
+// import { getTokenDuration } from '../../shared/utils/auth';
 
 const MainLayout = () => {
   const token = useLoaderData();
@@ -17,12 +17,12 @@ const MainLayout = () => {
       submit(null, { action: 'logout', method: 'post' });
     }
 
-    const tokenDuration = getTokenDuration();
-    console.log('AAA token duration', tokenDuration);
+    // const tokenDuration = getTokenDuration();
+    // console.log('AAA token duration', tokenDuration);
 
-    setTimeout(() => {
-      submit(null, { action: 'logout', method: 'post' });
-    }, tokenDuration);
+    // setTimeout(() => {
+    //   submit(null, { action: 'logout', method: 'post' });
+    // }, tokenDuration);
   }, [token, submit]);
 
   return (
