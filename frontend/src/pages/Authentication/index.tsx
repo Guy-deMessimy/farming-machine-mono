@@ -4,6 +4,11 @@ import { LoginFormValues } from '../../shared/types/forms.type';
 import AuthForm from './components/auth-form';
 import './styles.scss';
 import { useSignInMutation } from '../../hooks/UseSignIn';
+import { ApolloError } from '@apollo/client';
+
+type GraphQLOriginalError = {
+  message?: string | string[];
+};
 
 const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
@@ -34,12 +39,6 @@ const AuthenticationPage = () => {
         localStorage.removeItem('token');
       } else if (mode === 'login') {
         console.info('AAA je try', data);
-        //   if (response.status === 422 || response.status === 401) {
-        //     return response;
-        //   }
-        //   const resData = response.json();
-        //   const token = resData.token;
-        //   localStorage.setItem('token', token);
 
         const response = await signIn({
           variables: {
@@ -70,8 +69,37 @@ const AuthenticationPage = () => {
 
       navigate('/');
     } catch (error) {
-      console.info('je error', error);
-      throw json({ message: 'Could not authenticate user mode.' }, { status: 500 });
+      console.error('Erreur de connexion :', error);
+      if (error instanceof ApolloError) {
+        if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+          const firstError = error.graphQLErrors[0];
+          console.log('AAA firstError', firstError);
+          const message = firstError.message;
+
+          // Si l’erreur vient du backend avec un message clair
+          if (message === 'Password does not match') {
+            alert('Mot de passe incorrect.');
+            return;
+          }
+
+          const originalError = firstError.extensions?.originalError as GraphQLOriginalError;
+
+          if (Array.isArray(originalError.message)) {
+            alert(originalError.message.join('\n'));
+            return;
+          }
+
+          alert(message);
+          return;
+        }
+
+        // ✅ Erreur réseau ou inconnue
+        alert('Une erreur est survenue. Merci de réessayer.');
+      } else if (error instanceof Error) {
+        // Gestion générique d'erreur JS
+      } else {
+        // Cas très exceptionnel
+      }
     } finally {
       console.info('je finally');
     }
