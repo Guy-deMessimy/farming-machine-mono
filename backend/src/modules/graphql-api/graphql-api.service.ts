@@ -15,6 +15,7 @@ export class GraphqlApiService {
   execute<T>(
     graphQlQuery: string,
     variables: Record<string, any> = {},
+    authHeader?: string,
   ): Observable<T> {
     const payload = { query: graphQlQuery, variables };
     return this.httpService
@@ -22,7 +23,10 @@ export class GraphqlApiService {
         process.env.API_URL || 'http://localhost:3000/graphql',
         payload,
         {
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            ...(authHeader && { Authorization: authHeader }),
+           },
         },
       )
       .pipe(
