@@ -3,6 +3,7 @@ import { useSearchParams, json, useNavigate } from 'react-router-dom';
 import { LoginFormValues } from '../../shared/types/forms.type';
 import AuthForm from './components/auth-form';
 import './styles.scss';
+import { useSignInMutation } from '../../hooks/UseSignIn';
 
 const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
@@ -11,6 +12,7 @@ const AuthenticationPage = () => {
     email: '',
     password: '',
   });
+  const { signIn } = useSignInMutation();
   const form = useForm<LoginFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
@@ -31,20 +33,41 @@ const AuthenticationPage = () => {
         navigate('/FGFGFG');
         localStorage.removeItem('token');
       } else if (mode === 'login') {
-        const expiration = new Date();
-        expiration.setHours(expiration.getHours() + 1);
-        console.log('AAA EXPIRATION ON SUBMIT', expiration.toISOString());
-        localStorage.setItem('expiration', expiration.toISOString());
-        localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
-        console.info('je try', data);
+        console.info('AAA je try', data);
+        //   if (response.status === 422 || response.status === 401) {
+        //     return response;
+        //   }
+        //   const resData = response.json();
+        //   const token = resData.token;
+        //   localStorage.setItem('token', token);
+
+        const response = await signIn({
+          variables: {
+            input: data,
+          },
+        });
+
+        console.log('AAA response', response);
+
+        const accessToken = response.data?.signIn?.accessToken;
+        const user = response.data?.signIn?.user;
+        console.log('AAA accessToken', accessToken);
+        console.log('AAA user', user);
+
+        if (!accessToken || !user) {
+          throw new Error('Invalid credentials');
+        }
+
+        // 💾 Stocke le token
+        localStorage.setItem('token', accessToken);
+
+        // 🕒 Tu peux activer cette partie plus tard pour gérer la durée du token
+        // const expiration = new Date();
+        // expiration.setHours(expiration.getHours() + 1);
+        // localStorage.setItem('expiration', expiration.toISOString());
+        // localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
       }
-      //   const response = await myGraphqlPost(mode);
-      //   if (response.status === 422 || response.status === 401) {
-      //     return response;
-      //   }
-      //   const resData = response.json();
-      //   const token = resData.token;
-      //   localStorage.setItem('token', token);
+
       navigate('/');
     } catch (error) {
       console.info('je error', error);
