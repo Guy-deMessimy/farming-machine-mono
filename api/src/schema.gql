@@ -70,7 +70,7 @@ type Query {
   findAllEngineModel(query: EngineModelQueryDto): [EngineModel!]
   findAllEngineTypes(query: EngineTypesQueryDto): [EngineTypes!]
   findAllUsers(query: UserQueryDto): [User!]
-  getUser(input: GetUserInput!): User
+  getUser: User
 }
 
 input EngineQueryDto {
@@ -159,17 +159,17 @@ input UserWhereInput {
   idIn: [String!]
 }
 
-"""User input model for querying by ID or email"""
-input GetUserInput {
-  id: String
-  email: String
-}
-
 type Mutation {
   deleteUser(input: GetUserInput!): DeleteUserResponse!
   createUser(input: CreateUserInput!): User!
   signUp(input: SignUpDto!): User!
   signIn(input: SignInDto!): AuthPayload!
+}
+
+"""User input model for querying by ID or email"""
+input GetUserInput {
+  id: String
+  email: String
 }
 
 input CreateUserInput {
