@@ -33,16 +33,6 @@ export class AuthenticationResolver {
     const { accessToken, user } = await this.authenticationService.signIn(
       input,
     );
-    // console.log('CONTEXT', req);
-    // securiser le cookie avec le context (acceder au cookie necessite de le tester via react car apollo sandbox ne renvoit pas de cookes)
-    // context.res.cookie('accessToken', accessToken, {
-    //   httpOnly: true,
-    //   // secure: process.env.NODE_ENV === 'production',
-    //   secure: true,
-    //   // sameSite: 'lax', // ou strict
-    //   sameSite: true,
-    //   // maxAge: 1000 * 60 * 60, // 1h
-    // });
     return { accessToken, user };
   }
 }
