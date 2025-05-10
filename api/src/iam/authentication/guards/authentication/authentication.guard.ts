@@ -10,6 +10,12 @@ import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { AccessTokenGuard } from '../access-token/access-token.guard';
 
+// C’est un composite guard dynamique :
+// il lit les métadonnées posées avec @Auth(...)
+// il choisit les guards à exécuter dynamiquement (Bearer, None, etc.)
+// il délègue à AccessTokenGuard (ou d’autres si tu en ajoutes)
+// C’est lui que tu appliques globalement via APP_GUARD dans main.ts ou AppModule.
+
 // the can activate function should return a boolean, indicating whether the current request is allowed or not.
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
@@ -21,14 +27,14 @@ export class AuthenticationGuard implements CanActivate {
   > = {
     [AuthType.Bearer]: this.accessTokenGuard,
     [AuthType.None]: { canActivate: () => true },
-    };
+  };
 
   constructor(
     private readonly reflector: Reflector,
     private readonly accessTokenGuard: AccessTokenGuard,
   ) {}
 
-  // les gardes ont accès à l'instance ExecutionContext et savent donc exactement ce qui va être exécuté ensuite. 
+  // les gardes ont accès à l'instance ExecutionContext et savent donc exactement ce qui va être exécuté ensuite.
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // console.log('authTypeGuardMap', this.authTypeGuardMap)
     // le Reflector permet de lire les metadata posées avec des décorateurs custom (@Auth() ici).

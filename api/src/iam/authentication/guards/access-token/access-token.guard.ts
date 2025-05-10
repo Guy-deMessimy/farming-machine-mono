@@ -13,6 +13,10 @@ import jwtConfig from 'src/iam/config/jwt.config';
 import { Request } from 'express';
 import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
 
+// Ce guard vérifie :
+// que le header Authorization contient un JWT valide (Bearer <token>)
+// qu’il peut être décodé et vérifié par JwtService
+// et qu’on peut attacher le payload à request[REQUEST_USER_KEY]
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
   constructor(
@@ -27,7 +31,7 @@ export class AccessTokenGuard implements CanActivate {
     const request = ctx.getContext().req;
     // console.log('REQUEST', request)
     const token = this.extractTokenFromHeader(request);
-    console.log('TOKKEN', token)
+    console.log('TOKKEN', token);
     if (!token) {
       throw new UnauthorizedException('Missing access token');
     }
