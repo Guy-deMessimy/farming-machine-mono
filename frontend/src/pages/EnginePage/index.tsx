@@ -1,11 +1,10 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import isEqual from 'lodash/isEqual';
 // Components
 import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
 // Hooks
 import { useEngines } from '../../hooks/useEngines';
-import { useEngineTypes } from '../../hooks/useEngineTypes';
 // Types
 import { SortOrder } from '../../shared/types/enum.type';
 import { Engine, EngineModel, EngineTypes } from '../../shared/types/engines.type';
@@ -13,37 +12,14 @@ import { Engine, EngineModel, EngineTypes } from '../../shared/types/engines.typ
 import './styles.scss';
 
 const EnginePage: FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [filters, setFilters] = useState({ type: '', brand: '' });
   const [order, setOrder] = useState<string>(SortOrder.ASC);
+  const { engines, enginesLoading, enginesError } = useEngines({});
   const [engineTypes, setEngineTypes] = useState<EngineTypes[]>([]);
-  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
   const [engineModel, setEngineModel] = useState<EngineModel[]>([]);
+  const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
   const [selectedEngineModel, setSelectedEngineModel] = useState<number[]>([]);
   const [filteredEngines, setFilteredEngines] = useState<Engine[]>([]);
   const [filteredEngineModel, setFilteredEngineModel] = useState<EngineModel[]>([]);
-  const { engines, enginesLoading, enginesError } = useEngines({});
-
-  // Synchroniser les filtres avec les paramètres d’URL
-  // useEffect(() => {
-  //   const searchParams = new URLSearchParams(location.search);
-  //   setFilters({
-  //     type: searchParams.get('type') || '',
-  //     brand: searchParams.get('brand') || '',
-  //   });
-  // }, [location.search]);
-
-  // const handleFilterChange = (key: 'type' | 'brand', value: string | number) => {
-  //   const newFilters: Record<string, string> = {
-  //     ...filters,
-  //     [key]: value.toString(), // Convertit en chaîne pour compatibilité avec les URL
-  //   };
-  //   setFilters(newFilters as { type: string; brand: string });
-
-  //   const searchParams = new URLSearchParams(newFilters);
-  //   navigate(`?${searchParams.toString()}`, { replace: true });
-  // };
 
   const handleFilterChange = (key: string, value: string | number[]) => {
     switch (key) {
@@ -61,67 +37,77 @@ const EnginePage: FC = () => {
     }
   };
 
+  // Mise à jour des types uniques d'engines
   useEffect(() => {
-    if (!enginesLoading && engines) {
-      const uniqueEngineModels = engines
-        .flatMap((engine: Engine) => engine.engineModel)
-        .filter(
-          (model: EngineModel, index: number, self: EngineModel[]) =>
-            index === self.findIndex((m) => m.id === model.id),
-        );
-      setEngineModel(uniqueEngineModels);
-    }
-  }, [engines, enginesLoading]);
-
-  useEffect(() => {
-    if (!enginesLoading && engineModel) {
+    if (!enginesLoading && engineModel.length > 0) {
       const uniqueEngineTypes = engineModel
         .flatMap((model: EngineModel) => model.engineType)
         .filter(
           (model: EngineTypes, index: number, self: EngineTypes[]) =>
             index === self.findIndex((m) => m.id === model.id),
         );
-      setEngineTypes(uniqueEngineTypes);
+      if (!isEqual(uniqueEngineTypes, engineTypes)) {
+        setEngineTypes(uniqueEngineTypes);
+      }
     }
   }, [engineModel]);
 
+  // Mise à jour des modèles uniques d'engines
   useEffect(() => {
-    let filtered = engineModel;
-    if (selectedEngineTypes.length > 0) {
-      filtered = engineModel.filter((model: EngineModel) => selectedEngineTypes.includes(Number(model.engineType.id)));
-    }
-    setFilteredEngineModel(filtered);
-  }, [selectedEngineTypes, engineModel]);
-
-  useEffect(() => {
-    if (!enginesLoading && engines) {
-      setFilteredEngines(engines);
+    if (!enginesLoading && engines.length > 0) {
+      const uniqueEngineModels = engines
+        .flatMap((engine: Engine) => engine.engineModel)
+        .filter(
+          (model: EngineModel, index: number, self: EngineModel[]) =>
+            index === self.findIndex((m) => m.id === model.id),
+        );
+      if (!isEqual(uniqueEngineModels, engineModel)) {
+        setEngineModel(uniqueEngineModels);
+      }
     }
   }, [engines, enginesLoading]);
 
+  const applyFilters = () => {
+    if (!engines) {
+      setFilteredEngines([]);
+      setFilteredEngineModel([]);
+      return;
+    }
+
+    if (!enginesLoading && engines?.length > 0) {
+      // Filtrage des models
+      const filteredModels =
+        selectedEngineTypes.length > 0
+          ? engineModel.filter((model) => selectedEngineTypes.includes(Number(model.engineType.id)))
+          : engineModel;
+      setFilteredEngineModel(filteredModels);
+
+      // Filtrage des engines
+      let filtered = engines;
+
+      if (selectedEngineTypes.length > 0) {
+        filtered = filtered.filter((engine: Engine) =>
+          selectedEngineTypes.includes(Number(engine.engineModel.engineType.id)),
+        );
+      }
+
+      if (selectedEngineModel.length > 0) {
+        filtered = filtered.filter((engine: Engine) => selectedEngineModel.includes(Number(engine.engineModel.id)));
+      }
+
+      if (order) {
+        filtered = [...filtered].sort((a, b) =>
+          order === SortOrder.ASC ? a.brandName.localeCompare(b.brandName) : b.brandName.localeCompare(a.brandName),
+        );
+      }
+
+      setFilteredEngines(filtered);
+    }
+  };
+
   useEffect(() => {
-    let filtered = engines;
-
-    if (selectedEngineTypes.length > 0) {
-      filtered = filtered.filter((engine: Engine) =>
-        selectedEngineTypes.includes(Number(engine.engineModel.engineType.id)),
-      );
-    }
-
-    if (selectedEngineModel.length > 0) {
-      filtered = filtered.filter((engine: Engine) => selectedEngineModel.includes(Number(engine.engineModel.id)));
-    }
-
-    if (order) {
-      order.length > 0
-        ? (filtered = [...filtered].sort((a: Engine, b: Engine) =>
-            order === SortOrder.ASC ? a.brandName.localeCompare(b.brandName) : b.brandName.localeCompare(a.brandName),
-          ))
-        : {};
-    }
-
-    setFilteredEngines(filtered);
-  }, [selectedEngineTypes, selectedEngineModel, order, engines]);
+    applyFilters();
+  }, [engines, engineModel, selectedEngineTypes, selectedEngineModel, order, enginesLoading]);
 
   if (enginesLoading) return <p>Loading...</p>;
   if (enginesError) return <p>Error: {enginesError?.message}</p>;
