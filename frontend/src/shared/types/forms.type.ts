@@ -7,4 +7,5 @@ export interface ComplexFormValues {
 export interface LoginFormValues {
   email: string;
   password: string;
+  confirmPassword?: string;
 }

@@ -18,14 +18,6 @@ const AuthForm: FC<ReportComponentProps> = () => {
   return (
     <div className="authentification_form">
       <h1>{isLogin ? 'Log in' : 'Create a new user'}</h1>
-      {/* {data?.errors && (
-        <ul>
-          {Object.values(data.errors).map((err) => (
-            <li key={err}>{err}</li>
-          ))}
-        </ul>
-      )}
-      {data?.message && <p>{data.message}</p>} */}
       <Controller
         name="email"
         control={control}
@@ -61,6 +53,32 @@ const AuthForm: FC<ReportComponentProps> = () => {
           );
         }}
       />
+      {!isLogin && (
+        <Controller
+          name="confirmPassword"
+          control={control}
+          key="confirmPassword"
+          rules={{
+            validate: (value, formValues) => value === formValues.password || 'Les mots de passe ne correspondent pas',
+          }}
+          render={({ field }) => {
+            return (
+              <>
+                <label htmlFor="confirmPassword">Confirmer le mot de passe</label>
+                <Input.Password
+                  placeholder="confirmer le mot de passe"
+                  iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+                  value={field.value ?? ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              </>
+            );
+          }}
+        />
+      )}
+      {formState.errors.confirmPassword && (
+        <p style={{ color: 'red', marginTop: '4px' }}>{formState.errors.confirmPassword.message}</p>
+      )}
       <div className={''}>
         <Button type="primary" htmlType="submit" disabled={formState.isSubmitting}>
           {formState.isSubmitting ? 'Submitting...' : 'Save'}

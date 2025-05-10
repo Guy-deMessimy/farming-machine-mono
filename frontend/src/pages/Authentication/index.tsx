@@ -5,6 +5,7 @@ import AuthForm from './components/auth-form';
 import './styles.scss';
 import { useSignInMutation } from '../../hooks/UseSignIn';
 import { ApolloError } from '@apollo/client';
+import { useSignUpMutation } from '../../hooks/UseSignUp';
 
 type GraphQLOriginalError = {
   message?: string | string[];
@@ -13,11 +14,14 @@ type GraphQLOriginalError = {
 const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const isLogin = searchParams.get('mode') === 'login';
   const myDefaultValues = (): LoginFormValues => ({
     email: '',
     password: '',
+    ...(!isLogin && { confirmPassword: '' }), // Ajout conditionnel
   });
   const { signIn } = useSignInMutation();
+  const { signUp } = useSignUpMutation();
   const form = useForm<LoginFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
@@ -34,8 +38,21 @@ const AuthenticationPage = () => {
         throw json({ message: 'Unsupported mode.' }, { status: 422 });
       }
       if (mode === 'signup') {
-        navigate('/FGFGFG');
-        localStorage.removeItem('token');
+        console.log('AAA 🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ data:', data);
+        const { confirmPassword, ...safeInput } = data;
+
+        const response = await signUp({
+          variables: {
+            input: safeInput,
+          },
+        });
+        console.log('AAA🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ response:', response);
+        if (response.data?.signUp) {
+          localStorage.removeItem('token');
+          alert('Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
+          // ✅ Inscription réussie, redirection vers le login
+          navigate('/auth?mode=login');
+        }
       } else if (mode === 'login') {
         const response = await signIn({
           variables: {
@@ -53,6 +70,7 @@ const AuthenticationPage = () => {
 
         // 💾 Stocke le token
         localStorage.setItem('token', accessToken);
+        navigate('/');
 
         // 🕒 Tu peux activer cette partie plus tard pour gérer la durée du token
         // const expiration = new Date();
@@ -60,8 +78,6 @@ const AuthenticationPage = () => {
         // localStorage.setItem('expiration', expiration.toISOString());
         // localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
       }
-
-      navigate('/');
     } catch (error) {
       console.error('Erreur de connexion :', error);
       if (error instanceof ApolloError) {
@@ -97,7 +113,7 @@ const AuthenticationPage = () => {
   };
 
   const onError = (errors: FieldErrors<LoginFormValues>) => {
-    console.error('onError', errors);
+    console.error('AAA onError', errors);
   };
 
   const AuthenticationFormProvider = (
