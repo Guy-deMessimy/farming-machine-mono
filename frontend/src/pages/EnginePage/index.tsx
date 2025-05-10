@@ -10,10 +10,13 @@ import { SortOrder } from '../../shared/types/enum.type';
 import { Engine, EngineModel, EngineTypes } from '../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
+import { useNavigate } from 'react-router-dom';
 
 const EnginePage: FC = () => {
+  const navigate = useNavigate();
   const [order, setOrder] = useState<string>(SortOrder.ASC);
   const { engines, enginesLoading, enginesError } = useEngines({});
+  console.log('AAA🚀 ~ enginesError:', enginesError);
   const [engineTypes, setEngineTypes] = useState<EngineTypes[]>([]);
   const [engineModel, setEngineModel] = useState<EngineModel[]>([]);
   const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);
@@ -109,8 +112,16 @@ const EnginePage: FC = () => {
     applyFilters();
   }, [engines, engineModel, selectedEngineTypes, selectedEngineModel, order, enginesLoading]);
 
+  const errorContent = (
+    <div className="locked-section">
+      <p>🔒 Connectez-vous pour afficher les moteurs disponibles.</p>
+      <p>Error: {enginesError?.message}</p>
+      <button onClick={() => navigate('/auth?mode=login')}>Se connecter</button>
+    </div>
+  );
+
   if (enginesLoading) return <p>Loading...</p>;
-  if (enginesError) return <p>Error: {enginesError?.message}</p>;
+  if (enginesError) return errorContent;
 
   return (
     <div className="engine__wrapper">
