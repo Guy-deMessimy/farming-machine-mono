@@ -24,7 +24,11 @@ export class EngineResolver {
     @ActiveUser() user?: ActiveUserData,
   ) {
     console.log('USER', user);
-    this.logger.debug(`User ${user?.sub} called findAllEngines with query: ${JSON.stringify(query)}`);
+    this.logger.debug(
+      `User ${user?.sub} called findAllEngines with query: ${JSON.stringify(
+        query,
+      )}`,
+    );
     return this.engineService.findAllEngines(query);
   }
 }

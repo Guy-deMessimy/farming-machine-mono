@@ -28,7 +28,7 @@ import { AuthenticationGuard } from './authentication/guards/authentication/auth
       provide: APP_GUARD, // guard global qui lit la metadata @auth et applique dynamiquement les guards correspondant
       useClass: AuthenticationGuard,
     },
-    AccessTokenGuard // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
+    AccessTokenGuard, // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
   ],
   exports: [
     HashingService,

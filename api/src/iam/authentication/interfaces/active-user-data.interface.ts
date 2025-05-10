@@ -22,5 +22,5 @@ export interface ActiveUserData {
    * does not make sense. We have those two properties here ("role" and "permissions")
    * just to showcase two alternative approaches.
    */
-//   permissions: PermissionType[];
+  //   permissions: PermissionType[];
 }
