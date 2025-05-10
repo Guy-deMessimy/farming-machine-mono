@@ -5,7 +5,6 @@ import { setContext } from '@apollo/client/link/context';
 import { createUploadLink } from 'apollo-upload-client';
 import { onError } from '@apollo/client/link/error';
 import App from './components/App/App';
-import reportWebVitals from './reportWebVitals';
 import './styles.scss';
 import { getAuthToken } from './shared/utils/auth';
 
@@ -16,7 +15,6 @@ const httpLink = createUploadLink({
 
 const authLink = setContext((_, { headers }) => {
   const token = getAuthToken();
-  console.log('AAA token', token);
   return {
     headers: {
       ...headers,

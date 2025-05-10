@@ -29,7 +29,6 @@ const AuthenticationPage = () => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     const mode = searchParams.get('mode') || 'login';
-    console.log('AAA mode', mode);
     try {
       if (mode !== 'login' && mode !== 'signup') {
         throw json({ message: 'Unsupported mode.' }, { status: 422 });
@@ -38,19 +37,14 @@ const AuthenticationPage = () => {
         navigate('/FGFGFG');
         localStorage.removeItem('token');
       } else if (mode === 'login') {
-        console.info('AAA je try', data);
-
         const response = await signIn({
           variables: {
             input: data,
           },
         });
 
-        console.log('AAA response', response);
-
         const accessToken = response.data?.signIn?.accessToken;
         const user = response.data?.signIn?.user;
-        console.log('AAA accessToken', accessToken);
         console.log('AAA user', user);
 
         if (!accessToken || !user) {
@@ -73,10 +67,8 @@ const AuthenticationPage = () => {
       if (error instanceof ApolloError) {
         if (error.graphQLErrors && error.graphQLErrors.length > 0) {
           const firstError = error.graphQLErrors[0];
-          console.log('AAA firstError', firstError);
           const message = firstError.message;
 
-          // Si l’erreur vient du backend avec un message clair
           if (message === 'Password does not match') {
             alert('Mot de passe incorrect.');
             return;
@@ -93,7 +85,6 @@ const AuthenticationPage = () => {
           return;
         }
 
-        // ✅ Erreur réseau ou inconnue
         alert('Une erreur est survenue. Merci de réessayer.');
       } else if (error instanceof Error) {
         // Gestion générique d'erreur JS

@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { Controller, useFormContext, ControllerRenderProps } from 'react-hook-form';
+import { FC } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { Select } from 'antd';
 
 // Types

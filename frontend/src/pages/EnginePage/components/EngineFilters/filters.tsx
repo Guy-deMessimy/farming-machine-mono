@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 // Components
 import FiltersForm from './filters-form';

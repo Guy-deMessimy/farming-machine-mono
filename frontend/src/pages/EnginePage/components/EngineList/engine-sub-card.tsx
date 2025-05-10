@@ -15,7 +15,6 @@ interface SubCardProps {
 }
 
 const SubCard: FC<SubCardProps> = ({ engineItem, handleClose }) => {
-  console.log('AAA item', engineItem);
   const [priceValue, setPriceValue] = useState(1);
   const [hourValue, setHourValue] = useState(3);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,12 +31,10 @@ const SubCard: FC<SubCardProps> = ({ engineItem, handleClose }) => {
   };
 
   const onPriceChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setPriceValue(e.target.value);
   };
 
   const onHourChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setHourValue(e.target.value);
   };
 

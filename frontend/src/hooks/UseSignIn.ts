@@ -1,10 +1,6 @@
 import { SIGN_IN } from '../graphql/authentication/mutation/signIn.mutation';
 import { useMutation } from '@apollo/client';
 
-// headers: {
-//     'AUthorization': 'Bearer ' + getAuthToken()
-// }
-
 type SignInInput = {
   email: string;
   password: string;

@@ -14,7 +14,6 @@ const AuthForm: FC<ReportComponentProps> = () => {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get('mode') === 'login';
   const { control, formState } = useFormContext<LoginFormValues>();
-  console.log('AAA formstate', formState);
 
   return (
     <div className="authentification_form">
