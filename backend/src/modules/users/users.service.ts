@@ -12,13 +12,18 @@ export class UsersService {
   findUser({
     graphQlQuery,
     query,
+    authHeader,
   }: {
     graphQlQuery: string;
-    query: any;
-  }): Observable<User> {
-    const response = this.graphqlApiService.execute<User>(graphQlQuery, {
-      query,
-    });
-    return response;
+    query: string;
+    authHeader?: string;
+  }): Observable<User | null> {
+    return this.graphqlApiService.execute<User>(
+      graphQlQuery,
+      {
+        query,
+      },
+      authHeader,
+    );
   }
 }
