@@ -18,7 +18,7 @@ export class EngineResolver {
   ): Observable<Engine[]> {
     try {
       const authHeader = context.req.headers['authorization'];
-      console.log('authHeader', authHeader);
+      // console.log('authHeader', authHeader);
       const graphQlQuery = context.req.body.query;
       if (typeof graphQlQuery !== 'string') {
         throw new Error('Request body query is not a string');

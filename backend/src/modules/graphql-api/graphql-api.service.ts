@@ -26,15 +26,15 @@ export class GraphqlApiService {
           headers: {
             'Content-Type': 'application/json',
             ...(authHeader && { Authorization: authHeader }),
-           },
+          },
         },
       )
       .pipe(
         map((response) => {
           const raw = response.data;
-          console.log('RAW:', raw);
+          // console.log('RAW:', raw);
           if (raw.errors?.length) {
-            console.log('RAW ERRORS:', raw.errors);
+            // console.log('RAW ERRORS:', raw.errors);
             throw {
               isGraphQLError: true,
               graphQLErrors: raw.errors,
@@ -42,7 +42,7 @@ export class GraphqlApiService {
           }
 
           const data = raw.data;
-          console.log('DATA:', data);
+          // console.log('DATA:', data);
           if (!data) {
             throw new Error('No data found in GraphQL response');
           }
