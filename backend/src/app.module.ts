@@ -18,6 +18,7 @@ import { UsersModule } from './modules/users/users.module';
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       installSubscriptionHandlers: true,
+      context: ({ req, res }) => ({ req, res }),
     }),
     EnginesModule,
     EngineModelModule,
