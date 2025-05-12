@@ -12,7 +12,7 @@ async function bootstrap() {
     logger.log(`Starting api service...`);
     logger.log(`Database URL: ${process.env.DATABASE_URL}`);
 
-    const app = await NestFactory.create(AppModule, { cors: true });
+    const app = await NestFactory.create(AppModule);
 
     app.use((req, res, next) => {
       // console.log('Full request:', {
