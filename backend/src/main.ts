@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
+const cookieParser = require('cookie-parser');
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -10,6 +11,8 @@ async function bootstrap() {
     logger.log(`Api URL: ${process.env.API_URL}`);
 
     const app = await NestFactory.create(AppModule);
+    // Middleware pour parser les cookies
+    app.use(cookieParser());
 
     const corsOrigins = process.env.CORS_ORIGIN
       ? process.env.CORS_ORIGIN.split(',')
