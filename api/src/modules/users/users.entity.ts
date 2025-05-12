@@ -12,7 +12,7 @@ export class User {
 
   @Field({ nullable: true })
   name?: string;
-  
+
   @Field(() => Date, { nullable: true })
   createdAt: Date;
 
