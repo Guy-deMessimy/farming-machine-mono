@@ -15,8 +15,12 @@ export class GraphqlApiService {
   execute<T>(
     graphQlQuery: string,
     variables: Record<string, any> = {},
-    authHeader?: string,
+    headers: Record<string, string> = {},
   ): Observable<T> {
+    if (typeof graphQlQuery !== 'string') {
+      throw new Error('Request body query is not a string');
+    }
+
     const payload = { query: graphQlQuery, variables };
     return this.httpService
       .post<{ data?: Record<string, any>; errors?: any[] }>(
@@ -25,7 +29,7 @@ export class GraphqlApiService {
         {
           headers: {
             'Content-Type': 'application/json',
-            ...(authHeader && { Authorization: authHeader }),
+            ...headers,
           },
         },
       )
