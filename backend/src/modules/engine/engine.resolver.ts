@@ -17,19 +17,11 @@ export class EngineResolver {
     @Args('query', { nullable: true }) query?: EngineQueryDto,
   ): Observable<Engine[]> {
     try {
-      const authHeader = context.req.headers['authorization'];
-      // console.log('authHeader', authHeader);
       const graphQlQuery = context.req.body.query;
-      if (typeof graphQlQuery !== 'string') {
-        throw new Error('Request body query is not a string');
-      }
-      // if (!authHeader) {
-      //   throw new UnauthorizedException('Missing access token');
-      // }
       const result = this.engineService.findAllEngines({
         graphQlQuery,
         query,
-        authHeader,
+        headers: context.req.headers['authorization'],
       });
       return result;
     } catch (error) {

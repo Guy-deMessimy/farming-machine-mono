@@ -11,18 +11,20 @@ export class EngineService {
   findAllEngines({
     graphQlQuery,
     query,
-    authHeader,
+    headers,
   }: {
     graphQlQuery: string;
     query: EngineQueryDto;
-    authHeader?: string;
+    headers?: string | string[] | undefined;
   }): Observable<Engine[]> {
+    const cleanHeaders =
+      typeof headers === 'string' ? { authorization: headers } : undefined;
     const response = this.graphqlApiService.execute<Engine[]>(
       graphQlQuery,
       {
         query,
       },
-      authHeader,
+      cleanHeaders,
     );
     return response;
   }
