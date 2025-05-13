@@ -11,19 +11,13 @@ export class UsersService {
 
   findUser({
     graphQlQuery,
-    query,
-    authHeader,
+    headers,
   }: {
     graphQlQuery: string;
-    query: string;
-    authHeader?: string;
+    headers?: string | string[] | undefined;
   }): Observable<User | null> {
-    return this.graphqlApiService.execute<User>(
-      graphQlQuery,
-      {
-        query,
-      },
-      authHeader,
-    );
+    const cleanHeaders =
+      typeof headers === 'string' ? { authorization: headers } : undefined;
+    return this.graphqlApiService.execute<User>(graphQlQuery, {}, cleanHeaders);
   }
 }
