@@ -29,6 +29,7 @@ export class UsersResolver {
 
   @Query(() => User, { nullable: true })
   async getUser(@ActiveUser() user: ActiveUserData): Promise<User | null> {
+    this.logger.debug(`User ${user?.sub} called getUser query`);
     return this.usersService.findUser({ email: user.email });
   }
 
