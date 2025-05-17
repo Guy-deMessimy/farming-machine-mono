@@ -10,6 +10,8 @@ import { AuthPayload } from './dto/auth-payload.dto';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
 import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
+import { ActiveUser } from '../decorators/active-user.decorator';
+import { ActiveUserData } from './interfaces/active-user-data.interface';
 
 @Auth(AuthType.None)
 @Resolver()
@@ -31,13 +33,13 @@ export class AuthenticationResolver {
     @Args('input') input: SignInDto,
     @Context() { req }: { req: Request },
   ): Promise<AuthPayload> {
-    const { accessToken, user, refreshToken } = await this.authenticationService.signIn(
-      input,
-    );
+    const { accessToken, user, refreshToken } =
+      await this.authenticationService.signIn(input);
     return { accessToken, user, refreshToken };
   }
 
   @Mutation(() => AuthPayload)
+  @Auth(AuthType.Refresh)
   async refreshToken(
     @Context() ctx?: { req: AuthenticatedRequest },
   ): Promise<AuthPayload> {

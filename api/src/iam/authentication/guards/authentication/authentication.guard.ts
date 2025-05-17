@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { AccessTokenGuard } from '../access-token/access-token.guard';
+import { RefreshTokenGuard } from '../refresh-token-guard/refresh-token-guard.guard';
 
 // C’est un composite guard dynamique :
 // il lit les métadonnées posées avec @Auth(...)
@@ -27,11 +28,13 @@ export class AuthenticationGuard implements CanActivate {
   > = {
     [AuthType.Bearer]: this.accessTokenGuard,
     [AuthType.None]: { canActivate: () => true },
+    [AuthType.Refresh]: this.refreshTokenGuard,
   };
 
   constructor(
     private readonly reflector: Reflector,
     private readonly accessTokenGuard: AccessTokenGuard,
+    private readonly refreshTokenGuard: RefreshTokenGuard,
   ) {}
 
   // les gardes ont accès à l'instance ExecutionContext et savent donc exactement ce qui va être exécuté ensuite.

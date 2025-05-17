@@ -3,4 +3,5 @@ export enum AuthType {
   Bearer, // auth via JWT (access token)
   // ApiKey,
   None, // no auth (ex public endpoint)
+  Refresh,
 }

@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';
 import { AuthenticationGuard } from './authentication/guards/authentication/authentication.guard';
+import { RefreshTokenGuard } from './authentication/guards/refresh-token-guard/refresh-token-guard.guard';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AuthenticationGuard } from './authentication/guards/authentication/auth
       useClass: AuthenticationGuard,
     },
     AccessTokenGuard, // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
+    RefreshTokenGuard,
   ],
   exports: [
     HashingService,
