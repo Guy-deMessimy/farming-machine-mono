@@ -10,7 +10,9 @@ import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
-import { AuthHeaderInterceptor } from './common/interceptors/auth-header.interceptor';
+import { AuthHeaderInterceptor } from './modules/auth/interceptors/auth-header.interceptor';
+import { DynamicInterceptor } from './modules/auth/interceptors/dynamic-interceptor';
+import { RefreshTokenHeaderInterceptor } from './modules/auth/interceptors/refresh-token-interceptor';
 
 @Module({
   imports: [
@@ -29,9 +31,12 @@ import { AuthHeaderInterceptor } from './common/interceptors/auth-header.interce
     UsersModule,
   ],
   providers: [
+    AuthHeaderInterceptor,
+    RefreshTokenHeaderInterceptor,
+    DynamicInterceptor,
     {
       provide: APP_INTERCEPTOR,
-      useClass: AuthHeaderInterceptor,
+      useClass: DynamicInterceptor,
     },
   ],
   controllers: [],

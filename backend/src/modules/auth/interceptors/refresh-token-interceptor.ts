@@ -8,10 +8,10 @@ import {
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { GqlExecutionContext } from '@nestjs/graphql';
-import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { IS_PUBLIC_KEY } from '../../../common/decorators/public.decorator';
 
 @Injectable()
-export class AuthHeaderInterceptor implements NestInterceptor {
+export class RefreshTokenHeaderInterceptor implements NestInterceptor {
   constructor(private reflector: Reflector) {}
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     // getAllAndOverride va chercher la metadata AUTH_TYPE_KEY (définie avec SetMetadata) sur la méthode (context.getHandler()) et sur la classe (context.getClass()).
@@ -25,11 +25,11 @@ export class AuthHeaderInterceptor implements NestInterceptor {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
 
-    const token = request.cookies?.accessToken;
+    const token = request.cookies?.refreshToken;
     if (!token) {
       throw new UnauthorizedException('Missing access token in cookies');
     }
-    request.headers.authorization = `Bearer ${token}`;
+    request.headers['x-refresh-token'] = token;
 
     return next.handle();
   }
