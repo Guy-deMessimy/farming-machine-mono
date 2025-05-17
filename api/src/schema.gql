@@ -63,6 +63,7 @@ type DeleteUserResponse {
 type AuthPayload {
   accessToken: String!
   user: User!
+  refreshToken: String
 }
 
 type Query {
@@ -164,6 +165,7 @@ type Mutation {
   createUser(input: CreateUserInput!): User!
   signUp(input: SignUpDto!): User!
   signIn(input: SignInDto!): AuthPayload!
+  refreshToken: AuthPayload!
 }
 
 """User input model for querying by ID or email"""

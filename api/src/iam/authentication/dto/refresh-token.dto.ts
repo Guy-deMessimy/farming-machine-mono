@@ -1,9 +1,8 @@
-import { Field, ObjectType } from '@nestjs/graphql';
-import { AuthPayload } from './auth-payload.dto'; // réutilise le DTO de base
+import { Field, InputType } from '@nestjs/graphql';
 import { IsNotEmpty } from 'class-validator';
 
-@ObjectType()
-export class RefreshTokenDto extends AuthPayload {
+@InputType()
+export class RefreshTokenDto {
   @Field()
   @IsNotEmpty()
   refreshToken: string;
