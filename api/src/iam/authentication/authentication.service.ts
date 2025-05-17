@@ -63,7 +63,10 @@ export class AuthenticationService {
       user.password,
     );
     if (!isEqual) {
-      throw new UnauthorizedException('Password does not match');
+      throw new UnauthorizedException('Password does not match', {
+        cause: new Error(),
+        description: 'Some error description',
+      });
     }
     return await this.generateTokens(user);
   }
@@ -122,6 +125,7 @@ export class AuthenticationService {
   // let users have the ability to re-authenticate themselves : regenerate tokens using the refresh token
   async refreshTokens(refreshTokenDto: RefreshTokenDto) {
     try {
+      // 1. Vérifie la validité du JWT
       const { sub } = await this.jwtService.verifyAsync<
         Pick<ActiveUserData, 'sub'>
       >(refreshTokenDto.refreshToken, {
@@ -129,9 +133,50 @@ export class AuthenticationService {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
       });
+      // 2. Charge le token hashé de la base
+      const tokenEntry = await this.prisma.refreshToken.findUnique({
+        where: { userId: sub },
+      });
+      console.log(
+        '🚀 ~ AuthenticationService ~ refreshTokens ~ tokenEntry:',
+        tokenEntry,
+      );
+      if (
+        !tokenEntry ||
+        !tokenEntry.tokenHash ||
+        tokenEntry.revokedAt ||
+        tokenEntry.expiresAt < new Date()
+      ) {
+        throw new UnauthorizedException('Refresh token invalide ou expiré', {
+          cause: new Error(),
+          description: 'Some error description',
+        });
+      }
+
+      // 3. Compare le token reçu avec le hash
+      const isEqual = await this.hashingService.compare(
+        refreshTokenDto.refreshToken,
+        tokenEntry.tokenHash,
+      );
+      console.log(
+        '🚀 ~ AuthenticationService ~ refreshTokens ~ isEqual:',
+        isEqual,
+      );
+
+      if (!isEqual) {
+        this.logger.warn(
+          `Tentative de refresh token invalide pour user ${sub}`,
+        );
+        throw new UnauthorizedException('Refresh token invalide', {
+          cause: new Error(),
+          description: 'Some error description',
+        });
+      }
+
       const user = await this.repository.findOneBy({
         id: sub,
       });
+      // 4. Re-génère les tokens
       return this.generateTokens(user);
     } catch (err) {
       throw new UnauthorizedException();
