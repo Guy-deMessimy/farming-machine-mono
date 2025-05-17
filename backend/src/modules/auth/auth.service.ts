@@ -34,4 +34,12 @@ export class AuthService {
   }): Observable<AuthPayload> {
     return this.graphqlApiService.execute<AuthPayload>(graphQlQuery, { input });
   }
+
+  refreshToken({
+    graphQlQuery,
+  }: {
+    graphQlQuery: string;
+  }): Observable<AuthPayload> {
+    return this.graphqlApiService.execute<AuthPayload>(graphQlQuery);
+  }
 }

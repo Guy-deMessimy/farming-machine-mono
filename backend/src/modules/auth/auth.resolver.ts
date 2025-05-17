@@ -1,6 +1,6 @@
 // src/auth/auth.resolver.ts
 import { Resolver, Mutation, Args, Context } from '@nestjs/graphql';
-import { Logger } from '@nestjs/common';
+import { Logger, UnauthorizedException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -38,14 +38,16 @@ export class AuthResolver {
     @Args('input') input?: SignInDto,
   ): Promise<AuthPayload> {
     const { req, res }: { req: Request; res: Response } = ctx;
+    console.log('🚀 ~ AuthResolver ~ res:', res);
     const graphQlQuery = req.body.query;
     // Converts an observable to a promise by subscribing to the obervable and returning a promise that will be resolved upon the arrival of the first value from the observable. The subscription will then be close .
-    const { accessToken, user } = await firstValueFrom(
+    const { accessToken, refreshToken, user } = await firstValueFrom(
       this.authService.signIn({ graphQlQuery, input }),
     );
+    console.log('🚀 ~ AuthResolver ~ refreshToken:', refreshToken);
     console.log('[🧪] Token renvoyé par AuthService:', accessToken);
-    if (!accessToken) {
-      console.error('❌ accessToken is missing');
+    if (!accessToken || !refreshToken) {
+      throw new UnauthorizedException('Tokens are missing');
     }
 
     // Protection for the XSS
@@ -59,6 +61,28 @@ export class AuthResolver {
       // maxAge: 1000 * 60 * 60, // 1h
     });
 
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 jours
+    });
+
     return { user };
+  }
+
+  @Mutation(() => AuthPayload)
+  async refreshToken(@Context() ctx?: any): Promise<AuthPayload> {
+    const { req, res }: { req: Request; res: Response } = ctx;
+    const graphQlQuery = req.body.query;
+    const { accessToken, user, refreshToken } = await firstValueFrom(
+      this.authService.refreshToken({ graphQlQuery }),
+    );
+
+    if (!refreshToken) {
+      throw new UnauthorizedException('Missing refresh token');
+    }
+
+    return { accessToken, user, refreshToken };
   }
 }
