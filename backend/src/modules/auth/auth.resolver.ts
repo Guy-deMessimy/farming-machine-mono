@@ -9,6 +9,8 @@ import { User } from '../users/users.entity';
 import { AuthPayload } from './dto/auth-payload.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { Public } from 'src/common/decorators/public.decorator';
+import { UseDynamicInterceptor } from './decorators/interceptor.decorator';
+import { InterceptorType } from './enums/interceptor-type.enum';
 
 @Resolver()
 export class AuthResolver {
@@ -72,6 +74,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => AuthPayload)
+  @UseDynamicInterceptor(InterceptorType.Refresh)
   async refreshToken(@Context() ctx?: any): Promise<AuthPayload> {
     const { req, res }: { req: Request; res: Response } = ctx;
     const graphQlQuery = req.body.query;
