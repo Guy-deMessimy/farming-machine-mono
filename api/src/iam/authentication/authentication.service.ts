@@ -7,13 +7,19 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UsersRepository } from '../../modules/users/users.repository';
-import { User } from '../../modules/users/users.entity';
+// services
 import { HashingService } from '../hashing/hashing.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+// interfaces
+import { ActiveUserData } from './interfaces/active-user-data.interface';
+// dto
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
+
+import { UsersRepository } from '../../modules/users/users.repository';
+import { User } from '../../modules/users/users.entity';
 import jwtConfig from '../config/jwt.config';
-import { ActiveUserData } from './interfaces/active-user-data.interface';
 
 @Injectable()
 export class AuthenticationService {
@@ -24,6 +30,7 @@ export class AuthenticationService {
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
     private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private readonly prisma: PrismaService,
   ) {}
 
   // register new user
@@ -58,21 +65,76 @@ export class AuthenticationService {
     if (!isEqual) {
       throw new UnauthorizedException('Password does not match');
     }
-    const accessToken = await this.jwtService.signAsync(
+    return await this.generateTokens(user);
+  }
+
+  async generateTokens(user: User) {
+    const [accessToken, refreshToken] = await Promise.all([
+      this.signToken<Partial<ActiveUserData>>(
+        user.id,
+        this.jwtConfiguration.accessTokenTtl,
+        { email: user.email },
+      ),
+      this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl),
+    ]);
+    // hash and save refresh token in db
+    const hashedRefreshToken = await this.hashingService.hash(refreshToken);
+
+    await this.prisma.refreshToken.upsert({
+      where: { userId: user.id },
+      update: {
+        tokenHash: hashedRefreshToken,
+        expiresAt: new Date(
+          Date.now() + this.jwtConfiguration.refreshTokenTtl * 1000,
+        ),
+      },
+      create: {
+        userId: user.id,
+        tokenHash: hashedRefreshToken,
+        expiresAt: new Date(
+          Date.now() + this.jwtConfiguration.refreshTokenTtl * 1000,
+        ),
+      },
+    });
+
+    return {
+      accessToken,
+      refreshToken,
+      user,
+    };
+  }
+
+  private async signToken<T>(userId: string, expiresIn: number, payload?: T) {
+    return await this.jwtService.signAsync(
       {
-        sub: user.id,
-        email: user.email,
-      } as ActiveUserData,
+        sub: userId,
+        ...payload,
+      },
       {
         audience: this.jwtConfiguration.audience,
         issuer: this.jwtConfiguration.issuer,
         secret: this.jwtConfiguration.secret,
-        expiresIn: this.jwtConfiguration.accessTokenTtl,
+        expiresIn,
       },
     );
-    return {
-      accessToken,
-      user,
-    };
+  }
+
+  // let users have the ability to re-authenticate themselves : regenerate tokens using the refresh token
+  async refreshTokens(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const { sub } = await this.jwtService.verifyAsync<
+        Pick<ActiveUserData, 'sub'>
+      >(refreshTokenDto.refreshToken, {
+        secret: this.jwtConfiguration.secret,
+        audience: this.jwtConfiguration.audience,
+        issuer: this.jwtConfiguration.issuer,
+      });
+      const user = await this.repository.findOneBy({
+        id: sub,
+      });
+      return this.generateTokens(user);
+    } catch (err) {
+      throw new UnauthorizedException();
+    }
   }
 }
