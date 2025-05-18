@@ -78,14 +78,14 @@ export class AuthResolver {
   async refreshToken(@Context() ctx?: any): Promise<AuthPayload> {
     const { req, res }: { req: Request; res: Response } = ctx;
     const graphQlQuery = req.body.query;
-    const { accessToken, user, refreshToken } = await firstValueFrom(
-      this.authService.refreshToken({ graphQlQuery }),
+
+    const { accessToken, user } = await firstValueFrom(
+      this.authService.refreshToken({
+        graphQlQuery,
+        headers: req.headers['authorization'],
+      }),
     );
 
-    if (!refreshToken) {
-      throw new UnauthorizedException('Missing refresh token');
-    }
-
-    return { accessToken, user, refreshToken };
+    return { accessToken, user };
   }
 }

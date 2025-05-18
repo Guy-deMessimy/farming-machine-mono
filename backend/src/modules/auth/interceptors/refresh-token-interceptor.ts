@@ -29,7 +29,7 @@ export class RefreshTokenHeaderInterceptor implements NestInterceptor {
     if (!token) {
       throw new UnauthorizedException('Missing access token in cookies');
     }
-    request.headers['x-refresh-token'] = token;
+    request.headers.authorization = `Bearer ${token}`;
 
     return next.handle();
   }
