@@ -73,9 +73,13 @@ services:
       - DATABASE_PASSWORD=${DATABASE_PASSWORD} # Mot de passe de la base de données
       - DATABASE_HOST=${DATABASE_HOST} # Hôte de la base de données
       - CHOKIDAR_USEPOLLING=true # Active le polling pour la détection de changements de fichiers
+      - REDIS_HOST=${REDIS_HOST} # Hôte de la base de données redis
+      - REDIS_PORT=${REDIS_PORT} # port de la base de données
     depends_on:
       database:  # Assure que le service database démarre avant l'API
         condition: service_healthy  # Attendre que MySQL soit prêt
+      redis:
+        condition: service_started
     networks:
       - app-network # Connecte le service au réseau app-network
 
@@ -127,6 +131,8 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    networks:
+      - app-network # Connecte le service au réseau app-network
     # volumes:
     #   - redis-data:/data # persiste les données Redis même après l’arrêt ou la recréation du conteneur (conserve les refresh tokens, sessions, etc.)
 
