@@ -125,17 +125,9 @@ export class AuthenticationService {
   // let users have the ability to re-authenticate themselves : regenerate tokens using the refresh token
   async refreshTokens(refreshTokenDto: RefreshTokenDto) {
     try {
-      // 1. Vérifie la validité du JWT
-      const { sub } = await this.jwtService.verifyAsync<
-        Pick<ActiveUserData, 'sub'>
-      >(refreshTokenDto.refreshToken, {
-        secret: this.jwtConfiguration.secret,
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-      });
-      // 2. Charge le token hashé de la base
+      // 1. Charge le token hashé de la base
       const tokenEntry = await this.prisma.refreshToken.findUnique({
-        where: { userId: sub },
+        where: { userId: refreshTokenDto.sub },
       });
       console.log(
         '🚀 ~ AuthenticationService ~ refreshTokens ~ tokenEntry:',
@@ -153,7 +145,7 @@ export class AuthenticationService {
         });
       }
 
-      // 3. Compare le token reçu avec le hash
+      // 2. Compare le token reçu avec le hash
       const isEqual = await this.hashingService.compare(
         refreshTokenDto.refreshToken,
         tokenEntry.tokenHash,
@@ -165,7 +157,7 @@ export class AuthenticationService {
 
       if (!isEqual) {
         this.logger.warn(
-          `Tentative de refresh token invalide pour user ${sub}`,
+          `Tentative de refresh token invalide pour user ${refreshTokenDto.sub}`,
         );
         throw new UnauthorizedException('Refresh token invalide', {
           cause: new Error(),
@@ -174,7 +166,7 @@ export class AuthenticationService {
       }
 
       const user = await this.repository.findOneBy({
-        id: sub,
+        id: refreshTokenDto.sub,
       });
       // 4. Re-génère les tokens
       return this.generateTokens(user);

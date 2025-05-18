@@ -1,17 +1,16 @@
 import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
-import { Logger, UnauthorizedException } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
-import { Response } from 'express';
 import { AuthenticationService } from './authentication.service';
 import { User } from '../../modules/users/users.entity';
+// dto
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthPayload } from './dto/auth-payload.dto';
+// decorators, enum, interfaces
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
-import { AuthenticatedRequest } from './interfaces/authenticated-request.interface';
-import { ActiveUser } from '../decorators/active-user.decorator';
-import { ActiveUserData } from './interfaces/active-user-data.interface';
+import { RefreshTokenRequest } from './interfaces/refresh-token-request.interface';
 
 @Auth(AuthType.None)
 @Resolver()
@@ -41,14 +40,10 @@ export class AuthenticationResolver {
   @Mutation(() => AuthPayload)
   @Auth(AuthType.Refresh)
   async refreshToken(
-    @Context() ctx?: { req: AuthenticatedRequest },
+    @Context() ctx: { req: RefreshTokenRequest },
   ): Promise<AuthPayload> {
-    const rawHeader = ctx.req.headers['x-refresh-token'];
-    const refreshToken = Array.isArray(rawHeader) ? rawHeader[0] : rawHeader;
-    if (!refreshToken) {
-      throw new UnauthorizedException('Missing refresh token');
-    }
-
-    return this.authenticationService.refreshTokens({ refreshToken });
+    const refreshToken = ctx.req.refreshToken;
+    const sub = ctx.req.refreshTokenPayload?.sub;
+    return this.authenticationService.refreshTokens({ sub, refreshToken });
   }
 }

@@ -1,4 +1,3 @@
-// src/auth/guards/refresh-token.guard.ts
 import {
   CanActivate,
   ExecutionContext,
@@ -8,7 +7,12 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { Request } from 'express';
+// interfaces
+import { RefreshTokenRequest } from '../../interfaces/refresh-token-request.interface';
+import { ActiveUserData } from '../../interfaces/active-user-data.interface';
+
+// guard plus leger : Sert surtout à protéger la mutation refreshToken (contre du flood, du token mal formé, etc.)
+// verifie la validité du jwt
 
 @Injectable()
 export class RefreshTokenGuard implements CanActivate {
@@ -19,24 +23,32 @@ export class RefreshTokenGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
-    const request = ctx.getContext().req as Request;
+    const request = ctx.getContext().req as RefreshTokenRequest;
 
-    const refreshToken = request.headers['x-refresh-token'] as string;
+    const raw = request.headers['authorization'] as string;
+    const token = Array.isArray(raw) ? raw[0] : raw;
+
+    if (!token?.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Missing or malformed refresh token');
+    }
+
+    const refreshToken = token.replace('Bearer ', '');
 
     if (!refreshToken) {
       throw new UnauthorizedException('Missing refresh token header');
     }
 
     try {
-      const payload = await this.jwtService.verifyAsync(refreshToken, {
+      // Vérifie la validité du JWT
+      const payload = await this.jwtService.verifyAsync<
+        Pick<ActiveUserData, 'sub'>
+      >(refreshToken, {
         secret: this.configService.get<string>('jwt.secret'),
         audience: this.configService.get<string>('jwt.audience'),
         issuer: this.configService.get<string>('jwt.issuer'),
       });
-      console.log('🚀 ~ RefreshTokenGuard ~ canActivate ~ payload:', payload);
-
-      // Injection du payload pour un usage ultérieur (ex: decorateur @CurrentUser)
-      // request.user = payload;
+      request.refreshToken = refreshToken;
+      request.refreshTokenPayload = payload;
 
       return true;
     } catch (err) {

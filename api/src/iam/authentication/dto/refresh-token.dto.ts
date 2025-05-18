@@ -6,4 +6,8 @@ export class RefreshTokenDto {
   @Field()
   @IsNotEmpty()
   refreshToken: string;
+
+  @Field()
+  @IsNotEmpty()
+  sub: string;
 }
