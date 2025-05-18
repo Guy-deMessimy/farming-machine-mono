@@ -14,6 +14,7 @@ import { EngineModelModule } from './modules/engine-model/engine-model.module';
 import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 import { UsersModule } from './modules/users/users.module';
 import { IamModule } from './iam/iam.module';
+import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { IamModule } from './iam/iam.module';
     EngineTypesModule,
     UsersModule,
     IamModule,
+    RedisModule,
   ],
   controllers: [],
   providers: [],
