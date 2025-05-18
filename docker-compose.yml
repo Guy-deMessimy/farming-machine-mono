@@ -121,6 +121,15 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7.2
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - redis-data:/data # persiste les données Redis même après l’arrêt ou la recréation du conteneur (conserve les refresh tokens, sessions, etc.)
+
 networks:
   app-network:
     driver: bridge # Utilise le driver bridge pour le réseau
