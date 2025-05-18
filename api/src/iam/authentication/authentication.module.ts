@@ -5,13 +5,16 @@ import { IamModule } from '../iam.module';
 import { ConfigModule } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { RedisModule } from 'src/redis/redis.module';
+import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
 
 @Module({
   imports: [
     forwardRef(() => IamModule), // get back iam services
     ConfigModule.forFeature(jwtConfig), // inject jwtConfig.KEY
     PrismaModule,
+    RedisModule,
   ],
-  providers: [AuthenticationService, AuthenticationResolver],
+  providers: [AuthenticationService, AuthenticationResolver, RefreshTokenIdsStorage],
 })
 export class AuthenticationModule {}

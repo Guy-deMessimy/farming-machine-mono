@@ -17,6 +17,7 @@ import { IamModule } from './iam/iam.module';
 import { RedisModule } from './redis/redis.module';
 
 @Module({
+  // "je branche ce module pour avoir accès à ce qu’il exporte"
   imports: [
     ConfigModule.forRoot({
       load: [appConfig],
@@ -38,6 +39,7 @@ import { RedisModule } from './redis/redis.module';
     RedisModule,
   ],
   controllers: [],
+  // "je déclare ici ce que mon module gère et instancie lui-même"
   providers: [],
 })
 export class AppModule {}
