@@ -10,4 +10,8 @@ export class RefreshTokenDto {
   @Field()
   @IsNotEmpty()
   sub: string;
+
+  @Field()
+  @IsNotEmpty()
+  refreshTokenId?: string;
 }

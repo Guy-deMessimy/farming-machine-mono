@@ -10,9 +10,11 @@ import { ConfigService } from '@nestjs/config';
 // interfaces
 import { RefreshTokenRequest } from '../../interfaces/refresh-token-request.interface';
 import { ActiveUserData } from '../../interfaces/active-user-data.interface';
+import { RefreshTokenPayload } from '../../interfaces/refresh-token-payload.interface';
 
 // guard plus leger : Sert surtout à protéger la mutation refreshToken (contre du flood, du token mal formé, etc.)
 // verifie la validité du jwt
+// Respecte SRP : le guard valide, le service exécute
 
 @Injectable()
 export class RefreshTokenGuard implements CanActivate {
@@ -40,13 +42,14 @@ export class RefreshTokenGuard implements CanActivate {
 
     try {
       // Vérifie la validité du JWT
-      const payload = await this.jwtService.verifyAsync<
-        Pick<ActiveUserData, 'sub'>
-      >(refreshToken, {
-        secret: this.configService.get<string>('jwt.secret'),
-        audience: this.configService.get<string>('jwt.audience'),
-        issuer: this.configService.get<string>('jwt.issuer'),
-      });
+      const payload = await this.jwtService.verifyAsync<RefreshTokenPayload>(
+        refreshToken,
+        {
+          secret: this.configService.get<string>('jwt.secret'),
+          audience: this.configService.get<string>('jwt.audience'),
+          issuer: this.configService.get<string>('jwt.issuer'),
+        },
+      );
       request.refreshToken = refreshToken;
       request.refreshTokenPayload = payload;
 

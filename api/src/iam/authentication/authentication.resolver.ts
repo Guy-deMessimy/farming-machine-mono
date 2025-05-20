@@ -42,8 +42,12 @@ export class AuthenticationResolver {
   async refreshToken(
     @Context() ctx: { req: RefreshTokenRequest },
   ): Promise<AuthPayload> {
-    const refreshToken = ctx.req.refreshToken;
-    const sub = ctx.req.refreshTokenPayload?.sub;
-    return this.authenticationService.refreshTokens({ sub, refreshToken });
+    const { refreshToken, refreshTokenPayload } = ctx.req;
+    const sub = refreshTokenPayload.sub;
+    return this.authenticationService.refreshTokens({
+      sub,
+      refreshToken,
+      refreshTokenId: refreshTokenPayload.refreshTokenId,
+    });
   }
 }

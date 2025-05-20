@@ -15,6 +15,10 @@ import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-toke
     PrismaModule,
     RedisModule,
   ],
-  providers: [AuthenticationService, AuthenticationResolver, RefreshTokenIdsStorage],
+  providers: [
+    AuthenticationService,
+    AuthenticationResolver,
+    RefreshTokenIdsStorage,
+  ],
 })
 export class AuthenticationModule {}
