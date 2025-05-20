@@ -22,9 +22,9 @@ import { UsersRepository } from '../../modules/users/users.repository';
 import { User } from '../../modules/users/users.entity';
 import jwtConfig from '../config/jwt.config';
 import {
-  InvalidatedRefreshTokenError,
   RefreshTokenIdsStorage,
 } from './refresh-token-ids.storage/refresh-token-ids.storage';
+import { InvalidatedRefreshTokenError } from '../../common/errors/index';
 
 
 @Injectable()
