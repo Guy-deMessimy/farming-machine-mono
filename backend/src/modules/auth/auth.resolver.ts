@@ -73,6 +73,12 @@ export class AuthResolver {
     return { user };
   }
 
+  @Mutation(() => Boolean)
+  @Public()
+  logout(@Context() ctx: any): boolean {
+    return this.authService.logout(ctx.res);
+  }
+
   @Mutation(() => AuthPayload)
   @UseDynamicInterceptor(InterceptorType.Refresh)
   async refreshToken(@Context() ctx?: any): Promise<AuthPayload> {

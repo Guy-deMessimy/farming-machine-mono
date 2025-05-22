@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { User } from '../users/users.entity';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthPayload } from './dto/auth-payload.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -49,5 +50,19 @@ export class AuthService {
       {},
       cleanHeaders,
     );
+  }
+
+  logout(res: Response): boolean {
+    res.clearCookie('accessToken', {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
+    res.clearCookie('refreshToken', {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
+    return true;
   }
 }
