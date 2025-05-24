@@ -10,10 +10,10 @@ import WelcomePage from '../../pages/WelcomePage/index';
 import EnginePage from '../../pages/EnginePage/index';
 import EngineDetailsPage from '../../pages/EnginePage/components/EngineDetails';
 import AuthenticationPage from '../../pages/Authentication';
-import { logoutAction } from '../../pages/Logout';
-import { checkAuthLoader, tokenLoader } from '../../shared/utils/auth';
+import LogoutPage from '../../pages/Logout';
 
 import './styles.scss';
+import { publicOnlyLoader } from '../../shared/loaders/public-only-loader';
 
 const router = createBrowserRouter([
   {
@@ -21,10 +21,13 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     id: 'root',
-    loader: tokenLoader,
     children: [
       { index: true, element: <WelcomePage /> },
-      { path: '/auth', element: <AuthenticationPage /> },
+      {
+        path: '/auth',
+        element: <AuthenticationPage />,
+        loader: publicOnlyLoader,
+      },
       {
         path: '/engines',
         element: <Layout />,
@@ -36,14 +39,12 @@ const router = createBrowserRouter([
           {
             path: '/engines/:id',
             element: <EngineDetailsPage />,
-            loader: checkAuthLoader,
           },
         ],
       },
       {
         path: 'logout',
-        action: logoutAction,
-        // action: () => logoutAction(),
+        element: <LogoutPage />,
       },
     ],
   },
