@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import isEqual from 'lodash/isEqual'
+import isEqual from 'lodash/isEqual';
 import { useNavigate } from 'react-router-dom';
 // Components
 import Filters from './components/EngineFilters/filters';
