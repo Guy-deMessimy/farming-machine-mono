@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       {
         path: '/auth',
         element: <AuthenticationPage />,
-        loader: publicOnlyLoader,
+        // loader: publicOnlyLoader,
       },
       {
         path: '/engines',
