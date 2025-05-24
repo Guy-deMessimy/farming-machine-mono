@@ -1,10 +1,26 @@
-import { redirect } from 'react-router-dom';
-import { ApolloClient } from '@apollo/client';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLogout } from '../../hooks/useLogout';
+import { useAppDispatch } from '../../store/hooks';
+import { clearUser } from '../../store/slices/user/user-slice';
+import './styles.scss';
 
-export const logoutAction = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('expiration');
-  //await client.clearStore(); // supprime tout le cache Apollo
-  window.location.href = '/auth?mode=login';
-  return null;
+const LogoutPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { logout } = useLogout();
+
+  useEffect(() => {
+    const performLogout = async () => {
+      await logout();
+      dispatch(clearUser());
+      navigate('/auth?mode=login');
+    };
+
+    performLogout();
+  }, []);
+
+  return <p className="logout-message">Déconnexion en cours...</p>;
 };
+
+export default LogoutPage;
