@@ -6,15 +6,19 @@ import type { MenuProps } from 'antd';
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';
 import User from '../AssetPictosComponent/iconUser/index';
 import DropdownMenu from '../MenuComponent/index';
+// Store
+import { useAppSelector } from '../../store/hooks';
+import { selectUser } from '../../store/slices/auth/selectors';
 // UI and assets
 import './styles.scss';
 import { Fragment } from 'react/jsx-runtime';
+
 
 const MainNavigationComponent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get('mode') === 'login';
-  const token = useRouteLoaderData('root') as string | null;
+  const { user, isAuthenticated } = useAppSelector(selectUser);
 
   const authUrl = useMemo(() => `/auth?mode=${isLogin ? 'signup' : 'login'}`, [isLogin]);
 
@@ -60,20 +64,19 @@ const MainNavigationComponent = () => {
       <h3 className="baseline"> trouvez votre farming machine</h3>
       <div className="button-group">
         <User alt={'logo'} title={'logo_farming'} width="30px" height="30px" path={''} />
-        {!token && (
+        {!isAuthenticated && (
           <Button className="button">
             <Link to={authUrl}>{isLogin ? 'Inscription' : 'Connexion'}</Link>
           </Button>
         )}
 
-        {token && (
+        {isAuthenticated && (
           <Fragment>
             <>|</>
-            <Form action="/logout" method="post">
-              <Button type="primary" htmlType="submit" className="button">
-                Logout
-              </Button>
-            </Form>
+            <span>{user?.email}</span>
+            <Button type="primary" className="button" onClick={() => navigate('/logout')}>
+              Logout
+            </Button>
           </Fragment>
         )}
       </div>

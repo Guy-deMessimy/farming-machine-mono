@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import isEqual from 'lodash/isEqual';
+import isEqual from 'lodash/isEqual'
+import { useNavigate } from 'react-router-dom';
 // Components
 import Filters from './components/EngineFilters/filters';
 import EngineList from './components/EngineList/engine-list';
@@ -10,7 +11,6 @@ import { SortOrder } from '../../shared/types/enum.type';
 import { Engine, EngineModel, EngineTypes } from '../../shared/types/engines.type';
 // Ui and assets
 import './styles.scss';
-import { useNavigate } from 'react-router-dom';
 
 const EnginePage: FC = () => {
   const navigate = useNavigate();
