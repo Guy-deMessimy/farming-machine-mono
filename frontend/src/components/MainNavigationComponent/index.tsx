@@ -8,7 +8,7 @@ import User from '../AssetPictosComponent/iconUser/index';
 import DropdownMenu from '../MenuComponent/index';
 // Store
 import { useAppSelector } from '../../store/hooks';
-import { selectUser } from '../../store/slices/user/selectors';
+import { selectUser } from '../../store/slices/auth/selectors';
 // UI and assets
 import './styles.scss';
 import { Fragment } from 'react/jsx-runtime';

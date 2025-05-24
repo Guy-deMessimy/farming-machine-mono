@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogout } from '../../hooks/useLogout';
 import { useAppDispatch } from '../../store/hooks';
-import { clearUser } from '../../store/slices/user/user-slice';
+import { clearCredentials } from '../../store/slices/auth/auth-slice';
 import './styles.scss';
 
 const LogoutPage = () => {
@@ -13,7 +13,7 @@ const LogoutPage = () => {
   useEffect(() => {
     const performLogout = async () => {
       await logout();
-      dispatch(clearUser());
+      dispatch(clearCredentials());
       navigate('/auth?mode=login');
     };
 

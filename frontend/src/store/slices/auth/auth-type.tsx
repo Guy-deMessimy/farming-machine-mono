@@ -3,7 +3,7 @@ export interface User {
   email: string;
 }
 
-export interface UserState {
+export interface AuthState {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
