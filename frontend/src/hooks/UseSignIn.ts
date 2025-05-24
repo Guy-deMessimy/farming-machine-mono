@@ -8,7 +8,6 @@ type SignInInput = {
 
 type SignInResponse = {
   signIn: {
-    accessToken: string;
     user: {
       id: string;
       email: string;
@@ -17,7 +16,9 @@ type SignInResponse = {
 };
 
 export const useSignInMutation = () => {
-  const [signInMutation, { data, loading, error }] = useMutation<SignInResponse, { input: SignInInput }>(SIGN_IN);
+  const [signInMutation, { data, loading, error }] = useMutation<SignInResponse, { input: SignInInput }>(SIGN_IN, {
+    fetchPolicy: 'no-cache',
+  });
 
   return {
     signIn: signInMutation,
