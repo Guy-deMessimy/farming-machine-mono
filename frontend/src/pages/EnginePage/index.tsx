@@ -16,7 +16,6 @@ const EnginePage: FC = () => {
   const navigate = useNavigate();
   const [order, setOrder] = useState<string>(SortOrder.ASC);
   const { engines, enginesLoading, enginesError } = useEngines({});
-  console.log('AAA🚀 ~ enginesError:', enginesError);
   const [engineTypes, setEngineTypes] = useState<EngineTypes[]>([]);
   const [engineModel, setEngineModel] = useState<EngineModel[]>([]);
   const [selectedEngineTypes, setSelectedEngineTypes] = useState<number[]>([]);

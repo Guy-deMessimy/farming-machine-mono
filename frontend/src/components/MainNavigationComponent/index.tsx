@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Button } from 'antd';
-import { Form, Link, useNavigate, useRouteLoaderData, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 // Components
 import FarmingMachineLogo from '../AssetPictosComponent/iconLogo/index';

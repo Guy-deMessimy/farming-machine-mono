@@ -1,5 +1,4 @@
 import { FC, Fragment, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 // Components
 import EngineCard from './engine-card';
@@ -36,7 +35,7 @@ const EngineList: FC<ReportComponentProps> = ({ enginesList }) => {
 
   return (
     <ul className="engine__list">
-      {enginesList.map((engine: Engine, index: number) => (
+      {enginesList.map((engine: Engine) => (
         <Fragment key={engine.id}>
           <li className="engine__list__item" key={engine.id} onClick={() => toggleSubCard(engine.id)}>
             <EngineCard engineItem={engine} />
