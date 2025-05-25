@@ -15,6 +15,8 @@ import LogoutPage from '../pages/Logout';
 // Route guards
 import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
+import WithGuard from './guards/WithGuard';
+import { isAuthenticated } from './guards/guards';
 
 export const router = createBrowserRouter([
   {
@@ -42,10 +44,15 @@ export const router = createBrowserRouter([
           },
           {
             path: '/engines/:id',
+            // element: (
+            //   <PrivateRoute>
+            //     <EngineDetailsPage />
+            //   </PrivateRoute>
+            // ),
             element: (
-              <PrivateRoute>
+              <WithGuard guards={[isAuthenticated]} redirectTo="/auth">
                 <EngineDetailsPage />
-              </PrivateRoute>
+              </WithGuard>
             ),
           },
         ],
