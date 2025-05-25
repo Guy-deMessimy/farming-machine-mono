@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// Apollo client
 import { ApolloClient, InMemoryCache, ApolloProvider, from, HttpLink } from '@apollo/client';
 import { createUploadLink } from 'apollo-upload-client';
 import { onError } from '@apollo/client/link/error';
-import { store } from './store';
+// Redux store
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './store';
 import App from './components/App/App';
 import './styles.scss';
 
@@ -36,7 +39,9 @@ root.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <App />
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   </React.StrictMode>,

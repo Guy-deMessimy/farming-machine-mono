@@ -67,7 +67,6 @@ const AuthenticationPage = () => {
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       if (authMode !== 'signin' && authMode !== 'signup') {
-        setLoading(false);
         throw json({ message: 'Unsupported mode.' }, { status: 422 });
       }
       if (authMode === 'signup') {
