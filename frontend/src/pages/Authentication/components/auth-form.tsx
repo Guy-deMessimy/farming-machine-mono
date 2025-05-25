@@ -80,7 +80,7 @@ const AuthForm: FC<ReportComponentProps> = ({ authMode }) => {
         <p style={{ color: 'red', marginTop: '4px' }}>{formState.errors.confirmPassword.message}</p>
       )}
       <div className={''}>
-        <Button type="primary" htmlType="submit" disabled={formState.isSubmitting}>
+        <Button type="primary" htmlType="submit" disabled={formState.isSubmitting} loading={formState.isSubmitting}>
           {formState.isSubmitting ? 'Submitting...' : 'Save'}
         </Button>
       </div>
