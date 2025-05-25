@@ -16,14 +16,17 @@ type SignInResponse = {
 };
 
 export const useSignInMutation = () => {
-  const [signInMutation, { data, loading, error }] = useMutation<SignInResponse, { input: SignInInput }>(SIGN_IN, {
-    fetchPolicy: 'no-cache',
-  });
+  const [signInMutation, { data, loading: loadingSignIn, error }] = useMutation<SignInResponse, { input: SignInInput }>(
+    SIGN_IN,
+    {
+      fetchPolicy: 'no-cache',
+    },
+  );
 
   return {
     signIn: signInMutation,
     data,
-    loading,
+    loadingSignIn,
     error,
   };
 };

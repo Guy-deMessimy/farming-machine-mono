@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { useSearchParams } from 'react-router-dom';
 import { Input, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 // Types
@@ -8,11 +7,12 @@ import { LoginFormValues } from '../../../shared/types/forms.type';
 
 import './styles.scss';
 
-interface ReportComponentProps {}
+interface ReportComponentProps {
+  authMode: string;
+}
 
-const AuthForm: FC<ReportComponentProps> = () => {
-  const [searchParams] = useSearchParams();
-  const isLogin = searchParams.get('mode') === 'login';
+const AuthForm: FC<ReportComponentProps> = ({ authMode }) => {
+  const isLogin = authMode === 'signin';
   const { control, formState } = useFormContext<LoginFormValues>();
 
   return (

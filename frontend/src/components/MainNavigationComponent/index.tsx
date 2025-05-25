@@ -16,10 +16,10 @@ import { Fragment } from 'react/jsx-runtime';
 const MainNavigationComponent = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const isLogin = searchParams.get('mode') === 'login';
+  const isLogin = searchParams.get('mode') === 'signin';
   const { user, isAuthenticated } = useAppSelector(selectUser);
 
-  const authUrl = useMemo(() => `/auth?mode=${isLogin ? 'signup' : 'login'}`, [isLogin]);
+  const authUrl = useMemo(() => `/auth?mode=${isLogin ? 'signup' : 'signin'}`, [isLogin]);
 
   const items: MenuProps['items'] = [
     {

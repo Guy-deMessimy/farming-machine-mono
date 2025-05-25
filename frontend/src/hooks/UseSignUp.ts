@@ -14,12 +14,14 @@ type SignUpResponse = {
 };
 
 export const useSignUpMutation = () => {
-  const [signUpMutation, { data, loading, error }] = useMutation<SignUpResponse, { input: SignUpInput }>(SIGN_UP);
+  const [signUpMutation, { data, loading: loadingSignUp, error }] = useMutation<SignUpResponse, { input: SignUpInput }>(
+    SIGN_UP,
+  );
 
   return {
     signUp: signUpMutation,
     data,
-    loading,
+    loadingSignUp,
     error,
   };
 };

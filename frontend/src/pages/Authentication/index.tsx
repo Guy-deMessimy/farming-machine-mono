@@ -1,27 +1,58 @@
 import { FormProvider, useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { useSearchParams, json, useNavigate } from 'react-router-dom';
-import { LoginFormValues } from '../../shared/types/forms.type';
-import AuthForm from './components/auth-form';
-import './styles.scss';
-import { useSignInMutation } from '../../hooks/UseSignIn';
 import { ApolloError } from '@apollo/client';
+// Components
+import AuthForm from './components/auth-form';
+// Store and redux
+import { useAppDispatch } from '../../store/hooks';
+import { setCredentials } from '../../store/slices/auth/auth-slice';
+import { useAuthBootstrap } from '../../hooks/useAuthBootstrap';
+// Bff
+import { useSignInMutation } from '../../hooks/UseSignIn';
 import { useSignUpMutation } from '../../hooks/UseSignUp';
+import { LoginFormValues } from '../../shared/types/forms.type';
+
+import './styles.scss';
+import { useEffect, useState } from 'react';
 
 type GraphQLOriginalError = {
   message?: string | string[];
 };
 
+type AuthMode = 'signin' | 'signup';
+
 const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const isLogin = searchParams.get('mode') === 'login';
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+
+  // Hooks GraphQL Apollo pour signIn et signUp
+  const { signIn, loadingSignIn } = useSignInMutation();
+  const { signUp, loadingSignUp } = useSignUpMutation();
+
+  // État local pour déterminer le mode (connexion ou inscription)
+  const [authMode, setAuthMode] = useState<AuthMode>('signin');
+
+  // Checker si le user qui s'authentifie est deja connecte
+  const { bootstrapped } = useAuthBootstrap({ redirectIfAuthenticated: true });
+
+  const isLogin = authMode === 'signin';
+
+  // État de chargement combiné (vrai si l'une des mutations est en cours)
+  // const loading = loadingSignIn || loadingSignUp;
+
+  useEffect(() => {
+    const mode = searchParams.get('mode');
+    setAuthMode(mode === 'signup' ? 'signup' : 'signin');
+  }, [searchParams]);
+
   const myDefaultValues = (): LoginFormValues => ({
     email: '',
     password: '',
-    ...(!isLogin && { confirmPassword: '' }), // Ajout conditionnel
+    ...(!isLogin && { confirmPassword: '' }),
   });
-  const { signIn } = useSignInMutation();
-  const { signUp } = useSignUpMutation();
+
   const form = useForm<LoginFormValues>({
     shouldUnregister: true,
     mode: 'onChange',
@@ -31,52 +62,38 @@ const AuthenticationPage = () => {
     // use joi shema
   });
 
+  if (!bootstrapped) return <p>Chargement en cours...</p>; // ou spinner
+
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    const mode = searchParams.get('mode') || 'login';
+    setLoading(true);
+
     try {
-      if (mode !== 'login' && mode !== 'signup') {
+      if (authMode !== 'signin' && authMode !== 'signup') {
+        setLoading(false);
         throw json({ message: 'Unsupported mode.' }, { status: 422 });
       }
-      if (mode === 'signup') {
-        console.log('AAA 🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ data:', data);
+      if (authMode === 'signup') {
         const { confirmPassword, ...safeInput } = data;
-
         const response = await signUp({
           variables: {
             input: safeInput,
           },
         });
-        console.log('AAA🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ response:', response);
         if (response.data?.signUp) {
-          localStorage.removeItem('token');
           alert('Votre compte a bien été créé. Vous pouvez maintenant vous connecter.');
-          // ✅ Inscription réussie, redirection vers le login
-          navigate('/auth?mode=login');
+          navigate('/auth?mode=signin');
         }
-      } else if (mode === 'login') {
+      } else if (authMode === 'signin') {
         const response = await signIn({
           variables: {
             input: data,
           },
         });
 
-        const accessToken = response.data?.signIn?.accessToken;
-        const user = response.data?.signIn?.user;
-        console.log('AAA user', user);
-
-        if (!accessToken || !user) {
-          throw new Error('Invalid credentials');
-        }
-
-        // 💾 Stocke le token
-        localStorage.setItem('token', accessToken);
+        const { user } = response.data?.signIn ?? {};
+        if (!user) throw new Error('Invalid credentials');
+        dispatch(setCredentials({ user }));
         navigate('/');
-
-        // 🕒 Tu peux activer cette partie plus tard pour gérer la durée du token
-        // const expiration = new Date();
-        // expiration.setHours(expiration.getHours() + 1);
-        // localStorage.setItem('expiration', expiration.toISOString());
-        // localStorage.setItem('token', 'E6FItRREDFXdwMqYaO8GefV6KurWH4CwljAoGhItB5ruLk5FTzXHxsJft1cV0XDL');
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
@@ -119,7 +136,7 @@ const AuthenticationPage = () => {
   const AuthenticationFormProvider = (
     <FormProvider {...form}>
       <form className={`authentication_wrapper`} id="hook-form" onSubmit={form.handleSubmit(onSubmit, onError)}>
-        <AuthForm />
+        <AuthForm authMode={authMode} />
       </form>
     </FormProvider>
   );

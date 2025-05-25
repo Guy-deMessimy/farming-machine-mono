@@ -14,7 +14,7 @@ const LogoutPage = () => {
     const performLogout = async () => {
       await logout();
       dispatch(clearCredentials());
-      navigate('/auth?mode=login');
+      navigate('/auth?mode=signin');
     };
 
     performLogout();
