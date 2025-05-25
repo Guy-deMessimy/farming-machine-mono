@@ -25,7 +25,7 @@ const AuthenticationPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   // Hooks GraphQL Apollo pour signIn et signUp
   const { signIn, loadingSignIn } = useSignInMutation();
@@ -65,8 +65,6 @@ const AuthenticationPage = () => {
   if (!bootstrapped) return <p>Chargement en cours...</p>; // ou spinner
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    setLoading(true);
-
     try {
       if (authMode !== 'signin' && authMode !== 'signup') {
         setLoading(false);

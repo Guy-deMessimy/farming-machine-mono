@@ -13,7 +13,6 @@ import AuthenticationPage from '../../pages/Authentication';
 import LogoutPage from '../../pages/Logout';
 
 import './styles.scss';
-import { publicOnlyLoader } from '../../shared/loaders/public-only-loader';
 
 const router = createBrowserRouter([
   {
