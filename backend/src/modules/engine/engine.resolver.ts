@@ -7,6 +7,7 @@ import { Engine } from './engine.entity';
 import { EngineQueryDto } from './engine-query.dto';
 import { UseDynamicInterceptor } from '../auth/decorators/interceptor.decorator';
 import { InterceptorType } from '../auth/enums/interceptor-type.enum';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Resolver(() => Engine)
 export class EngineResolver {
@@ -14,7 +15,8 @@ export class EngineResolver {
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine], { nullable: true })
-  @UseDynamicInterceptor(InterceptorType.Default)
+  @Public()
+  @UseDynamicInterceptor(InterceptorType.None)
   findAllEngines(
     @Context() context?: { req: Request },
     @Args('query', { nullable: true }) query?: EngineQueryDto,

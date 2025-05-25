@@ -18,6 +18,7 @@ export class EngineResolver {
     private readonly pubSub: PubSub,
   ) {}
 
+  @Auth(AuthType.None)
   @Query(() => [Engine], { name: 'findAllEngines', nullable: true })
   async findAllEngines(
     @Args('query', { nullable: true }) query?: EngineQueryDto,
