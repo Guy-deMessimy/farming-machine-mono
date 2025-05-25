@@ -46,8 +46,6 @@ export class AuthResolver {
     const { accessToken, refreshToken, user } = await firstValueFrom(
       this.authService.signIn({ graphQlQuery, input }),
     );
-    console.log('🚀 ~ AuthResolver ~ refreshToken:', refreshToken);
-    console.log('[🧪] Token renvoyé par AuthService:', accessToken);
     if (!accessToken || !refreshToken) {
       throw new UnauthorizedException('Tokens are missing');
     }
@@ -85,13 +83,29 @@ export class AuthResolver {
     const { req, res }: { req: Request; res: Response } = ctx;
     const graphQlQuery = req.body.query;
 
-    const { accessToken, user } = await firstValueFrom(
+    const { accessToken, refreshToken, user } = await firstValueFrom(
       this.authService.refreshToken({
         graphQlQuery,
         headers: req.headers['authorization'],
       }),
     );
 
-    return { accessToken, user };
+    res.cookie('accessToken', accessToken, {
+      httpOnly: true,
+      // secure true ne passe pas en local sans https
+      secure: process.env.NODE_ENV === 'production',
+      // sameSite: 'lax', // ou strict
+      sameSite: true,
+      // maxAge: 1000 * 60 * 60, // 1h
+    });
+
+    res.cookie('refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 jours
+    });
+
+    return { user };
   }
 }
