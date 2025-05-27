@@ -50,7 +50,7 @@ export const router = createBrowserRouter([
             //   </PrivateRoute>
             // ),
             element: (
-              <WithGuard guards={[isAuthenticated]} redirectTo="/auth">
+              <WithGuard guards={[isAuthenticated]} redirectTo="/auth?mode=signin">
                 <EngineDetailsPage />
               </WithGuard>
             ),

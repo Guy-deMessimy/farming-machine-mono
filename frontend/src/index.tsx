@@ -25,10 +25,11 @@ const resolvePendingRequests = () => {
   pendingRequests = [];
 };
 const errorLink = onError(({ graphQLErrors, operation, forward }) => {
-    if (graphQLErrors) {
+  if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
       console.warn(`[GraphQL error]: ${message}`, { locations, path });
     });
+  }
   const hasAuthError = graphQLErrors?.some(
     (err) => err.message === 'Invalid or expired token' || err.extensions?.code === 'UNAUTHENTICATED',
   );
@@ -43,7 +44,7 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
             resolvePendingRequests();
           })
           .catch(() => {
-            console.error('Mutation refresh token failed')
+            console.error('Mutation refresh token failed');
           })
           .finally(() => {
             isRefreshing = false;
