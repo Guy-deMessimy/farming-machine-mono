@@ -62,8 +62,6 @@ const AuthenticationPage = () => {
     // use joi shema
   });
 
-  if (!bootstrapped) return <p>Chargement en cours...</p>; // ou spinner
-
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     try {
       if (authMode !== 'signin' && authMode !== 'signup') {

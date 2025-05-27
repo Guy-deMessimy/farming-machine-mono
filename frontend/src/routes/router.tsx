@@ -13,7 +13,7 @@ import AuthenticationPage from '../pages/Authentication';
 import LogoutPage from '../pages/Logout';
 
 // Route guards
-import PrivateRoute from './PrivateRoute';
+// import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import WithGuard from './guards/WithGuard';
 import { isAuthenticated } from './guards/guards';
