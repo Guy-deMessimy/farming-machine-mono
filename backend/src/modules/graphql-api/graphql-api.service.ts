@@ -1,4 +1,8 @@
-import { Injectable, HttpException } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios/dist';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
@@ -63,15 +67,16 @@ export class GraphqlApiService {
               firstError.extensions?.exception?.status ??
               (firstError.extensions?.code === 'UNAUTHENTICATED' ? 401 : 400);
 
-            return throwError(() => new HttpException(message, statusCode));
+            if (statusCode === 401) {
+              throw new UnauthorizedException('Missing access token');
+            } else
+              return throwError(() => new HttpException(message, statusCode));
           }
-
           const fallbackErrors = error.response?.data?.errors;
           if (fallbackErrors?.length) {
             const message = fallbackErrors[0].message || 'GraphQL error';
             return throwError(() => new HttpException(message, 400));
           }
-
           return throwError(
             () =>
               new HttpException(
