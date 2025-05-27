@@ -21,11 +21,8 @@ import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { UsersRepository } from '../../modules/users/users.repository';
 import { User } from '../../modules/users/users.entity';
 import jwtConfig from '../config/jwt.config';
-import {
-  RefreshTokenIdsStorage,
-} from './refresh-token-ids.storage/refresh-token-ids.storage';
+import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
 import { InvalidatedRefreshTokenError } from '../../common/errors/index';
-
 
 @Injectable()
 export class AuthenticationService {
@@ -162,7 +159,7 @@ export class AuthenticationService {
       //   refreshTokenDto.refreshToken,
       //   tokenEntry.tokenHash,
       // );
-  
+
       // if (!isEqual) {
       //   this.logger.warn(
       //     `Tentative de refresh token invalide pour user ${refreshTokenDto.sub}`,

@@ -1,5 +1,5 @@
 // src/auth/auth.resolver.ts
-import { Resolver, Mutation, Args, Context } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Context, Query } from '@nestjs/graphql';
 import { Logger, UnauthorizedException } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
@@ -75,6 +75,19 @@ export class AuthResolver {
   @Public()
   logout(@Context() ctx: any): boolean {
     return this.authService.logout(ctx.res);
+  }
+
+  @Query(() => String)
+  @UseDynamicInterceptor(InterceptorType.Default)
+  async ping(@Context() context?: { req: Request }): Promise<string> {
+    const graphQlQuery = context.req.body.query;
+    const result = await firstValueFrom(
+      this.authService.ping({
+        graphQlQuery,
+        headers: context.req.headers['authorization'],
+      }),
+    );
+    return result;
   }
 
   @Mutation(() => AuthPayload)

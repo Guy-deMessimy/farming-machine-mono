@@ -65,4 +65,16 @@ export class AuthService {
     });
     return true;
   }
+
+  ping({
+    graphQlQuery,
+    headers,
+  }: {
+    graphQlQuery: string;
+    headers?: string | string[] | undefined;
+  }): Observable<string> {
+    const cleanHeaders =
+      typeof headers === 'string' ? { authorization: headers } : undefined;
+    return this.graphqlApiService.execute(graphQlQuery, {}, cleanHeaders);
+  }
 }

@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver, Context } from '@nestjs/graphql';
+import { Args, Mutation, Resolver, Context, Query } from '@nestjs/graphql';
 import { Logger } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { AuthenticationService } from './authentication.service';
@@ -49,5 +49,11 @@ export class AuthenticationResolver {
       refreshToken,
       refreshTokenId: refreshTokenPayload.refreshTokenId,
     });
+  }
+
+  @Auth(AuthType.Bearer)
+  @Query(() => String)
+  ping(): string {
+    return 'pong';
   }
 }
