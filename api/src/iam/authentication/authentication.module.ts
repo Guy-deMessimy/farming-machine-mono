@@ -4,8 +4,8 @@ import { AuthenticationResolver } from './authentication.resolver';
 import { IamModule } from '../iam.module';
 import { ConfigModule } from '@nestjs/config';
 import jwtConfig from '../config/jwt.config';
-import { PrismaModule } from 'src/prisma/prisma.module';
-import { RedisModule } from 'src/redis/redis.module';
+import { PrismaModule } from '../../prisma/prisma.module';
+import { RedisModule } from '../../redis/redis.module';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
 
 @Module({

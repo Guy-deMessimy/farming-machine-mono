@@ -7,8 +7,8 @@ import { UserQueryDto } from './dto//user-query.dto';
 import { User } from './users.entity';
 import { DeleteUserResponse } from './dto/delete-user-response';
 import { CreateUserInput } from './dto/create-user.dto';
-import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
-import { ActiveUserData } from 'src/iam/authentication/interfaces/active-user-data.interface';
+import { ActiveUser } from '../../iam/decorators/active-user.decorator';
+import { ActiveUserData } from '../../iam/authentication/interfaces/active-user-data.interface';
 import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
 import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
 

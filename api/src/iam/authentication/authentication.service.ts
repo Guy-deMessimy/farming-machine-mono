@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
 // services
 import { HashingService } from '../hashing/hashing.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 // interfaces
 import { ActiveUserData } from './interfaces/active-user-data.interface';
 // dto

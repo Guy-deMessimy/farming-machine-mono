@@ -1,6 +1,6 @@
 import { AccessTokenGuard } from './access-token.guard';
 import { JwtService } from '@nestjs/jwt';
-import jwtConfig from 'src/iam/config/jwt.config';
+import jwtConfig from '../../../config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 
 describe('AccessTokenGuard', () => {

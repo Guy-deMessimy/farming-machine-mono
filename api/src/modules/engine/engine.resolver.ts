@@ -4,10 +4,10 @@ import { PubSub } from 'graphql-subscriptions';
 import { EngineService } from './engine.service';
 import { Engine } from './engine.entity';
 import { EngineQueryDto } from './engine-query.dto';
-import { ActiveUser } from 'src/iam/decorators/active-user.decorator';
-import { ActiveUserData } from 'src/iam/authentication/interfaces/active-user-data.interface';
-import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
-import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
+import { ActiveUser } from '../../iam/decorators/active-user.decorator';
+import { ActiveUserData } from '../../iam/authentication/interfaces/active-user-data.interface';
+import { Auth } from '../../iam/authentication/decorators/auth.decorator';
+import { AuthType } from '../../iam/authentication/enums/auth-type.enum';
 
 @Resolver()
 export class EngineResolver {

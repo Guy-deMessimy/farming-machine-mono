@@ -9,9 +9,9 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
-import jwtConfig from 'src/iam/config/jwt.config';
+import jwtConfig from '../../../../iam/config/jwt.config';
 import { Request } from 'express';
-import { REQUEST_USER_KEY } from 'src/iam/iam.constants';
+import { REQUEST_USER_KEY } from '../../../iam.constants';
 
 // Ce guard vérifie :
 // que le header Authorization contient un JWT valide (Bearer <token>)

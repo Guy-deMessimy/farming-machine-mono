@@ -5,7 +5,7 @@ import { HashingService } from './hashing/hashing.service';
 import { BcryptService } from './hashing/bcrypt.service';
 import { UsersModule } from '../modules/users/users.module';
 import { AuthenticationModule } from './authentication/authentication.module';
-import { PubSubModule } from 'src/modules/pub-sub/pub-sub.module';
+import { PubSubModule } from '../modules/pub-sub/pub-sub.module';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';

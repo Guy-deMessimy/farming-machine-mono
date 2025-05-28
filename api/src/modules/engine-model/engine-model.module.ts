@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from '../../prisma/prisma.module';
 import { PubSubModule } from '../pub-sub/pub-sub.module';
 import { EngineModelService } from './engine-model.service';
 import { EngineModelResolver } from './engine-model.resolver';

@@ -7,7 +7,7 @@ import appConfig from './config/app.config';
 
 // Modules
 import { ConfigModule } from '@nestjs/config';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { PubSubModule } from './modules/pub-sub/pub-sub.module';
 import { EnginesModule } from './modules/engine/engines.module';
 import { EngineModelModule } from './modules/engine-model/engine-model.module';
