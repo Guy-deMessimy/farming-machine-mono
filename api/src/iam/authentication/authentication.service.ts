@@ -119,7 +119,6 @@ export class AuthenticationService {
   // let users have the ability to re-authenticate themselves : regenerate tokens using the refresh token
   async refreshTokens(refreshTokenDto: RefreshTokenDto) {
     try {
-
       const user = await this.repository.findOneBy({
         id: refreshTokenDto.sub,
       });
