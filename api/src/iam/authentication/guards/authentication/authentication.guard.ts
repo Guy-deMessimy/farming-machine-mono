@@ -5,7 +5,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
 import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { AccessTokenGuard } from '../access-token/access-token.guard';
@@ -39,7 +38,6 @@ export class AuthenticationGuard implements CanActivate {
 
   // les gardes ont accès à l'instance ExecutionContext et savent donc exactement ce qui va être exécuté ensuite.
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    // console.log('authTypeGuardMap', this.authTypeGuardMap)
     // le Reflector permet de lire les metadata posées avec des décorateurs custom (@Auth() ici).
     // getAllAndOverride va chercher la metadata AUTH_TYPE_KEY (définie avec SetMetadata) sur la méthode (context.getHandler()) et sur la classe (context.getClass()).
     // Si la méthode a une metadata, elle override celle de la classe. ((voir resolver))
