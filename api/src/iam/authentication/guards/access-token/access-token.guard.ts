@@ -4,21 +4,19 @@ import {
   Injectable,
   Inject,
   UnauthorizedException,
+  Logger,
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { Observable } from 'rxjs';
-import jwtConfig from '../../../../iam/config/jwt.config';
 import { Request } from 'express';
+import jwtConfig from '../../../../iam/config/jwt.config';
 import { REQUEST_USER_KEY } from '../../../iam.constants';
 
-// Ce guard vérifie :
-// que le header Authorization contient un JWT valide (Bearer <token>)
-// qu’il peut être décodé et vérifié par JwtService
-// et qu’on peut attacher le payload à request[REQUEST_USER_KEY]
+// Guard check que le header Authorization contient un JWT valide (Bearer <token>), décodable et vérifiable par JwtService et que le payload est attachable à request[REQUEST_USER_KEY]
 @Injectable()
 export class AccessTokenGuard implements CanActivate {
+  private readonly logger = new Logger(AccessTokenGuard.name);
   constructor(
     private readonly jwtService: JwtService,
     @Inject(jwtConfig.KEY)
@@ -27,11 +25,8 @@ export class AccessTokenGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
-    // console.log('CTX', ctx)
     const request = ctx.getContext().req;
-    // console.log('REQUEST', request)
     const token = this.extractTokenFromHeader(request);
-    console.log('TOKKEN', token);
     if (!token) {
       throw new UnauthorizedException('Missing access token');
     }
@@ -40,23 +35,15 @@ export class AccessTokenGuard implements CanActivate {
         token,
         this.jwtConfiguration,
       );
-      // const payload = await this.jwtService.verifyAsync(token, {
-      //   secret: this.jwtConfiguration.secret,
-      //   issuer: this.jwtConfiguration.issuer,
-      //   audience: this.jwtConfiguration.audience,
-      // });
       request[REQUEST_USER_KEY] = payload;
-      console.log('PAYLOAD1', payload);
       return true;
     } catch (err) {
-      console.error('JWT verification failed:', err);
+      this.logger.error(`JWT verification failed:: ${err}`);
       throw new UnauthorizedException('Invalid or expired token');
     }
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    // const [_, token] = request.headers.authorization?.split(' ') ?? [];
-    // return token;
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
