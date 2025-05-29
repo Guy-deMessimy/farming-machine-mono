@@ -1,16 +1,15 @@
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { Logger, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { UsersService } from './users.service';
+// dto
 import { GetUserInput } from './dto/get-user.dto';
 import { UserQueryDto } from './dto//user-query.dto';
-import { User } from './users.entity';
 import { DeleteUserResponse } from './dto/delete-user-response';
 import { CreateUserInput } from './dto/create-user.dto';
+import { User } from './users.entity';
 import { ActiveUser } from '../../iam/decorators/active-user.decorator';
 import { ActiveUserData } from '../../iam/authentication/interfaces/active-user-data.interface';
-import { Auth } from 'src/iam/authentication/decorators/auth.decorator';
-import { AuthType } from 'src/iam/authentication/enums/auth-type.enum';
 
 @Resolver()
 export class UsersResolver {
