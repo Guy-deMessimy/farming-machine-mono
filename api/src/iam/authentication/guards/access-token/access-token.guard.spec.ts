@@ -10,6 +10,7 @@ import { REQUEST_USER_KEY } from '../../../iam.constants';
 describe('AccessTokenGuard', () => {
   let guard: AccessTokenGuard;
   let jwtService: jest.Mocked<JwtService>;
+
   const mockJwtConfig = {
     secret: 'test-secret',
     audience: 'test-audience',

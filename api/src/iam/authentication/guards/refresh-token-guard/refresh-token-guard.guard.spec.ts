@@ -2,37 +2,40 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RefreshTokenGuard } from './refresh-token-guard.guard';
 import { JwtService } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import { ConfigType } from '@nestjs/config';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import jwtConfig from '../../../config/jwt.config';
+import { REQUEST_USER_KEY } from '../../../iam.constants';
 
-describe.skip('RefreshTokenGuard', () => {
+describe('RefreshTokenGuard', () => {
   let guard: RefreshTokenGuard;
-  let jwtService: JwtService;
+  let jwtService: jest.Mocked<JwtService>;
 
-  const mockJwtService = {
-    verifyAsync: jest.fn(),
-  };
+  const mockJwtConfig = {
+    secret: 'test-secret',
+    audience: 'test-audience',
+    issuer: 'test-issuer',
+    accessTokenTtl: 3600,
+    refreshTokenTtl: 86400,
+  } as ConfigType<typeof jwtConfig>;
 
-  const mockConfigService = {
-    get: jest.fn((key: string) => {
-      switch (key) {
-        case 'jwt.secret':
-          return 'my-secret';
-        case 'jwt.audience':
-          return 'http://localhost:4000';
-        case 'jwt.issuer':
-          return 'http://localhost:3001';
-      }
-    }),
-  };
+  let context: ExecutionContext;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         RefreshTokenGuard,
-        { provide: JwtService, useValue: mockJwtService },
-        { provide: ConfigService, useValue: mockConfigService },
+        {
+          provide: JwtService,
+          useValue: {
+            verifyAsync: jest.fn(),
+          },
+        },
+        {
+          provide: jwtConfig.KEY,
+          useValue: mockJwtConfig,
+        },
       ],
     }).compile();
 
@@ -40,45 +43,49 @@ describe.skip('RefreshTokenGuard', () => {
     jwtService = module.get(JwtService);
   });
 
+  const mockExecutionContext = (headers: Record<string, string> = {}) => {
+    const req = { headers };
+    jest.spyOn(GqlExecutionContext, 'create').mockReturnValue({
+      getContext: () => ({ req }),
+    } as unknown as GqlExecutionContext);
+    return req;
+  };
+
   it('should be defined', () => {
     expect(guard).toBeDefined();
   });
 
-  it('should allow valid refresh token', async () => {
-    const mockPayload = { sub: 'user-id' };
-    jwtService.verifyAsync = jest.fn().mockResolvedValue(mockPayload);
-
-    const context = createMockExecutionContext('valid-token');
-    const result = await guard.canActivate(context);
-    expect(result).toBe(true);
-  });
-
   it('should throw if token is missing', async () => {
-    const context = createMockExecutionContext(undefined);
-    await expect(guard.canActivate(context)).rejects.toThrow(
-      UnauthorizedException,
+    mockExecutionContext();
+    await expect(guard.canActivate({} as ExecutionContext)).rejects.toThrow(
+      new UnauthorizedException('Missing access refresh token'),
     );
   });
 
   it('should throw if token is invalid', async () => {
-    jwtService.verifyAsync = jest.fn().mockRejectedValue(new Error('invalid'));
-    const context = createMockExecutionContext('invalid-token');
-    await expect(guard.canActivate(context)).rejects.toThrow(
-      UnauthorizedException,
+    mockExecutionContext({ authorization: 'Bearer invalid.token' });
+    jwtService.verifyAsync.mockRejectedValue(new Error('invalid'));
+
+    await expect(guard.canActivate({} as ExecutionContext)).rejects.toThrow(
+      new UnauthorizedException('Invalid or expired refresh token'),
     );
   });
 
-  function createMockExecutionContext(
-    refreshToken: string | undefined,
-  ): ExecutionContext {
-    const req = {
-      headers: refreshToken ? { 'x-refresh-token': refreshToken } : {},
-    };
+  it('should attach payload to request and return true on valid token', async () => {
+    const payload = { sub: 'user-123', email: 'test@example.com' };
+    const req = mockExecutionContext({
+      authorization: 'Bearer valid.token',
+    });
 
-    return {
-      switchToHttp: () => ({ getRequest: () => req }),
-      getHandler: jest.fn(),
-      getClass: jest.fn(),
-    } as unknown as ExecutionContext;
-  }
+    jwtService.verifyAsync.mockResolvedValue(payload);
+
+    const result = await guard.canActivate({} as ExecutionContext);
+
+    expect(result).toBe(true);
+    expect(jwtService.verifyAsync).toHaveBeenCalledWith(
+      'valid.token',
+      mockJwtConfig,
+    );
+    expect(req[REQUEST_USER_KEY]).toEqual(payload);
+  });
 });
