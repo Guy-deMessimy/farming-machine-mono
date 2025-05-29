@@ -2,7 +2,6 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserQueryDto } from './dto/user-query.dto';
-import { GetUserInput } from './dto/get-user.dto';
 
 @Injectable()
 export class UsersRepository {

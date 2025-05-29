@@ -5,7 +5,6 @@ import { RefreshTokenGuard } from '../refresh-token-guard/refresh-token-guard.gu
 import { Reflector } from '@nestjs/core';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { AuthType } from '../../enums/auth-type.enum';
-import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 
 describe('AuthenticationGuard', () => {
   let guard: AuthenticationGuard;

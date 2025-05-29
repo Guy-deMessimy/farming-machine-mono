@@ -19,8 +19,6 @@ describe('AccessTokenGuard', () => {
     refreshTokenTtl: 86400,
   } as ConfigType<typeof jwtConfig>;
 
-  let context: ExecutionContext;
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [

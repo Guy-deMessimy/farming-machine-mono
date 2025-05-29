@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Logger } from '@nestjs/common';
-import { Prisma, EngineTypes } from '@prisma/client';
+import { EngineTypes } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { EngineTypesQueryDto } from './engine-type-query.dto';
 

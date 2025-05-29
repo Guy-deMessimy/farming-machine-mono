@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from '@nestjs/graphql';
-import { ArrayNotEmpty, IsArray, IsEnum, IsOptional } from 'class-validator';
+import { IsEnum, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Prisma } from '@prisma/client';
 import { BaseQueryDto } from '../../common/dto/base-query.dto';
