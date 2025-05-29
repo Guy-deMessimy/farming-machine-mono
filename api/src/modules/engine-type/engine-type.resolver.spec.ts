@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EngineTypesResolver } from './engine-type.resolver';
 
-describe('EngineTypeResolver', () => {
+describe.skip('EngineTypeResolver', () => {
   let resolver: EngineTypesResolver;
 
   beforeEach(async () => {

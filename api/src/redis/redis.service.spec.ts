@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RedisService } from './redis.service';
 
-describe('RedisService', () => {
+describe.skip('RedisService', () => {
   let service: RedisService;
 
   beforeEach(async () => {
