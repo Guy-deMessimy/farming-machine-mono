@@ -119,41 +119,11 @@ export class AuthenticationService {
   // let users have the ability to re-authenticate themselves : regenerate tokens using the refresh token
   async refreshTokens(refreshTokenDto: RefreshTokenDto) {
     try {
-      // 1. Charge le token hashé de la base -> disable by redis storage
-      // const tokenEntry = await this.prisma.refreshToken.findUnique({
-      //   where: { userId: refreshTokenDto.sub },
-      // });
-      // if (
-      //   !tokenEntry ||
-      //   !tokenEntry.tokenHash ||
-      //   tokenEntry.revokedAt ||
-      //   tokenEntry.expiresAt < new Date()
-      // ) {
-      //   throw new UnauthorizedException('Refresh token invalide ou expiré', {
-      //     cause: new Error(),
-      //     description: 'Some error description',
-      //   });
-      // }
-
-      // 2. Compare le token reçu avec le hash -> disable by redis storage
-      // const isEqual = await this.hashingService.compare(
-      //   refreshTokenDto.refreshToken,
-      //   tokenEntry.tokenHash,
-      // );
-
-      // if (!isEqual) {
-      //   this.logger.warn(
-      //     `Tentative de refresh token invalide pour user ${refreshTokenDto.sub}`,
-      //   );
-      //   throw new UnauthorizedException('Refresh token invalide', {
-      //     cause: new Error(),
-      //     description: 'Some error description',
-      //   });
-      // }
 
       const user = await this.repository.findOneBy({
         id: refreshTokenDto.sub,
       });
+      // compare les hash ? ou l'id ? cf this.hashingService.compare
       const isValid = await this.refreshTokenIdsStorage.validate(
         user.id,
         refreshTokenDto.refreshTokenId,
@@ -163,7 +133,10 @@ export class AuthenticationService {
         // refresh token rotation technique
         await this.refreshTokenIdsStorage.invalidate(user.id);
       } else {
-        throw new Error('Refresh token is invalid');
+        throw new UnauthorizedException('Refresh token invalide', {
+          cause: new Error(),
+          description: 'Some error description',
+        });
       }
 
       // 4. Re-génère les tokens
