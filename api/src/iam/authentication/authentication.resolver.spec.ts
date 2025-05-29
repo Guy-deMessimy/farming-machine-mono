@@ -5,7 +5,6 @@ import { PubSub } from 'graphql-subscriptions';
 import { SignUpDto } from './dto/sign-up.dto';
 import { User } from '../../modules/users/users.entity';
 import { SignInDto } from './dto/sign-in.dto';
-import { AuthPayload } from './dto/auth-payload.dto';
 import { RefreshTokenPayload } from './interfaces/refresh-token-payload.interface';
 import { RefreshTokenRequest } from './interfaces/refresh-token-request.interface';
 

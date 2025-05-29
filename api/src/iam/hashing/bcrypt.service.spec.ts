@@ -23,8 +23,7 @@ describe('BcryptService', () => {
     expect(hashed).toMatch(/^\$2[aby]\$/);
     const isValid = await service.compare(plainText, hashed);
     expect(isValid).toBe(true);
-    });
-  
+  });
 
   it('should return false for incorrect password', async () => {
     const hash = await service.hash('correctPassword');
