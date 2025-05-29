@@ -93,25 +93,6 @@ export class AuthenticationService {
       ),
     ]);
     await this.refreshTokenIdsStorage.insert(user.id, refreshTokenId);
-    // hash and save refresh token in db -> disable by redis storage
-    // const hashedRefreshToken = await this.hashingService.hash(refreshToken);
-
-    // await this.prisma.refreshToken.upsert({
-    //   where: { userId: user.id },
-    //   update: {
-    //     tokenHash: hashedRefreshToken,
-    //     expiresAt: new Date(
-    //       Date.now() + this.jwtConfiguration.refreshTokenTtl * 1000,
-    //     ),
-    //   },
-    //   create: {
-    //     userId: user.id,
-    //     tokenHash: hashedRefreshToken,
-    //     expiresAt: new Date(
-    //       Date.now() + this.jwtConfiguration.refreshTokenTtl * 1000,
-    //     ),
-    //   },
-    // });
 
     return {
       accessToken,

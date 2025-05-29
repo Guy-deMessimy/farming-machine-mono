@@ -22,20 +22,6 @@ model User {
   // Relations
   posts     Post[] // Un user peut avoir plusieurs posts (avis)
   customer  Customer? // Un user peut être lié à un customer (relation 1:1 optionnelle)
-  refreshToken  RefreshToken? // ✅ 1:1 avec RefreshToken
-}
-
-model RefreshToken {
-  id          String    @id @default(uuid())
-  userId      String    @unique
-  tokenHash   String
-  createdAt   DateTime  @default(now())
-  expiresAt   DateTime
-  revokedAt   DateTime?
-  updatedAt   DateTime  @updatedAt
-  userAgent   String?
-  ip          String?
-  user        User    @relation(fields: [userId], references: [id])
 }
 
 model Customer {
