@@ -31,6 +31,11 @@ export class UsersRepository {
       include: {
         customer: true,
         posts: true,
+        role: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }
