@@ -11,6 +11,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './authentication/guards/access-token/access-token.guard';
 import { AuthenticationGuard } from './authentication/guards/authentication/authentication.guard';
 import { RefreshTokenGuard } from './authentication/guards/refresh-token-guard/refresh-token-guard.guard';
+import { RolesGuard } from './authorization/guards/roles/roles.guard';
 
 @Module({
   imports: [
@@ -29,6 +30,11 @@ import { RefreshTokenGuard } from './authentication/guards/refresh-token-guard/r
       provide: APP_GUARD, // guard global qui lit la metadata @auth et applique dynamiquement les guards correspondant
       useClass: AuthenticationGuard,
     },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+
     AccessTokenGuard, // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
     RefreshTokenGuard,
   ],
