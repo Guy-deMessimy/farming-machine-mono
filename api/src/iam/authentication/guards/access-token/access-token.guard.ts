@@ -12,6 +12,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import jwtConfig from '../../../../iam/config/jwt.config';
 import { REQUEST_USER_KEY } from '../../../iam.constants';
+import { ActiveUserData } from '../../interfaces/active-user-data.interface';
 
 // Guard check que le header Authorization contient un JWT valide (Bearer <token>), décodable et vérifiable par JwtService et que le payload est attachable à request[REQUEST_USER_KEY]
 @Injectable()
@@ -31,7 +32,7 @@ export class AccessTokenGuard implements CanActivate {
       throw new UnauthorizedException('Missing access token');
     }
     try {
-      const payload = await this.jwtService.verifyAsync(
+      const payload = await this.jwtService.verifyAsync<ActiveUserData>(
         token,
         this.jwtConfiguration,
       );
