@@ -53,12 +53,20 @@ type User {
   name: String
   createdAt: DateTime
   updatedAt: DateTime
+  role: Role!
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+"""Les rôles utilisateurs disponibles"""
+enum Role {
+  ADMIN
+  PROVIDER
+  VIEWER
+}
 
 type AuthPayload {
   accessToken: String!

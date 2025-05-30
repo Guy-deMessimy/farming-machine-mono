@@ -45,6 +45,7 @@ describe('UsersService', () => {
           name: 'Jean', // ← ajoute même si optionnel
           createdAt: new Date(),
           updatedAt: new Date(),
+          roleId: 'role-uuid-viewer'
         },
       ];
       repository.findAll.mockResolvedValue(users);
@@ -63,6 +64,7 @@ describe('UsersService', () => {
         name: 'Jean', // ← ajoute même si optionnel
         createdAt: new Date(),
         updatedAt: new Date(),
+        roleId: 'role-uuid-viewer'
       };
       repository.findOneBy.mockResolvedValue(user);
       const result = await service.findUser({ id: '1' });
@@ -78,6 +80,7 @@ describe('UsersService', () => {
         name: 'Jean', // ← ajoute même si optionnel
         createdAt: new Date(),
         updatedAt: new Date(),
+        roleId: 'role-uuid-viewer'
       };
       repository.findOneBy.mockResolvedValue(user);
       const result = await service.findUser({ email: 'mail@mail.com' });
@@ -103,6 +106,7 @@ describe('UsersService', () => {
         name: 'Jean', // ← ajoute même si optionnel
         createdAt: new Date(),
         updatedAt: new Date(),
+        roleId: 'role-uuid-viewer'
       };
       repository.findOneBy.mockResolvedValue(user);
       repository.delete.mockResolvedValue(undefined);

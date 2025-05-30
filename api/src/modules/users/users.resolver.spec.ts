@@ -50,6 +50,7 @@ describe('UsersResolver', () => {
         name: 'Jean', // ← ajoute même si optionnel
         createdAt: new Date(),
         updatedAt: new Date(),
+        roleId: 'role-uuid-viewer'
       },
     ];
 

@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Role } from './enums/role.enum';
 // import { Customer } from '../../customer/entities/customer.entity'; // adapte si besoin
 // import { Post } from '../../post/entities/post.entity'; // adapte si besoin
 
@@ -18,6 +19,9 @@ export class User {
 
   @Field(() => Date, { nullable: true })
   updatedAt: Date;
+
+  @Field(() => Role, { defaultValue: Role.VIEWER })
+  role?: Role;
 
   //   @Field(() => [Post], { nullable: true })
   //   posts?: Post[];
