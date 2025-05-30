@@ -7,7 +7,7 @@ import { User } from '../../modules/users/users.entity';
 import { SignInDto } from './dto/sign-in.dto';
 import { RefreshTokenPayload } from './interfaces/refresh-token-payload.interface';
 import { RefreshTokenRequest } from './interfaces/refresh-token-request.interface';
-
+import { Role } from '../../modules/users/enums/role.enum';
 describe('AuthenticationResolver', () => {
   let resolver: AuthenticationResolver;
   let authenticationService: jest.Mocked<AuthenticationService>;
@@ -97,6 +97,7 @@ describe('AuthenticationResolver', () => {
         sub: 'user-123',
         refreshTokenId: 'refresh-456',
         email: 'test@example.com',
+        role: Role.VIEWER,
       };
 
       const authPayload = {

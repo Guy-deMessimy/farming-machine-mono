@@ -7,6 +7,7 @@ import { User } from './users.entity';
 import { UserQueryDto } from './dto/user-query.dto';
 import { GetUserInput } from './dto/get-user.dto';
 import { DeleteUserResponse } from './dto/delete-user-response';
+import { Role } from './enums/role.enum';
 
 describe('UsersResolver', () => {
   let resolver: UsersResolver;
@@ -50,7 +51,7 @@ describe('UsersResolver', () => {
         name: 'Jean', // ← ajoute même si optionnel
         createdAt: new Date(),
         updatedAt: new Date(),
-        roleId: 'role-uuid-viewer'
+        roleId: 'role-uuid-viewer',
       },
     ];
 
@@ -63,8 +64,12 @@ describe('UsersResolver', () => {
   });
 
   it('should return user from getUser using @ActiveUser', async () => {
-    const mockUser = { sub: '123', email: 'user@test.com' };
-    const expectedUser = { id: '123', email: 'user@test.com' } as User;
+    const mockUser = { sub: '123', email: 'user@test.com', role: Role.VIEWER };
+    const expectedUser = {
+      id: '123',
+      email: 'user@test.com',
+      role: Role.VIEWER,
+    } as User;
 
     usersService.findUser.mockResolvedValue(expectedUser);
 

@@ -1,6 +1,8 @@
 // import { PermissionType } from 'src/iam/authorization/permission.type';
 // import { Role } from 'src/users/enums/role.enum';
 
+import { Role } from 'src/modules/users/enums/role.enum';
+
 export interface ActiveUserData {
   /**
    * The "subject" of the token. The value of this property is the user ID
@@ -15,7 +17,7 @@ export interface ActiveUserData {
   /**
    * The subject's (user) role.
    */
-  // role: Role;
+  role: Role;
   /**
    * The subject's (user) permissions.
    * NOTE: Using this approach in combination with the "role-based" approach
