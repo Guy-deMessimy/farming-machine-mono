@@ -23,6 +23,7 @@ import { User } from '../../modules/users/users.entity';
 import jwtConfig from '../config/jwt.config';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
 import { InvalidatedRefreshTokenError } from '../../common/errors/index';
+import { RoleName } from '@prisma/client';
 
 @Injectable()
 export class AuthenticationService {
@@ -77,11 +78,12 @@ export class AuthenticationService {
 
   async generateTokens(user: User) {
     const refreshTokenId = randomUUID();
+    const { name: roleName } = user.role as unknown as { name: RoleName };
     const [accessToken, refreshToken] = await Promise.all([
       this.signToken<Partial<ActiveUserData>>(
         user.id,
         this.jwtConfiguration.accessTokenTtl,
-        { email: user.email },
+        { email: user.email, role: roleName },
       ),
       this.signToken(
         user.id,
