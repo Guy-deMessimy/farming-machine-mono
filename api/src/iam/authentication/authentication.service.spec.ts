@@ -12,6 +12,7 @@ import jwtConfig from '../config/jwt.config';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { InvalidatedRefreshTokenError } from '../../common/errors/index';
 import { User } from 'src/modules/users/users.entity';
+import { Role } from '../../modules/users/enums/role.enum';
 
 jest.mock('crypto', () => ({
   ...jest.requireActual('crypto'),
@@ -269,6 +270,7 @@ describe('AuthenticationService', () => {
       {
         sub: user.id,
         email: user.email,
+        role: Role.ADMIN
       },
       {
         secret: 'test-secret',
