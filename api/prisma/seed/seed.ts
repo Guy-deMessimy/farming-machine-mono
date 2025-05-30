@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, RoleName } from '@prisma/client';
 import { parseArgs } from 'node:util';
 import * as bcrypt from 'bcrypt';
 // Types
@@ -91,6 +91,7 @@ import {
   ENGINE_LIST_WOOD_TRACTORS
 } from './16-engine-list-tractors';
 import { generateFakeUsers } from './17-populate-users';
+import { PermissionName } from './enums/permissions.enum';
 
 const prisma = new PrismaClient();
 
@@ -407,7 +408,60 @@ const main = async (): Promise<void> => {
         );
       
         console.info(`[SEED] Successfully created ${count} users`);
+       };
+      
+      const seedPermissions = async (): Promise<void> => {
+        const permissions = Object.values(PermissionName);
+        await Promise.all(
+          permissions.map(async (name) => {
+            await prisma.permission.upsert({
+              where: { name },
+              update: {},
+              create: { name },
+            });
+          })
+        );
+        console.info('[SEED] Successfully created permissions');
       };
+
+      const seedRoles = async (): Promise<void> => {
+        const rolePermissions: Record<string, PermissionName[]> = {
+          ADMIN: [
+            PermissionName.READ_MACHINE,
+            PermissionName.CREATE_MACHINE,
+            PermissionName.UPDATE_MACHINE,
+            PermissionName.DELETE_MACHINE,
+          ],
+          PROVIDER: [
+            PermissionName.READ_MACHINE,
+            PermissionName.CREATE_MACHINE,
+          ],
+          VIEWER: [
+            PermissionName.READ_MACHINE,
+          ],
+        };
+
+        for (const roleName of Object.keys(rolePermissions) as RoleName[]) {
+          const permissions = rolePermissions[roleName];
+
+          const existingPermissions = await prisma.permission.findMany({
+            where: { name: { in: permissions } },
+          });
+
+          await prisma.role.upsert({
+            where: { name: roleName },
+            update: {},
+            create: {
+              name: roleName,
+              permissions: {
+                connect: existingPermissions.map((p) => ({ id: p.id })),
+              },
+            },
+          });
+        }
+          console.info(`[SEED] Successfully created roles with permissions`);
+      };
+    
    
       const isTypeSeeded = await seedEngineTypes();
       if (isTypeSeeded) {
@@ -426,6 +480,8 @@ const main = async (): Promise<void> => {
           seedSeedersEquipmentList(),
           seedTractorsList(),
           seedFakeUsers(20),
+          seedPermissions(),
+          seedRoles(),
         ]);
       } else {
         console.warn('[SEED] Skipping engine seeding due to type seeding failure');

@@ -14,14 +14,35 @@ model User {
   // cuid(): crée un identifiant unique alphanumérique, stable, non prévisible, en format string.
   id        String    @id @default(cuid())
   email     String    @unique
-  password  String? // nullabe si Google ou autre
+  password  String?   // nullabe si Google ou autre
   name      String?   @db.VarChar(255)
   // role      Role        @default(USER)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   // Relations
-  posts     Post[] // Un user peut avoir plusieurs posts (avis)
+  posts     Post[]    // Un user peut avoir plusieurs posts (avis)
   customer  Customer? // Un user peut être lié à un customer (relation 1:1 optionnelle)
+  roleId    String?  
+  role      Role?    @relation(fields: [roleId], references: [id])
+}
+
+model Role {
+  id          String        @id @default(uuid())
+  name        RoleName      @unique
+  users       User[]
+  permissions Permission[]
+}
+
+enum RoleName {
+  ADMIN
+  PROVIDER
+  VIEWER
+}
+
+model Permission {
+  id    String   @id @default(uuid())
+  name  String   @unique
+  roles Role[]   
 }
 
 model Customer {
