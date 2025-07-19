@@ -47,14 +47,24 @@ export class AuthenticationService {
       });
 
       if (!viewerRole) throw new Error('Role VIEWER not found');
+      const isExistedUser = await this.repository.findOneBy({
+        email: signUpDto.email,
+      });
+      if (isExistedUser) {
+        this.logger.warn(`User with email ${signUpDto.email} already exists`);
+        throw new ConflictException({
+          message: 'User with this email already exists',
+          code: 'USER_ALREADY_EXISTS',
+        });
+      }
       const user = await this.repository.create({
         email: signUpDto.email,
         password: await this.hashingService.hash(signUpDto.password),
         role: {
           connect: {
-        id: viewerRole.id,
-      },
-    },
+            id: viewerRole.id,
+          },
+        },
       });
       return user;
     } catch (err) {

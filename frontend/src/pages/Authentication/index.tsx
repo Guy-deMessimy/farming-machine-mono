@@ -93,18 +93,31 @@ const AuthenticationPage = () => {
     } catch (error) {
       console.error('Erreur de connexion :', error);
       if (error instanceof ApolloError) {
+        // Gestion des erreurs Apollo
         if (error.graphQLErrors && error.graphQLErrors.length > 0) {
           const firstError = error.graphQLErrors[0];
+          console.log('AAA~ constonSubmit:SubmitHandler<LoginFormValues>= ~ firstError:', firstError);
           const message = firstError.message;
+          console.log('AAA ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ message:', message);
+          const code = firstError.extensions?.code;
+          console.log('AAA ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ code:', code);
 
           if (message === 'Password does not match') {
+            console.log('AAA ~ JE PASSE LA 1 onstonSubmit:SubmitHandler<LoginFormValues>= ~ message:', message);
             alert('Mot de passe incorrect.');
             return;
           }
 
-          const originalError = firstError.extensions?.originalError as GraphQLOriginalError;
+          if (message === 'User with this email already exists') {
+            console.log('AAA  ~ JE PASSE LA 2 ~ code:', code);
+            alert('Un utilisateur avec cette adresse e-mail existe déjà.');
 
-          if (Array.isArray(originalError.message)) {
+            return;
+          }
+          const originalError = firstError.extensions?.originalError as GraphQLOriginalError;
+          console.log('🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ originalError:', originalError);
+
+          if (originalError && Array.isArray(originalError.message)) {
             alert(originalError.message.join('\n'));
             return;
           }
@@ -122,6 +135,7 @@ const AuthenticationPage = () => {
     } finally {
       console.info('je finally');
     }
+    console.log('🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ ApolloError:', ApolloError);
   };
 
   const onError = (errors: FieldErrors<LoginFormValues>) => {
