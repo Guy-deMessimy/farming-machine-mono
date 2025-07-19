@@ -17,7 +17,7 @@ export interface ActiveUserData {
   /**
    * The subject's (user) role.
    */
-  role: Role;
+  role: string;
   /**
    * The subject's (user) permissions.
    * NOTE: Using this approach in combination with the "role-based" approach

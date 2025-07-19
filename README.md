@@ -110,8 +110,8 @@ npx prisma migrate dev --name init
 
 Pour lancer Prisma studio
 
-```sh
-npx prisma studio
+sh
+npx prisma studio```
 ```
 
 Une session sera lancée sur [localhost:5555](http://localhost:5555/)

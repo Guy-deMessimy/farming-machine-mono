@@ -24,6 +24,7 @@ import jwtConfig from '../config/jwt.config';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
 import { InvalidatedRefreshTokenError } from '../../common/errors/index';
 import { RoleName } from '@prisma/client';
+import { Role } from '../../modules/users/enums/role.enum';
 
 @Injectable()
 export class AuthenticationService {
@@ -41,9 +42,19 @@ export class AuthenticationService {
   // register new user
   async signUp(signUpDto: SignUpDto): Promise<User> {
     try {
+      const viewerRole = await this.prisma.role.findUnique({
+        where: { name: Role.VIEWER },
+      });
+
+      if (!viewerRole) throw new Error('Role VIEWER not found');
       const user = await this.repository.create({
         email: signUpDto.email,
         password: await this.hashingService.hash(signUpDto.password),
+        role: {
+          connect: {
+        id: viewerRole.id,
+      },
+    },
       });
       return user;
     } catch (err) {

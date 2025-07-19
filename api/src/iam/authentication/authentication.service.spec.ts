@@ -257,6 +257,7 @@ describe('AuthenticationService', () => {
       posts: [],
       customer: null,
       refreshToken: null,
+      role: Role.ADMIN,
     };
 
     (jwtService.signAsync as jest.Mock).mockResolvedValueOnce('access-token');
@@ -270,7 +271,6 @@ describe('AuthenticationService', () => {
       {
         sub: user.id,
         email: user.email,
-        role: Role.ADMIN
       },
       {
         secret: 'test-secret',
