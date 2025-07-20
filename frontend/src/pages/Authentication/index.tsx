@@ -86,14 +86,15 @@ const AuthenticationPage = () => {
         });
 
         const { user } = response.data?.signIn ?? {};
-        if (!user) throw new Error('Invalid credentials');
-        dispatch(setCredentials({ user }));
-        navigate('/');
+        if (user) {
+          dispatch(setCredentials({ user }));
+          navigate('/');
+        }
+        throw new Error('Invalid credentials');
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
       if (error instanceof ApolloError) {
-        // Gestion des erreurs Apollo
         if (error.graphQLErrors && error.graphQLErrors.length > 0) {
           const firstError = error.graphQLErrors[0];
           const message = firstError.message;
@@ -121,11 +122,10 @@ const AuthenticationPage = () => {
 
         alert('Une erreur est survenue. Merci de réessayer.');
       } else if (error instanceof Error) {
-        console.log('AAA ~ INSTANCE ERROR 1', error);
         alert('Mot de passe incorrect ou utilisateur non trouvé.');
         return;
       } else {
-        console.log('AAA ~ INSTANCE ERROR 2');
+        console.error('AAA Erreur de connexion :', error);
       }
     } finally {
       console.info('je finally');
