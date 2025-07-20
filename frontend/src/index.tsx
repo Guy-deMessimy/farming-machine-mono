@@ -19,11 +19,17 @@ const httpLink = createUploadLink({
 
 let isRefreshing = false;
 let pendingRequests: (() => void)[] = [];
+const skipRefreshFor = ['SignIn', 'SignUp', 'RefreshToken'];
 
 const resolvePendingRequests = () => {
   pendingRequests.forEach((callback) => callback());
   pendingRequests = [];
 };
+
+const rejectPendingRequests = () => {
+  pendingRequests = [];
+};
+
 const errorLink = onError(({ graphQLErrors, operation, forward }) => {
   if (graphQLErrors) {
     graphQLErrors.forEach(({ message, locations, path }) => {
@@ -33,6 +39,11 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
   const hasAuthError = graphQLErrors?.some(
     (err) => err.message === 'Invalid or expired token' || err.extensions?.code === 'UNAUTHENTICATED',
   );
+  const isSkippable = skipRefreshFor.includes(operation.operationName);
+  if (isSkippable) {
+    console.warn(`[GraphQL error] Skipping refresh for ${operation.operationName}`);
+    return forward(operation); // on ne bloque pas le flux
+  }
 
   if (hasAuthError) {
     if (!isRefreshing) {
@@ -43,22 +54,25 @@ const errorLink = onError(({ graphQLErrors, operation, forward }) => {
           .then(() => {
             resolvePendingRequests();
           })
-          .catch(() => {
+          .catch((err) => {
             console.error('Mutation refresh token failed');
+            rejectPendingRequests();
+            throw err;
           })
           .finally(() => {
             isRefreshing = false;
           }),
       ).flatMap(() => forward(operation));
-    } else {
-      // lorsqu'une erreur d'authentification est detectée et qu'un rafraichissement est deja en cours alors la reqeuete est mise en attente dans pendingRequest
-      return fromPromise(
-        new Promise<void>((resolve) => {
-          pendingRequests.push(() => resolve());
-        }),
-      ).flatMap(() => forward(operation));
     }
+    // lorsqu'une erreur d'authentification est detectée et qu'un rafraichissement est deja en cours alors la reqeuete est mise en attente dans pendingRequest
+    return fromPromise(
+      new Promise<void>((resolve) => {
+        pendingRequests.push(() => resolve());
+      }),
+    ).flatMap(() => forward(operation));
   }
+  // ➜ très important : si ce n'est pas une erreur d'auth, NE PAS stopper ici
+  return forward(operation);
 });
 
 const client = new ApolloClient({
