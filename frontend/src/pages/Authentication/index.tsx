@@ -86,11 +86,10 @@ const AuthenticationPage = () => {
         });
 
         const { user } = response.data?.signIn ?? {};
-        if (user) {
-          dispatch(setCredentials({ user }));
-          navigate('/');
-        }
-        throw new Error('Invalid credentials');
+        if (!user) throw new Error('Invalid credentials');
+
+        dispatch(setCredentials({ user }));
+        navigate('/');
       }
     } catch (error) {
       console.error('Erreur de connexion :', error);
