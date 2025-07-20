@@ -28,7 +28,7 @@ const AuthenticationPage = () => {
   // const [loading, setLoading] = useState(false);
 
   // Hooks GraphQL Apollo pour signIn et signUp
-  const { signIn, loadingSignIn } = useSignInMutation();
+  const { signIn, loadingSignIn, signInError } = useSignInMutation();
   const { signUp, loadingSignUp } = useSignUpMutation();
 
   // État local pour déterminer le mode (connexion ou inscription)
@@ -96,26 +96,19 @@ const AuthenticationPage = () => {
         // Gestion des erreurs Apollo
         if (error.graphQLErrors && error.graphQLErrors.length > 0) {
           const firstError = error.graphQLErrors[0];
-          console.log('AAA~ constonSubmit:SubmitHandler<LoginFormValues>= ~ firstError:', firstError);
           const message = firstError.message;
-          console.log('AAA ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ message:', message);
           const code = firstError.extensions?.code;
-          console.log('AAA ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ code:', code);
 
           if (message === 'Password does not match') {
-            console.log('AAA ~ JE PASSE LA 1 onstonSubmit:SubmitHandler<LoginFormValues>= ~ message:', message);
             alert('Mot de passe incorrect.');
             return;
           }
 
           if (message === 'User with this email already exists') {
-            console.log('AAA  ~ JE PASSE LA 2 ~ code:', code);
             alert('Un utilisateur avec cette adresse e-mail existe déjà.');
-
             return;
           }
           const originalError = firstError.extensions?.originalError as GraphQLOriginalError;
-          console.log('🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ originalError:', originalError);
 
           if (originalError && Array.isArray(originalError.message)) {
             alert(originalError.message.join('\n'));
@@ -128,14 +121,15 @@ const AuthenticationPage = () => {
 
         alert('Une erreur est survenue. Merci de réessayer.');
       } else if (error instanceof Error) {
-        // Gestion générique d'erreur JS
+        console.log('AAA ~ INSTANCE ERROR 1', error);
+        alert('Mot de passe incorrect ou utilisateur non trouvé.');
+        return;
       } else {
-        // Cas très exceptionnel
+        console.log('AAA ~ INSTANCE ERROR 2');
       }
     } finally {
       console.info('je finally');
     }
-    console.log('🚀 ~ constonSubmit:SubmitHandler<LoginFormValues>= ~ ApolloError:', ApolloError);
   };
 
   const onError = (errors: FieldErrors<LoginFormValues>) => {
