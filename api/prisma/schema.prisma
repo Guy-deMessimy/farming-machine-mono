@@ -24,6 +24,7 @@ model User {
   customer  Customer? // Un user peut être lié à un customer (relation 1:1 optionnelle)
   roleId    String?  
   role      Role?    @relation(fields: [roleId], references: [id])
+  apiKeys   ApiKey[]  // 1 user → n keys
 }
 
 model Role {
@@ -40,9 +41,22 @@ enum RoleName {
 }
 
 model Permission {
-  id    String   @id @default(uuid())
-  name  String   @unique
-  roles Role[]   
+  id      String   @id @default(uuid())
+  name    String   @unique
+  roles   Role[] 
+  apiKeys ApiKey[]  @relation("ApiKeyPermissions") // ← nom explicite
+}
+
+model ApiKey {
+  id          String  @id @default(uuid())
+  key         String @unique
+  label       String
+  createdAt   DateTime @default(now())
+  expiresAt   DateTime 
+  isActive    Boolean @default(true)
+  ownerId     String
+  owner       User   @relation(fields: [ownerId], references: [id])
+  permissions Permission[]  @relation("ApiKeyPermissions") // ← même nom
 }
 
 model Customer {
