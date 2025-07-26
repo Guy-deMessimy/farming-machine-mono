@@ -12,6 +12,7 @@ import { AccessTokenGuard } from './authentication/guards/access-token/access-to
 import { AuthenticationGuard } from './authentication/guards/authentication/authentication.guard';
 import { RefreshTokenGuard } from './authentication/guards/refresh-token-guard/refresh-token-guard.guard';
 import { RolesGuard } from './authorization/guards/roles/roles.guard';
+import { ApiKeyGuard } from './authentication/guards/api-key/api-key.guard';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { RolesGuard } from './authorization/guards/roles/roles.guard';
     },
 
     AccessTokenGuard, // Tu fourni l’AccessTokenGuard pour qu’il soit injecté dans AuthenticationGuard.
+    ApiKeyGuard,
     RefreshTokenGuard,
   ],
   exports: [

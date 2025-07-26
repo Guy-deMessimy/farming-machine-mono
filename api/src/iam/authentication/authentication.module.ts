@@ -7,6 +7,7 @@ import jwtConfig from '../config/jwt.config';
 import { PrismaModule } from '../../prisma/prisma.module';
 import { RedisModule } from '../../redis/redis.module';
 import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-token-ids.storage';
+import { ApiKeysService } from './api-keys.service';
 
 @Module({
   imports: [
@@ -19,6 +20,8 @@ import { RefreshTokenIdsStorage } from './refresh-token-ids.storage/refresh-toke
     AuthenticationService,
     AuthenticationResolver,
     RefreshTokenIdsStorage,
+    ApiKeysService,
   ],
+  exports: [ApiKeysService],
 })
 export class AuthenticationModule {}
