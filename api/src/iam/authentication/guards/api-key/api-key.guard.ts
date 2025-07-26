@@ -34,7 +34,7 @@ export class ApiKeyGuard implements CanActivate {
     request[REQUEST_USER_KEY] = {
       sub: apiKeyEntity.owner.id,
       email: apiKeyEntity.owner.email,
-      role: apiKeyEntity.owner.role.name,
+      role: apiKeyEntity.owner.role?.name ?? 'VIEWER',
       permissions: apiKeyEntity.permissions.map((p) => p.name),
     } as unknown as ActiveUserData;
     return true;
