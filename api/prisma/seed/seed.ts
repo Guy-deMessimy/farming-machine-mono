@@ -1,6 +1,7 @@
 import { PrismaClient, RoleName } from '@prisma/client';
 import { parseArgs } from 'node:util';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 // Types
 import { EngineInput, EngineModelInput, ParsedArgs, TypeInput } from './types/engines.type';
 // Dummy data lists
@@ -92,6 +93,7 @@ import {
 } from './16-engine-list-tractors';
 import { generateFakeUsers } from './17-populate-users';
 import { PermissionName } from './enums/permissions.enum';
+import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
@@ -390,41 +392,51 @@ const main = async (): Promise<void> => {
         }
       };
 
-       const seedFakeUsers = async (count = 10): Promise<void> => {
-        const fakeUsers = generateFakeUsers(count);
+       const seedFakeUsers = async (count = 10): Promise<boolean> => {
+         const fakeUsers = generateFakeUsers(count);
+         try {
+            await Promise.all(
+              fakeUsers.map(async (user) => {
+              const hashedPassword = await bcrypt.hash(user.password, 10);
+                await prisma.user.create({
+                  data: {
+                    email: user.email,
+                    name: user.name,
+                    password: hashedPassword,
+                  },
+                });
+              })
+            );
       
-        await Promise.all(
-          fakeUsers.map(async (user) => {
-            const hashedPassword = await bcrypt.hash(user.password, 10);
-      
-            await prisma.user.create({
-              data: {
-                email: user.email,
-                name: user.name,
-                password: hashedPassword,
-              },
-            });
-          })
-        );
-      
-        console.info(`[SEED] Successfully created ${count} users`);
+           console.info(`[SEED] Successfully created ${count} users`);
+          return true
+         } catch (error) {
+           console.error('[SEED] Failed to seed users:', error);
+          return false;
+         }
        };
       
-      const seedPermissions = async (): Promise<void> => {
-        const permissions = Object.values(PermissionName);
-        await Promise.all(
-          permissions.map(async (name) => {
-            await prisma.permission.upsert({
-              where: { name },
-              update: {},
-              create: { name },
-            });
-          })
-        );
-        console.info('[SEED] Successfully created permissions');
+      const seedPermissions = async (): Promise<boolean> => {
+        try {
+          const permissions = Object.values(PermissionName);
+          await Promise.all(
+            permissions.map(async (name) => {
+              await prisma.permission.upsert({
+                where: { name },
+                update: {},
+                create: { name },
+              });
+            })
+          );
+          console.info('[SEED] Successfully created permissions');
+          return true
+        } catch (error) {
+          console.error('[SEED] Failed to seed permissions:', error);
+          return false;
+        }
       };
 
-      const seedRoles = async (): Promise<void> => {
+      const seedRoles = async (): Promise<boolean> => {
         const rolePermissions: Record<string, PermissionName[]> = {
           ADMIN: [
             PermissionName.READ_MACHINE,
@@ -440,49 +452,89 @@ const main = async (): Promise<void> => {
             PermissionName.READ_MACHINE,
           ],
         };
-
-        for (const roleName of Object.keys(rolePermissions) as RoleName[]) {
-          const permissions = rolePermissions[roleName];
-
-          const existingPermissions = await prisma.permission.findMany({
-            where: { name: { in: permissions } },
-          });
-
-          await prisma.role.upsert({
-            where: { name: roleName },
-            update: {},
-            create: {
-              name: roleName,
-              permissions: {
-                connect: existingPermissions.map((p) => ({ id: p.id })),
+        try {
+          for (const roleName of Object.keys(rolePermissions) as RoleName[]) {
+            const permissions = rolePermissions[roleName];
+            const existingPermissions = await prisma.permission.findMany({
+              where: { name: { in: permissions } },
+            });
+            await prisma.role.upsert({
+              where: { name: roleName },
+              update: {},
+              create: {
+                name: roleName,
+                permissions: {
+                  connect: existingPermissions.map((p) => ({ id: p.id })),
+                },
               },
-            },
-          });
-        }
+            });
+          }
           console.info(`[SEED] Successfully created roles with permissions`);
+          return true
+        } catch (error) {
+          console.error('[SEED] Failed to seed role:', error);
+          return false;
+        }
       };
-    
-   
+
+      const seedApiKeys = async (): Promise<void> => {
+        const users = await prisma.user.findMany();
+        const permissions = await prisma.permission.findMany();
+
+        if (!users || !permissions) {
+          throw new Error('No users or permissions found - seed them first')
+        }
+        for (const user of users) {
+          const numberOfKeys = faker.number.int({ min: 1, max: 3 })
+          for (let i = 0; i < numberOfKeys; i++) {
+            const apiKeyValue = crypto.randomBytes(32).toString('hex');
+            const selectedPermissions = faker.helpers.arrayElements(permissions, faker.number.int({ min: 1, max: Math.min(permissions.length, 4) }));
+            await prisma.apiKey.create({
+              data: {
+                key: apiKeyValue,
+                label: `${faker.hacker.adjective()}-${faker.word.noun()}`,
+                createdAt: new Date(),
+                expiresAt: faker.date.future(),
+                isActive: true,
+                owner: {
+                  connect: { id: user.id }
+                },
+                permissions: {
+                  connect: selectedPermissions.map((perm) => ({ id: perm.id }))
+                }
+              }
+            })
+          }
+        }
+          console.info(`[SEED] Successfully created apiKeys`);
+      }
+
       const isTypeSeeded = await seedEngineTypes();
+
       if (isTypeSeeded) {
-        await Promise.all([
-          seedCrushersList(),
-          seedVariousEquipmentList(),
-          seedHandlingList(),
-          seedSpreadingList(),
-          seedSpecializedCulturesList(),
-          seedBreedingEquipmentList(),
-          seedHaymakingEquipmentList(),
-          seedHarvestList(),
-          seedSoiToolsList(),
-          seedSprayerEquipmentList(),
-          seedSeedersAgriculturalTrailersList(),
-          seedSeedersEquipmentList(),
-          seedTractorsList(),
-          seedFakeUsers(20),
-          seedPermissions(),
-          seedRoles(),
-        ]);
+        const isPermissions = await seedPermissions();
+        const isUsers = await seedFakeUsers(20);
+        const isRoles = await seedRoles(); // dépend des permissions
+        if (isPermissions && isUsers && isRoles) {
+          await Promise.all([
+            seedCrushersList(),
+            seedVariousEquipmentList(),
+            seedHandlingList(),
+            seedSpreadingList(),
+            seedSpecializedCulturesList(),
+            seedBreedingEquipmentList(),
+            seedHaymakingEquipmentList(),
+            seedHarvestList(),
+            seedSoiToolsList(),
+            seedSprayerEquipmentList(),
+            seedSeedersAgriculturalTrailersList(),
+            seedSeedersEquipmentList(),
+            seedTractorsList(),
+            seedApiKeys(),
+          ]);
+        } else {
+          console.warn('[SEED] Critical seeding step failed (users, permissions or roles). Skipping equipment.');
+        }
       } else {
         console.warn('[SEED] Skipping engine seeding due to type seeding failure');
       }
