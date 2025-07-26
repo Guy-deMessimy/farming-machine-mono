@@ -97,6 +97,18 @@ import { faker } from '@faker-js/faker';
 
 const prisma = new PrismaClient();
 
+const generateApiKey = (id: number, uuid: string): string => {
+  const raw = `${id} ${uuid}`;
+  return Buffer.from(raw).toString('base64');
+
+}
+
+const createAndHash = async (visibleKey: string,): Promise<{ visibleKey: string; hashedKey: string }> => {
+  const hashedKey = await bcrypt.hash(visibleKey, 10);     
+  return { visibleKey, hashedKey };
+};
+
+
 const main = async (): Promise<void> => {
   const {
     values: { environment },
@@ -487,23 +499,29 @@ const main = async (): Promise<void> => {
         for (const user of users) {
           const numberOfKeys = faker.number.int({ min: 1, max: 3 })
           for (let i = 0; i < numberOfKeys; i++) {
-            const apiKeyValue = crypto.randomBytes(32).toString('hex');
+            const uuid = crypto.randomUUID();
             const selectedPermissions = faker.helpers.arrayElements(permissions, faker.number.int({ min: 1, max: Math.min(permissions.length, 4) }));
-            await prisma.apiKey.create({
+            const created = await prisma.apiKey.create({
               data: {
-                key: apiKeyValue,
-                label: `${faker.hacker.adjective()}-${faker.word.noun()}`,
-                createdAt: new Date(),
+                uuid,
+                key: 'placeholder', 
+                label: `seed-key-${i}`,
                 expiresAt: faker.date.future(),
                 isActive: true,
-                owner: {
-                  connect: { id: user.id }
-                },
+                owner: { connect: { id: user.id } },
                 permissions: {
-                  connect: selectedPermissions.map((perm) => ({ id: perm.id }))
-                }
-              }
-            })
+                  connect: selectedPermissions.map((p) => ({ id: p.id })),
+                },
+              },
+            });
+
+            const visibleKey = generateApiKey(created.id, uuid);
+            const { hashedKey } = await createAndHash(visibleKey);
+            await prisma.apiKey.update({
+              where: { id: created.id },
+              data: { key: hashedKey },
+            });
+            console.log(`[SEED] API Key for ${user.email}: ${visibleKey}`);
           }
         }
           console.info(`[SEED] Successfully created apiKeys`);
