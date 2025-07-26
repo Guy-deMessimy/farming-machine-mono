@@ -9,6 +9,7 @@ import { AUTH_TYPE_KEY } from '../../decorators/auth.decorator';
 import { AuthType } from '../../enums/auth-type.enum';
 import { AccessTokenGuard } from '../access-token/access-token.guard';
 import { RefreshTokenGuard } from '../refresh-token-guard/refresh-token-guard.guard';
+import { ApiKeyGuard } from '../api-key/api-key.guard';
 
 // C’est un composite guard dynamique :
 // il lit les métadonnées posées avec @Auth(...)
@@ -26,6 +27,7 @@ export class AuthenticationGuard implements CanActivate {
     CanActivate | CanActivate[]
   > = {
     [AuthType.Bearer]: this.accessTokenGuard,
+    [AuthType.ApiKey]: this.apiKeyGuard,
     [AuthType.None]: { canActivate: () => true },
     [AuthType.Refresh]: this.refreshTokenGuard,
   };
@@ -33,6 +35,7 @@ export class AuthenticationGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly accessTokenGuard: AccessTokenGuard,
+    private readonly apiKeyGuard: ApiKeyGuard,
     private readonly refreshTokenGuard: RefreshTokenGuard,
   ) {}
 
