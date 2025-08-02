@@ -16,12 +16,10 @@ export class ApiKeysService {
     return this.hashingService.compare(apiKey, hashedKey);
   }
 
-
-extractIdFromApiKey(apiKey: string): number {
-  const [id] = Buffer.from(apiKey, 'base64').toString('ascii').split(' ');
+  extractIdFromApiKey(apiKey: string): number {
+    const [id] = Buffer.from(apiKey, 'base64').toString('ascii').split(' ');
     return parseInt(id, 10);
   }
-
 
   async findByUuidOrThrow(id: number) {
     const record = await this.prisma.apiKey.findUnique({
