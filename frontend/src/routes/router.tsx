@@ -17,6 +17,8 @@ import LogoutPage from '../pages/Logout';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import WithGuard from './guards/WithGuard';
 import { isAuthenticated } from './guards/guards';
+import PrivateRoute from './PrivateRoute';
+import SharePage from '../pages/SharePage';
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +54,20 @@ export const router = createBrowserRouter([
             element: (
               <WithGuard guards={[isAuthenticated]} redirectTo="/auth?mode=signin">
                 <EngineDetailsPage />
+              </WithGuard>
+            ),
+          },
+        ],
+      },
+      {
+        path: 'share',
+        element: <Layout />,
+        children: [
+          {
+            index: true,
+            element: (
+              <WithGuard guards={[isAuthenticated]} redirectTo="/auth?mode=signin">
+                <SharePage />
               </WithGuard>
             ),
           },

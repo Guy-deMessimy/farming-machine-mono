@@ -27,20 +27,19 @@ const MainNavigationComponent = () => {
       key: '0',
     },
     {
+      label: <div onClick={() => navigate('/share')}>Share</div>,
+      key: '1',
+    },
+    {
       type: 'divider',
     },
     {
       label: <div onClick={() => navigate('/services')}>Services</div>,
-      key: '1',
-      disabled: true,
-    },
-    {
-      label: <div onClick={() => navigate('/rent')}>Rent</div>,
       key: '2',
       disabled: true,
     },
     {
-      label: <div onClick={() => navigate('/share')}>Share</div>,
+      label: <div onClick={() => navigate('/rent')}>Rent</div>,
       key: '3',
       disabled: true,
     },
