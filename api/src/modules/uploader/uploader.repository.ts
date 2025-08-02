@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { File, Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
-import { UploadedFile } from './upolad-file.entity';
-// import { FileUploadDto } from '../dto/upload-file-input';
 
 @Injectable()
 export class UploaderRepository {

@@ -2,7 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { File } from '@prisma/client';
 import { UploaderService } from './uploader.service';
-import { UploadedFile } from './upolad-file.entity';
+import { UploadedFile } from './upload-file.entity';
 
 @Resolver()
 export class UploaderResolver {
