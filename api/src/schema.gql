@@ -74,6 +74,16 @@ type AuthPayload {
   refreshToken: String
 }
 
+"""File model"""
+type UploadedFile {
+  id: Int!
+  fileName: String!
+  fileUrl: String!
+  key: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
 type Query {
   findAllEngines(query: EngineQueryDto): [Engine!]
   findAllEngineModel(query: EngineModelQueryDto): [EngineModel!]
@@ -175,6 +185,7 @@ type Mutation {
   signUp(input: SignUpDto!): User!
   signIn(input: SignInDto!): AuthPayload!
   refreshToken: AuthPayload!
+  uploadFile(file: Upload!): UploadedFile!
 }
 
 """User input model for querying by ID or email"""
@@ -199,3 +210,6 @@ input SignInDto {
   email: String!
   password: String!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

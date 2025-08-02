@@ -15,6 +15,8 @@ import { EngineTypesModule } from './modules/engine-type/engine-type.module';
 import { UsersModule } from './modules/users/users.module';
 import { IamModule } from './iam/iam.module';
 import { RedisModule } from './redis/redis.module';
+import { UploaderModule } from './modules/uploader/uploader.module';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   // "je branche ce module pour avoir accès à ce qu’il exporte"
@@ -37,6 +39,8 @@ import { RedisModule } from './redis/redis.module';
     UsersModule,
     IamModule,
     RedisModule,
+    UploaderModule,
+    S3Module,
   ],
   controllers: [],
   // "je déclare ici ce que mon module gère et instancie lui-même"
