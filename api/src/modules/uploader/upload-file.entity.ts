@@ -12,8 +12,14 @@ export class UploadedFile {
   @Field(() => String)
   fileUrl: FileDB[`fileUrl`];
 
-  @Field(() => String)
-  key: FileDB[`key`];
+  // @Field(() => String)
+  // key: FileDB[`key`];
+
+  @Field(() => String, {
+    nullable: true,
+    deprecationReason: 'Internal use only',
+  })
+  key?: FileDB;
 
   @Field(() => GraphQLISODateTime)
   createdAt: FileDB[`createdAt`];

@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
 import { Readable } from 'stream';
 import sharp from 'sharp';
-import { UploadFileInput } from 'src/modules/uploader/uploaded-file-input.dto';
+import { FileUpload } from 'graphql-upload';
 import { RatioEnum } from './enums/s3-enum';
 import { IMAGE_SIZE, MAX_WIDTH, QUALITY_ARRAY } from './constants/s3-constants';
 import { uploadedFile } from './upload-file.entity';
@@ -89,7 +89,7 @@ export class S3Service {
   }
 
   public async uploadImage(
-    uploadFileInput: UploadFileInput,
+    uploadFileInput: FileUpload,
     ratio?: RatioEnum,
   ): Promise<uploadedFile | undefined> {
     const { createReadStream, filename, mimetype } = uploadFileInput;

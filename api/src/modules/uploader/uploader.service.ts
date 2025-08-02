@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 import { ConfigService } from '@nestjs/config';
+import { FileUpload } from 'graphql-upload';
 import { UploaderRepository } from './uploader.repository';
-import { UploadFileInput } from './uploaded-file-input.dto';
 import { S3Service } from '../../s3/s3.service';
 
 @Injectable()
@@ -17,8 +17,12 @@ export class UploaderService {
     console.log(databaseHost);
   }
 
-  async uploadFile(uploadFileInput: UploadFileInput) {
+  async uploadFile(uploadFileInput: FileUpload) {
     try {
+      if (!uploadFileInput?.createReadStream || !uploadFileInput?.mimetype) {
+        throw new BadRequestException('Invalid file upload');
+      }
+
       const result = await this.S3Service.uploadImage(uploadFileInput);
 
       if (result) {

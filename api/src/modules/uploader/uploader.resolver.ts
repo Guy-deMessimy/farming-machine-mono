@@ -12,7 +12,7 @@ export class UploaderResolver {
   async uploadFile(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload,
   ): Promise<File | undefined> {
-    const uploadedFile = this.uploaderService.uploadFile(file);
+    const uploadedFile = await this.uploaderService.uploadFile(file);
     return uploadedFile;
   }
 }

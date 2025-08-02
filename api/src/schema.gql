@@ -79,7 +79,7 @@ type UploadedFile {
   id: Int!
   fileName: String!
   fileUrl: String!
-  key: String!
+  key: String @deprecated(reason: "Internal use only")
   createdAt: DateTime!
   updatedAt: DateTime!
 }
