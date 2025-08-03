@@ -11,6 +11,7 @@ type SignInResponse = {
     user: {
       id: string;
       email: string;
+      role: string;
     };
   };
 };

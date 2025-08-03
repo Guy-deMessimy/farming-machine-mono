@@ -1,6 +1,4 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-// import { Customer } from '../../customer/entities/customer.entity'; // adapte si besoin
-// import { Post } from '../../post/entities/post.entity'; // adapte si besoin
 
 @ObjectType()
 export class User {
@@ -18,6 +16,9 @@ export class User {
 
   @Field(() => Date, { nullable: true })
   updatedAt: Date;
+
+  @Field()
+  role: string;
 
   //   @Field(() => [Post], { nullable: true })
   //   posts?: Post[];
