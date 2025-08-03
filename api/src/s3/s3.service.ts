@@ -8,7 +8,7 @@ import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
 import { Readable } from 'stream';
-import sharp from 'sharp';
+import * as sharp from 'sharp';
 import { FileUpload } from 'graphql-upload';
 import { RatioEnum } from './enums/s3-enum';
 import { IMAGE_SIZE, MAX_WIDTH, QUALITY_ARRAY } from './constants/s3-constants';
@@ -32,8 +32,10 @@ export class S3Service {
   }
 
   private static validateImage(mimetype: string): string | false {
+    console.log("🚀 ~ S3Service ~ validateImage ~ mimetype:", mimetype)
     const val = mimetype.split('/');
     if (val[0] !== 'image') {
+      if (mimetype === 'application/octet-stream') return 'octet';
       return false;
     }
     return val[1] ?? false;

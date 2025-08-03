@@ -10,7 +10,7 @@ import { Roles } from '../../iam/authorization/decorators/roles.decorator';
 import { Role } from '../users/enums/role.enum';
 
 // @Auth(AuthType.Bearer) a activer pour auth
-@Auth(AuthType.ApiKey)
+// @Auth(AuthType.ApiKey)
 @Resolver()
 export class EngineResolver {
   private readonly logger = new Logger(EngineResolver.name);
@@ -21,7 +21,7 @@ export class EngineResolver {
   ) {}
 
   // // @Roles(Role.VIEWER) role activer pour auth
-  // @Auth(AuthType.None) // a desactiver pour auth
+  @Auth(AuthType.None) // a desactiver pour auth
   @Query(() => [Engine], { name: 'findAllEngines', nullable: true })
   async findAllEngines(
     @Args('query', { nullable: true }) query?: EngineQueryDto,
