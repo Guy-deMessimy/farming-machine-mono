@@ -23,14 +23,10 @@ export class UploaderResolver {
   ): Observable<UploadedFile | undefined> {
     try {
       const graphQlQuery = context.req.body.query;
-      console.log("🚀 ~ UploaderResolver ~ uploadFile ~ graphQlQuery:", graphQlQuery)
-      console.log("🚀 ~ UploaderResolver ~ uploadFile ~ file:", file)
       const uploadedFile = this.uploaderService.uploadFile({
         graphQlQuery,
         file,
-        // headers: context.req.headers['authorization'],
       });
-      console.log("🚀 ~ UploaderResolver ~ uploadFile ~ uploadedFile:", uploadedFile)
       return uploadedFile;
     } catch (error) {
       this.logger.error('Resolver: uploadFile error:', error.stack);

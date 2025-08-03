@@ -3,8 +3,11 @@ import {
   HttpException,
   UnauthorizedException,
 } from '@nestjs/common';
+import FormData from 'form-data';
 import { HttpService } from '@nestjs/axios/dist';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, pipe, throwError } from 'rxjs';
+import { FileUpload } from 'graphql-upload';
+import { AxiosResponse } from 'axios';
 
 @Injectable()
 export class GraphqlApiService {
@@ -25,6 +28,42 @@ export class GraphqlApiService {
       throw new Error('Request body query is not a string');
     }
 
+    const hasFileUpload =
+      variables?.file &&
+      typeof variables.file === 'object' &&
+      typeof variables.file.createReadStream === 'function';
+
+    if (hasFileUpload) {
+      const { filename, mimetype, createReadStream }: FileUpload =
+        variables.file;
+      const operations = JSON.stringify({
+        query: graphQlQuery,
+        variables: { file: null },
+      });
+
+      const map = JSON.stringify({ '0': ['variables.file'] });
+      const form = new FormData();
+      form.append('operations', operations);
+      form.append('map', map);
+      form.append('0', createReadStream(), {
+        filename,
+        contentType: mimetype,
+      });
+      return this.httpService
+        .post<{ data?: Record<string, any>; errors?: any[] }>(
+          process.env.API_URL || 'http://localhost:3000/graphql',
+          form,
+          {
+            headers: {
+              ...form.getHeaders(), // FormData gère lui-même le bon content-type avec boundary
+              'x-apollo-operation-name': 'uploadFile', // 👈 CSRF bypass
+              ...headers,
+            },
+          },
+        )
+        .pipe(this.mapAndCatch());
+    }
+
     const payload = { query: graphQlQuery, variables };
     return this.httpService
       .post<{ data?: Record<string, any>; errors?: any[] }>(
@@ -37,12 +76,20 @@ export class GraphqlApiService {
           },
         },
       )
-      .pipe(
-        map((response) => {
+      .pipe(this.mapAndCatch());
+  }
+
+  private mapAndCatch<T>() {
+    return pipe(
+      map(
+        (
+          response: AxiosResponse<{
+            data?: Record<string, any>;
+            errors?: any[];
+          }>,
+        ) => {
           const raw = response.data;
-          // console.log('RAW:', raw);
           if (raw.errors?.length) {
-            // console.log('RAW ERRORS:', raw.errors);
             throw {
               isGraphQLError: true,
               graphQLErrors: raw.errors,
@@ -50,41 +97,39 @@ export class GraphqlApiService {
           }
 
           const data = raw.data;
-          // console.log('DATA:', data);
-          if (!data) {
-            throw new Error('No data found in GraphQL response');
-          }
-
+          if (!data) throw new Error('No data found in GraphQL response');
           const topLevelKey = Object.keys(data)[0];
           return data[topLevelKey];
-        }),
-
-        catchError((error) => {
-          if (error.isGraphQLError && error.graphQLErrors?.length) {
-            const firstError = error.graphQLErrors[0];
-            const message = firstError.message || 'GraphQL error';
-            const statusCode =
-              firstError.extensions?.exception?.status ??
-              (firstError.extensions?.code === 'UNAUTHENTICATED' ? 401 : 400);
-
-            if (statusCode === 401) {
-              throw new UnauthorizedException('Missing access token');
-            } else
-              return throwError(() => new HttpException(message, statusCode));
-          }
-          const fallbackErrors = error.response?.data?.errors;
-          if (fallbackErrors?.length) {
-            const message = fallbackErrors[0].message || 'GraphQL error';
-            return throwError(() => new HttpException(message, 400));
-          }
+        },
+      ),
+      catchError((error) => {
+        if (error.isGraphQLError && error.graphQLErrors?.length) {
+          const firstError = error.graphQLErrors[0];
+          const message = firstError.message || 'GraphQL error';
+          const statusCode =
+            firstError.extensions?.exception?.status ??
+            (firstError.extensions?.code === 'UNAUTHENTICATED' ? 401 : 400);
           return throwError(
             () =>
               new HttpException(
-                'Failed to execute GraphQL query',
-                error.response?.status || 500,
+                message,
+                statusCode === 401 ? 401 : statusCode || 400,
               ),
           );
-        }),
-      );
+        }
+        const fallbackErrors = error.response?.data?.errors;
+        if (fallbackErrors?.length) {
+          const message = fallbackErrors[0].message || 'GraphQL error';
+          return throwError(() => new HttpException(message, 400));
+        }
+        return throwError(
+          () =>
+            new HttpException(
+              'Failed to execute GraphQL query',
+              error.response?.status || 500,
+            ),
+        );
+      }),
+    );
   }
 }
