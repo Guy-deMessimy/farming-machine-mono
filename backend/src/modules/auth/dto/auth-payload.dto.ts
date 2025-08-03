@@ -1,6 +1,6 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { User } from '../../users/users.entity';
-
+import { Role } from '../enums/role.enum';
 @ObjectType()
 export class AuthPayload {
   // renvoye dans cookie
@@ -12,4 +12,7 @@ export class AuthPayload {
   // renvoye dans cookie
   @Field({ nullable: true })
   refreshToken?: string;
+
+  @Field(() => Role, { defaultValue: Role.VIEWER })
+  role?: Role;
 }
