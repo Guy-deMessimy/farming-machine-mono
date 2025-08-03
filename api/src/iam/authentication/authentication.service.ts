@@ -96,7 +96,9 @@ export class AuthenticationService {
     }
     return await this.generateTokens(user);
   }
-
+// problème de confusion entre "type d'entité interne" (modèle DB) et "type exposé à l’extérieur" (GraphQL). 
+  // C’est ce qu’on appelle une fuite d'abstraction ou un mélange de responsabilités entre couches.
+  // User ici provient de prisma mc'est un user Prisma mais il est type comme un user graphql à corriger
   async generateTokens(user: User) {
     const refreshTokenId = randomUUID();
     const { name: roleName } = user.role as unknown as { name: RoleName };

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Prisma, User } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { UserQueryDto } from './dto/user-query.dto';
+import { Role } from './enums/role.enum';
 
 @Injectable()
 export class UsersRepository {
@@ -26,7 +27,7 @@ export class UsersRepository {
   }
 
   async findOneBy(where: Prisma.UserWhereUniqueInput): Promise<User | null> {
-    return this.prisma.user.findUnique({
+    const prismaUser = await this.prisma.user.findUnique({
       where,
       include: {
         customer: true,
@@ -38,6 +39,13 @@ export class UsersRepository {
         },
       },
     });
+
+    if (!prismaUser) return null;
+
+    return {
+      ...prismaUser,
+      role: prismaUser.role?.name ?? Role.VIEWER,
+    } as User;
   }
 
   async delete(where: Prisma.UserWhereUniqueInput): Promise<User> {
