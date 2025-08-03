@@ -15,6 +15,9 @@ import './styles.scss';
 const httpLink = createUploadLink({
   uri: '/graphql' || 'http://backend:3001/graphql' || 'http://localhost:3001/graphql',
   credentials: 'include',
+  headers: {
+    'x-apollo-operation-name': 'uploadFile', // 👈 ajouté ici
+  },
 });
 
 let isRefreshing = false;
