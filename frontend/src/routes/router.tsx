@@ -11,14 +11,14 @@ import EnginePage from '../pages/EnginePage/index';
 import EngineDetailsPage from '../pages/EnginePage/components/EngineDetails';
 import AuthenticationPage from '../pages/Authentication';
 import LogoutPage from '../pages/Logout';
+import SharePage from '../pages/SharePage';
+import AccessDeniedPage from '../pages/AccessDenied';
 
 // Route guards
 // import PrivateRoute from './PrivateRoute';
 import PublicOnlyRoute from './PublicOnlyRoute';
 import WithGuard from './guards/WithGuard';
-import { isAuthenticated } from './guards/guards';
-import PrivateRoute from './PrivateRoute';
-import SharePage from '../pages/SharePage';
+import { isAdmin, isAuthenticated } from './guards/guards';
 
 export const router = createBrowserRouter([
   {
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
             //   </PrivateRoute>
             // ),
             element: (
-              <WithGuard guards={[isAuthenticated]} redirectTo="/auth?mode=signin">
+              <WithGuard guards={[isAuthenticated]}>
                 <EngineDetailsPage />
               </WithGuard>
             ),
@@ -66,7 +66,7 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: (
-              <WithGuard guards={[isAuthenticated]} redirectTo="/auth?mode=signin">
+              <WithGuard guards={[isAdmin]}>
                 <SharePage />
               </WithGuard>
             ),
@@ -76,6 +76,10 @@ export const router = createBrowserRouter([
       {
         path: 'logout',
         element: <LogoutPage />,
+      },
+      {
+        path: '/403',
+        element: <AccessDeniedPage />, // à toi de créer ça
       },
     ],
   },
