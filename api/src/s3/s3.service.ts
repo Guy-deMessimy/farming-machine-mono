@@ -32,7 +32,7 @@ export class S3Service {
   }
 
   private static validateImage(mimetype: string): string | false {
-    console.log("🚀 ~ S3Service ~ validateImage ~ mimetype:", mimetype)
+    console.log('🚀 ~ S3Service ~ validateImage ~ mimetype:', mimetype);
     const val = mimetype.split('/');
     if (val[0] !== 'image') {
       if (mimetype === 'application/octet-stream') return 'octet';
