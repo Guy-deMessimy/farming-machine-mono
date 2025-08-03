@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger } from '@nestjs/common';
 const cookieParser = require('cookie-parser');
+import { graphqlUploadExpress } from 'graphql-upload';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
@@ -52,6 +53,8 @@ async function bootstrap() {
       );
       next();
     });
+
+    app.use(graphqlUploadExpress({ maxFileSize: 50000000, maxFiles: 10 }));
 
     app.useGlobalPipes(
       new ValidationPipe({

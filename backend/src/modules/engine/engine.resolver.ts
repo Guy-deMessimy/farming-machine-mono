@@ -15,7 +15,7 @@ export class EngineResolver {
   constructor(private readonly engineService: EngineService) {}
 
   @Query(() => [Engine], { nullable: true })
-  @Public()  // desactiver pour activer auth ici
+  @Public() // desactiver pour activer auth ici
   @UseDynamicInterceptor(InterceptorType.None) // activer auth ici avec InterceptorType.default
   findAllEngines(
     @Context() context?: { req: Request },

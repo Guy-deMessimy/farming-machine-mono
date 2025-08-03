@@ -13,6 +13,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthHeaderInterceptor } from './modules/auth/interceptors/auth-header.interceptor';
 import { DynamicInterceptor } from './modules/auth/interceptors/dynamic-interceptor';
 import { RefreshTokenHeaderInterceptor } from './modules/auth/interceptors/refresh-token-interceptor';
+import { UploaderModule } from './modules/uploader/uploader.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RefreshTokenHeaderInterceptor } from './modules/auth/interceptors/refre
     EngineTypesModule,
     AuthModule,
     UsersModule,
+    UploaderModule,
   ],
   providers: [
     AuthHeaderInterceptor,
